@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/drawerlayout"
+    tools:context=".admin.Admin_profile">
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+        <include
+            layout="@layout/toolbar"/>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+
+            android:background="@drawable/top_background">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="138dp"
+                android:layout_height="126dp"
+                android:background="@drawable/profile_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="400dp"-->
+        <!--                    android:background="@drawable/top_background"-->
+        <!--                    tools:ignore="MissingConstraints">-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+
+
+            <EditText
+                android:id="@+id/prresname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="14dp"
+                android:hint="Restaurant Name"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <EditText
+                android:id="@+id/prresadd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_location_on_24"
+                android:drawablePadding="14dp"
+                android:hint="Restaurant Address"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/prresname"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <EditText
+                android:id="@+id/prresphno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_local_phone_24"
+                android:drawablePadding="14dp"
+                android:hint="Restaurant Phone Number"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/prresadd"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+            <EditText
+                android:id="@+id/ownname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="14dp"
+                android:hint="Owner Name"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/prresphno"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+            <TextView
+                android:id="@+id/ownemail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawablePadding="14dp"
+                android:hint="Owner Email ID"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/ownname"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+            <EditText
+                android:id="@+id/ownpass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_password_24"
+                android:drawablePadding="14dp"
+                android:hint="Password"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/ownemail"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <Button
+            android:id="@+id/profilebutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="0.18"
+            android:text="UPDATE" />
+
+
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:layout_gravity="start">
+
+        <include
+            layout="@layout/nav_drawer"/>
+
+    </RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

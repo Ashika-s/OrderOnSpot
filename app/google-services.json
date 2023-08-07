@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1045257362821",
+    "project_id": "food-bf66f",
+    "storage_bucket": "food-bf66f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1045257362821:android:9b8108a9047b2d016cb8ec",
+        "android_client_info": {
+          "package_name": "com.sas.food_order_application"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1045257362821-e20mepf6kpeb7ellmo85v0v59231h0hj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.sas.food_order_application",
+            "certificate_hash": "830f232cc3997cf4632610057e9f171d2de67f8b"
+          }
+        },
+        {
+          "client_id": "1045257362821-t145qur7ip6jbq0kj7kshjoeuqgpaheh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBfYSPrjIOBvpQ-muxCvN2CoG-ugYtLJkM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1045257362821-t145qur7ip6jbq0kj7kshjoeuqgpaheh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

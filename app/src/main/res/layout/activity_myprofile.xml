@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F5F5"
+    tools:context=".ui.Settings.MyprofileActivity">
+    <include layout="@layout/toolbar"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+
+            android:background="@drawable/top_background">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="138dp"
+                android:layout_height="126dp"
+                android:background="@drawable/profile_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.492"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:scaleType="centerCrop"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+        <!--                    android:layout_width="match_parent"-->
+        <!--                    android:layout_height="400dp"-->
+        <!--                    android:background="@drawable/top_background"-->
+        <!--                    tools:ignore="MissingConstraints">-->
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="400dp">
+
+
+            <EditText
+                android:id="@+id/prname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="76dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="14dp"
+                android:hint="Full Name"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <TextView
+                android:id="@+id/premail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_email_24"
+                android:drawablePadding="14dp"
+                android:hint="Email Address"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/prname"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <EditText
+                android:id="@+id/prpassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="#CCCCCC"
+                android:drawableLeft="@drawable/baseline_password_24"
+                android:drawablePadding="14dp"
+                android:hint="Password"
+                android:paddingLeft="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/premail"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
+            <Button
+                android:id="@+id/profilebutton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.18"
+                android:text="UPDATE"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/prpassword" />
+
+
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    </LinearLayout>
+    <!--    </ScrollView>-->
+</androidx.constraintlayout.widget.ConstraintLayout>
