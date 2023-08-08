@@ -13,36 +13,40 @@ import com.sas.food_order_application.Model.Category;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.admin.Categoryclass;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Category_Adapter extends RecyclerView.Adapter<Category_Adapter.ViewHolder> {
     Context context;
-    List<Category> list;
+    ArrayList<Categoryclass> userArrayList;
 
-    public Category_Adapter(List<Category> list) {
-//        this.context = context;
-        this.list = list;
+    public Category_Adapter(Context context, ArrayList<Categoryclass> userArrayList) {
+        this.context = context;
+        this.userArrayList = userArrayList;
     }
 
     @NonNull
     @Override
     public Category_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-       View view= LayoutInflater.from(parent.getContext()).inflate(R.layout.category_view,parent,false);
+       View view= LayoutInflater.from(context).inflate(R.layout.category_view,parent,false);
        return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull Category_Adapter.ViewHolder holder, int position) {
-        holder.categoryy.setText(list.get(position).getCategories());
+      Categoryclass category=userArrayList.get(position);
+
+      holder.categoryy.setText(category.getCategory());
 
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+
+        return userArrayList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder{
 
         TextView categoryy;
 

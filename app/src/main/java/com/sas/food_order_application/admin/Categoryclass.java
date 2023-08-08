@@ -7,8 +7,13 @@ public class Categoryclass {
     String type;
     String amount;
 
-    public Categoryclass() {
+    public Categoryclass(String data) {
+        this.category=data;
     }
+    public Categoryclass() {
+
+    }
+
 
     public Categoryclass(String item, String category, String type, String amount) {
         this.item = item;

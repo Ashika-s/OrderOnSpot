@@ -100,8 +100,7 @@ public class User_login extends AppCompatActivity {
                                             emailid = emaill;
                                             // if sign-in is successful
                                             // intent to home activity
-                                            Intent intent
-                                                    = new Intent(User_login.this,
+                                            Intent intent = new Intent(User_login.this,
                                                     MainActivity.class);
                                             startActivity(intent);
 

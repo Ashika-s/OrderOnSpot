@@ -78,6 +78,8 @@ DocumentReference documentReference;
 
                 addcategoryies(itemm,categoryy,typee,amountt);
 
+                startActivity(new Intent(Edit_Categories.this,Admin_Main.class));
+
                 }
         });
 
@@ -97,18 +99,30 @@ DocumentReference documentReference;
 
 
 
-
-        db.collection("Restaurant").document(restname).collection(type).document(item).set(categoryclass).addOnSuccessListener(new OnSuccessListener<Void>() {
+        db.collection("Admin").document(Admin_login.adminemailid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
-            public void onSuccess(Void unused) {
-                Toast.makeText(Edit_Categories.this,"Item Added",Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Edit_Categories.this,"Failed to add item",Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
+                        String rest = adminRegisterClass.getRestorantName();
+                        db.collection("Restaurant").document(rest).collection(type).document(item).set(categoryclass).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(Edit_Categories.this, "Item Added", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Edit_Categories.this, "Failed to add item", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
             }
         });
+
 
 
 

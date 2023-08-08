@@ -24,6 +24,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.MainActivity;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.User_login;
 
 public class Admin_login extends AppCompatActivity {
     Button login;
@@ -89,72 +90,35 @@ public class Admin_login extends AppCompatActivity {
                     Toast.makeText(Admin_login.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
 
-                }else {
-                    auth.signInWithEmailAndPassword(emaill, passwordd)
-                            .addOnCompleteListener(
-                                    new OnCompleteListener<AuthResult>() {
-                                        @Override
-                                        public void onComplete(
-                                                @NonNull Task<AuthResult> task)
-                                        {
-                                            if (task.isSuccessful()) {
-                                                Toast.makeText(getApplicationContext(),
-                                                                "Login successful!!",
-                                                                Toast.LENGTH_LONG)
-                                                        .show();
+                }Toast.makeText(Admin_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
+// signin existing user
+                auth.signInWithEmailAndPassword(emaill, passwordd)
+                        .addOnCompleteListener(
+                                new OnCompleteListener<AuthResult>() {
+                                    @Override
+                                    public void onComplete(
+                                            @NonNull Task<AuthResult> task)
+                                    {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
 
+                                            adminemailid = emaill;
+                                            // if sign-in is successful
+                                            // intent to home activity
+                                            Intent intent = new Intent(Admin_login.this, Admin_Main.class);
+                                            startActivity(intent);
 
-
-
-                                                DocumentReference docRef = db.collection("Admin").document(emaill);
-
-                                                docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                                                    @Override
-                                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                                        if (task.isSuccessful()) {
-                                                            DocumentSnapshot document = task.getResult();
-
-                                                            if (document.exists()) {
-                                                                Toast.makeText(Admin_login.this, "Successfully getting the data...", Toast.LENGTH_SHORT).show();
-
-                                                                AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
-
-
-
-                                                                 res=adminRegisterClass.getRestorantName();
-
-
-                                                            Log.d("login","value is "+res);
-
-
-
-                                                            } else {
-                                                                Log.d("profile", "No such document");
-                                                            }
-                                                        } else {
-                                                            Log.d("profile", "get failed with ", task.getException());
-                                                        }
-                                                    }
-                                                });
-
-                                                adminemailid = emaill;
-
-                                                Intent intent = new Intent(Admin_login.this, Admin_Main.class);
-                                                startActivity(intent);
-                                                finish();
-                                            }
-
-                                            else {
-
-                                                Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-                                            }
                                         }
-                                    });
 
+                                        else {
 
-                }
+                                            Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
 
             }
+
         });
     }
 }
