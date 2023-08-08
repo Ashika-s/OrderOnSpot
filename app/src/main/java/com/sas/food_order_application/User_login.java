@@ -103,6 +103,7 @@ public class User_login extends AppCompatActivity {
                                             Intent intent = new Intent(User_login.this,
                                                     MainActivity.class);
                                             startActivity(intent);
+                                            finish();
 
                                         }
 
