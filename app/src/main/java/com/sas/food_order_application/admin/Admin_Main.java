@@ -167,7 +167,7 @@ public class Admin_Main extends AppCompatActivity {
                         AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
                         String rest = adminRegisterClass.getRestorantName();
                         Log.d("main", "is " + rest);
-
+                        List<String> tempCategoryList = new ArrayList<>();
 
                         db.collection("Restaurant").document(rest).collection("Veg")
                                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -181,8 +181,11 @@ public class Admin_Main extends AppCompatActivity {
                                         }
                                         for(DocumentChange dc : value.getDocumentChanges()){
                                             if(dc.getType()==DocumentChange.Type.ADDED){
-                                                userArrayList.add(dc.getDocument().toObject(Categoryclass.class));
                                                 Categoryclass category= dc.getDocument().toObject(Categoryclass.class);
+                                                if(!tempCategoryList.contains(category.getCategory())) {
+                                                    tempCategoryList.add(category.getCategory());
+                                                    userArrayList.add(dc.getDocument().toObject(Categoryclass.class));
+                                                }
                                                 Log.d("list"," is"+category.getCategory());
                                             }
 
@@ -204,9 +207,11 @@ public class Admin_Main extends AppCompatActivity {
                                         }
                                         for(DocumentChange dc : value.getDocumentChanges()){
                                             if(dc.getType()==DocumentChange.Type.ADDED){
-                                                userArrayList.add(dc.getDocument().toObject(Categoryclass.class));
                                                 Categoryclass category= dc.getDocument().toObject(Categoryclass.class);
-                                                Log.d("list"," is"+category.getCategory());
+                                                if(!tempCategoryList.contains(category.getCategory())) {
+                                                    tempCategoryList.add(category.getCategory());
+                                                    userArrayList.add(dc.getDocument().toObject(Categoryclass.class));
+                                                }
                                             }
 
                                             category_adapter.notifyDataSetChanged();
