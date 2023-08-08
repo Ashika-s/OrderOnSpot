@@ -7,7 +7,9 @@
     tools:context=".admin.Edit_Categories">
 
 
-
+    <include
+        layout="@layout/addcat"
+        android:id="@+id/tool"/>
 
     <EditText
         android:id="@+id/items"
@@ -26,7 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-
+        app:layout_constraintTop_toBottomOf="@+id/tool"
         app:layout_constraintWidth_percent=".8"
         tools:ignore="MissingConstraints" />
 

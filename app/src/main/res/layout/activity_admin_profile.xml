@@ -16,7 +16,7 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
         <include
-            layout="@layout/toolbar"/>
+            layout="@layout/profile"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
