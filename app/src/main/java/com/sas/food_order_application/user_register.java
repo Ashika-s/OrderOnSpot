@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.sas.food_order_application.admin.Admin_login;
 
 public class user_register extends AppCompatActivity {
     Button register;
@@ -86,38 +88,44 @@ public class user_register extends AppCompatActivity {
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
                 confpasswordd = String.valueOf(confpassword.getText());
-
+                User_login.emailid=emaill;
                 if (name.getText().toString().isEmpty() || email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confpassword.getText().toString().isEmpty())
                 {
-                    Toast.makeText(user_register.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(user_register.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    confpassword.setError("Confirm password cannot be empty");
+                    confpassword.requestFocus();
+                    name.setError("name cannot be empty");
+                    name.requestFocus();
+                    email.setError("email cannot be empty");
+                    email.requestFocus();
+                    password.setError("password cannot be empty");
+                    password.requestFocus();
+
                     return;
                 }
                 else if(!password.getText().toString().equals(confpassword.getText().toString()))
                 {
-                    Toast.makeText(user_register.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
-//                    confpassword.setError("Passwords are not matching");
-//                    confpassword.requestFocus();
-//                   return;
+                    //Toast.makeText(user_register.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
+                    confpassword.setError("Passwords are not matching");
+                    confpassword.requestFocus();
+                     return;
                 }
-//                else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emaill).matches()) {
-//                    email.setError("Enter a valid email address");
-//                    email.requestFocus();
-//                    return;
-//                }
-
 
                 auth.createUserWithEmailAndPassword(emaill,passwordd)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
+                                    progressBar.setVisibility(View.GONE);
                                     addNewData(namee,passwordd,emaill,confpasswordd);
                                     Toast.makeText(user_register.this, "succefull", Toast.LENGTH_SHORT).show();
+
                                 } else {
 
 
-                                    Toast.makeText(user_register.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                  //  Toast.makeText(user_register.this, "Authentication failed.",
+                                        //    Toast.LENGTH_SHORT).show();
+                                    Log.d("user register","Authentication failed");
 
                                 }
                             }
@@ -140,8 +148,10 @@ public class user_register extends AppCompatActivity {
             @Override
             public void onSuccess(Void unused) {
                 progressBar.setVisibility((View.GONE));
-                startActivity(new Intent(user_register.this,MainActivity.class));
+                Intent intent=new Intent(user_register.this,MainActivity.class);
+                startActivity(intent);
                 finish();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
                     @Override

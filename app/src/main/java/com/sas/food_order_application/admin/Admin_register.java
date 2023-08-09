@@ -97,30 +97,40 @@ public class Admin_register extends AppCompatActivity {
                 emaill=String.valueOf(email.getText());
                 confirmpasswordd = String.valueOf(confirmpassword.getText());
                 progressBar.setVisibility(View.VISIBLE);
-
+                Admin_login.adminemailid=emaill;
 
 
                 if (Restaurantname.getText().toString().isEmpty() || Restaurantaddress.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirmpassword.getText().toString().isEmpty())
                 {
-                    Toast.makeText(Admin_register.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(Admin_register.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                    confirmpassword.setError("Confirm password cannot be empty");
+                    confirmpassword.requestFocus();
+                    Ownername.setError("Owner Name cannot be empty");
+                    Ownername.requestFocus();
+                    email.setError("email cannot be empty");
+                    email.requestFocus();
+                    password.setError("password cannot be empty");
+                    password.requestFocus();
+                    Restaurantname.setError("Restaurant Name cannot be empty");
+                    Restaurantname.requestFocus();
+                    Restaurantphno.setError("Restaurant Phone number cannot be empty");
+                    Restaurantphno.requestFocus();
+                    Ownerphno.setError("Owner Phone NUmber cannot be empty");
+                    Ownerphno.requestFocus();
+                    password.setError("password cannot be empty");
+                    password.requestFocus();
+                    Restaurantaddress.setError("Address cannot be empty");
+                    Restaurantaddress.requestFocus();
                     return;
                 }
                 else if(!password.getText().toString().equals(confirmpassword.getText().toString()))
                 {
-                    Toast.makeText(Admin_register.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(Admin_register.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
+                    confirmpassword.setError("Passwords are not matching");
+                    confirmpassword.requestFocus();
+                    return;
                 }
-//                else if(!password.getText().toString().equals(confirmpassword.getText().toString()))
-//                {
-//
-////                    confirmpassword.setError("Passwords are not matching");
-////                    confirmpassword.requestFocus();
-////                    return;
-//                }
-//                else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(emaill).matches()) {
-//                    email.setError("Enter a valid email address");
-//                    email.requestFocus();
-//                    return;
-//                }
+
                 auth.createUserWithEmailAndPassword(emaill,passwordd)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -128,9 +138,12 @@ public class Admin_register extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     addNewData(Restaurantnamee,Restaurantaddresss,Restaurantphnoo,Ownernamee,Ownerphnoo,passwordd,emaill,confirmpasswordd);
                                     Toast.makeText(Admin_register.this, "succefull", Toast.LENGTH_SHORT).show();
+
+
                                 } else {
-                                    Toast.makeText(Admin_register.this, "Authentication failed.",
-                                            Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(Admin_register.this, "Authentication failed.",
+                                     //       Toast.LENGTH_SHORT).show();
+                                    Log.d("admin register","Authentication failed");
 
                                 }
                             }
@@ -161,8 +174,9 @@ public class Admin_register extends AppCompatActivity {
                 Log.d("restname","is "+restname);
 
                 progressBar.setVisibility((View.GONE));
-                startActivity(new Intent(Admin_register.this,Admin_login.class));
+                startActivity(new Intent(Admin_register.this,Admin_Main.class));
                 finish();
+
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override

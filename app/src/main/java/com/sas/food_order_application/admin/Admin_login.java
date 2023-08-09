@@ -54,7 +54,7 @@ public class Admin_login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_login);
+        setContentView(R.layout.activity_admin_login2);
 
         auth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
@@ -100,8 +100,9 @@ public class Admin_login extends AppCompatActivity {
                                             @NonNull Task<AuthResult> task)
                                     {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
-
+                                            progressBar.setVisibility(View.GONE);
+                                           // Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
+                                            Log.d("user login","Login successful!!");
                                             adminemailid = emaill;
                                             // if sign-in is successful
                                             // intent to home activity

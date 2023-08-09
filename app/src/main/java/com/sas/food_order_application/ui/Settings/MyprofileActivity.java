@@ -108,14 +108,14 @@ public class MyprofileActivity extends AppCompatActivity {
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText( MyprofileActivity.this, "Successfully updated", Toast.LENGTH_SHORT).show();
+                           Toast.makeText( MyprofileActivity.this, "Successfully updated", Toast.LENGTH_SHORT).show();
                             Log.d("profile", "DocumentSnapshot successfully updated!");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MyprofileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-                            Log.w("profile", "Error updating document", e);
+                         //   Toast.makeText(MyprofileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
+                            Log.w("profile", "failed");
                         }
                     });
         }

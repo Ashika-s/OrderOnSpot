@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -95,8 +96,9 @@ public class User_login extends AppCompatActivity {
                                             @NonNull Task<AuthResult> task)
                                     {
                                         if (task.isSuccessful()) {
-                                            Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
-
+                                            progressBar.setVisibility(View.GONE);
+                                           // Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
+                                            Log.d("user login","Login successful!!");
                                             emailid = emaill;
                                             // if sign-in is successful
                                             // intent to home activity
