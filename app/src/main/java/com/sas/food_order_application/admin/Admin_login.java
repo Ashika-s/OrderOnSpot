@@ -52,11 +52,11 @@ public class Admin_login extends AppCompatActivity {
         setContentView(R.layout.activity_admin_login2);
         auth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
-        email=findViewById(R.id.email);
-        password=findViewById(R.id.password);
-        login=findViewById(R.id.registe);
-        signup=findViewById(R.id.sign);
-        progressBar=findViewById(R.id.progress);
+        email=findViewById(R.id.adminemail);
+        password=findViewById(R.id.adminpassword);
+        login=findViewById(R.id.adminregiste);
+        signup=findViewById(R.id.adminsign);
+      //  progressBar=findViewById(R.id.progress);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,7 +71,7 @@ public class Admin_login extends AppCompatActivity {
                 String emaill, passwordd;
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
-                progressBar.setVisibility(View.VISIBLE);
+               // progressBar.setVisibility(View.VISIBLE);
                 if (TextUtils.isEmpty(emaill) || TextUtils.isEmpty(passwordd)) {
                     email.setError("email cannot be empty");
                     email.requestFocus();
@@ -84,7 +84,7 @@ public class Admin_login extends AppCompatActivity {
                                     public void onComplete(
                                             @NonNull Task<AuthResult> task){
                                         if (task.isSuccessful()) {
-                                            progressBar.setVisibility(View.GONE);
+                                           // progressBar.setVisibility(View.GONE);
                                             Log.d("user login","Login successful!!");
                                             adminemailid = emaill;
                                             Intent intent = new Intent(Admin_login.this, Admin_Main.class);

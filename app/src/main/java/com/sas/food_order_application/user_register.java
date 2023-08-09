@@ -33,7 +33,7 @@ public class user_register extends AppCompatActivity {
     FirebaseAuth auth;
     TextView click;
     DocumentReference ref;
-    ProgressBar progressBar;
+   // ProgressBar progressBar;
     FirebaseFirestore db;
     CollectionReference collectionReference;
     @Override
@@ -61,12 +61,21 @@ public class user_register extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         confpassword = findViewById(R.id.conf);
-        progressBar = findViewById(R.id.progress);
+       // progressBar = findViewById(R.id.progress);
+        click=findViewById(R.id.signin);
 
+        click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(user_register.this,User_login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                progressBar.setVisibility(View.VISIBLE);
+              //  progressBar.setVisibility(View.VISIBLE);
                 String namee, emaill, passwordd, confpasswordd;
                 namee = String.valueOf(name.getText());
                 emaill = String.valueOf(email.getText());
@@ -96,7 +105,7 @@ public class user_register extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    progressBar.setVisibility(View.GONE);
+                              //     progressBar.setVisibility(View.GONE);
                                     addNewData(namee,passwordd,emaill,confpasswordd);
                                     Toast.makeText(user_register.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
@@ -116,7 +125,7 @@ public class user_register extends AppCompatActivity {
         db.collection("Customer").document(emaill).set(userclass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                progressBar.setVisibility((View.GONE));
+              //  progressBar.setVisibility((View.GONE));
                 Intent intent=new Intent(user_register.this,MainActivity.class);
                 startActivity(intent);
                 finish();

@@ -1,7 +1,9 @@
 package com.sas.food_order_application;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -10,14 +12,15 @@ import android.widget.Button;
 import com.sas.food_order_application.admin.Admin_login;
 
 public class Welcome extends AppCompatActivity {
-Button admin;
-Button customer;
+CardView admin;
+CardView customer;
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-        admin=findViewById(R.id.admin);
-        customer=findViewById(R.id.customer);
+        admin=findViewById(R.id.cardone);
+        customer=findViewById(R.id.cardtwo);
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

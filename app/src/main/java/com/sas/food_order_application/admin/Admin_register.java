@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,10 +36,11 @@ public class Admin_register extends AppCompatActivity {
     EditText password;
     EditText confirmpassword;
     EditText email;
+    TextView click;
     FirebaseAuth auth;
     CollectionReference collectionReference;
     DocumentReference ref;
-    ProgressBar progressBar;
+  //  ProgressBar progressBar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String restname;
 
@@ -59,7 +61,7 @@ public class Admin_register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_register2);
 
-        register = findViewById(R.id.registe);
+
         Restaurantname = findViewById(R.id.name);
         Restaurantaddress = findViewById(R.id.resadd);
         Restaurantphno = findViewById(R.id.resphno);
@@ -70,8 +72,17 @@ public class Admin_register extends AppCompatActivity {
         email=findViewById(R.id.owneremail);
         collectionReference=db.collection("Admin");
         auth=FirebaseAuth.getInstance();
-        progressBar = findViewById(R.id.progress);
-        register=findViewById(R.id.registe);
+       // progressBar = findViewById(R.id.progress);
+        register=findViewById(R.id.adminregiste);
+        click=findViewById(R.id.signinadmin);
+        click.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Admin_register.this,Admin_login.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +95,7 @@ public class Admin_register extends AppCompatActivity {
                 passwordd = String.valueOf(password.getText());
                 emaill=String.valueOf(email.getText());
                 confirmpasswordd = String.valueOf(confirmpassword.getText());
-                progressBar.setVisibility(View.VISIBLE);
+           //     progressBar.setVisibility(View.VISIBLE);
                 Admin_login.adminemailid=emaill;
 
                 if (Restaurantname.getText().toString().isEmpty() || Restaurantaddress.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirmpassword.getText().toString().isEmpty())
@@ -149,7 +160,7 @@ public class Admin_register extends AppCompatActivity {
             public void onSuccess(Void unused) {
                 restname=Restaurantnamee;
                 Log.d("restname","is "+restname);
-                progressBar.setVisibility((View.GONE));
+          //      progressBar.setVisibility((View.GONE));
                 startActivity(new Intent(Admin_register.this,Admin_Main.class));
                 finish();
             }

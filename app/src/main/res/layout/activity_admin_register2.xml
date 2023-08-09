@@ -1,230 +1,170 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+
     android:layout_height="match_parent"
     tools:context=".admin.Admin_register">
 
-    <ImageView
-        android:id="@+id/ImageView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/im"
-        android:scaleType="centerCrop"
-        tools:layout_editor_absoluteX="-66dp"
-        tools:layout_editor_absoluteY="16dp" />
 
-    <TextView
-        android:id="@+id/head"
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/lobster"
-        android:text="Order On Spot"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="43sp"
+        android:layout_margin="30dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.023" />
-
-    <TextView
-        android:id="@+id/register"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Register"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="21sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/head" />
+        app:layout_constraintStart_toStartOf="parent">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/baseline_restaurant_24"
-        android:drawablePadding="13dp"
-        android:hint="Restaurant Name"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/head"
-        app:layout_constraintWidth_percent=".8" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="24dp">
 
+            <TextView
+                android:id="@+id/head"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Register"
+                android:textAlignment="center"
+                android:textColor="@color/app"
+                android:textSize="36sp"
+                android:textStyle="bold" />
 
-    <EditText
-        android:id="@+id/resadd"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/baseline_location_on_24"
-        android:drawablePadding="13dp"
-        android:hint="Restaurant complete address"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name"
-        app:layout_constraintWidth_percent=".8" />
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="1dp"
+                android:hint="Restaurant Name"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
-    <EditText
-        android:id="@+id/resphno"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/phno"
-        android:drawablePadding="13dp"
-        android:hint="Contact number at restaurant"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resadd"
-        app:layout_constraintWidth_percent=".8" />
+            <EditText
+                android:id="@+id/resadd"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="9dp"
+                android:hint="Restaurant complete address"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
+            <EditText
+                android:id="@+id/resphno"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="9dp"
+                android:hint="Contact number at restaurant"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
-    <EditText
-        android:id="@+id/ownername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/ic_baseline_account_box_24"
-        android:drawablePadding="13dp"
-        android:hint="Owner Full Name"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resphno"
-        app:layout_constraintWidth_percent=".8" />
-    <EditText
-        android:id="@+id/owneremail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/ic_baseline_account_box_24"
-        android:drawablePadding="13dp"
-        android:hint="Owner Email Id"
-        android:inputType="textEmailAddress"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ownername"
-        app:layout_constraintWidth_percent=".8" />
+            <EditText
+                android:id="@+id/ownername"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="9dp"
+                android:hint="Owner Full Name"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
-    <EditText
-        android:id="@+id/ownernumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/phno"
-        android:drawablePadding="13dp"
-        android:hint="Mobile Number of Owner"
+            <EditText
+                android:id="@+id/owneremail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_person_24"
+                android:drawablePadding="1dp"
+                android:hint="Owner Email Id"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/owneremail"
-        app:layout_constraintWidth_percent=".8" />
+            <EditText
+                android:id="@+id/ownernumber"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="9dp"
+                android:hint="Mobile Number of Owner"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
-    <EditText
-        android:id="@+id/pass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/ic_baseline_password_24"
-        android:drawablePadding="13dp"
-        android:hint="Password"
-        android:textColor="@color/white"
-        android:inputType="textPassword"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ownernumber"
-        app:layout_constraintWidth_percent=".8" />
+            <EditText
+                android:id="@+id/pass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="9dp"
+                android:hint="Password"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
-    <EditText
-        android:id="@+id/confpass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
-        android:drawableLeft="@drawable/ic_baseline_password_24"
-        android:drawablePadding="13dp"
-        android:hint="Confirm Password"
-        android:inputType="textPassword"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pass"
-        app:layout_constraintWidth_percent=".8" />
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/progress"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints" />
+            <EditText
+                android:id="@+id/confpass"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_lock_24"
+                android:drawablePadding="9dp"
+                android:hint="Confirm Password"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHighlight="#5C5F61" />
 
-    <Button
-        android:id="@+id/registe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.468"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confpass"
-        tools:ignore="MissingConstraints" />
+            <Button
+                android:id="@+id/adminregiste"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="#F83C61"
+                android:text="Register"
+                android:textSize="18sp"
+                app:cornerRadius="20dp" />
+
+            <TextView
+                android:id="@+id/signinadmin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:text="                         Click here to SignIn"
+                android:textAlignment="center"
+                android:textColor="@color/app"
+                android:textSize="14sp"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="116dp"
+                tools:layout_editor_absoluteY="701dp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

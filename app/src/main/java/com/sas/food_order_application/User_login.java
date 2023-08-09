@@ -2,6 +2,8 @@ package com.sas.food_order_application;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,7 +25,7 @@ public class User_login extends AppCompatActivity {
     EditText email;
     EditText password;
     Button Login;
-    TextView signup;
+    TextView signuppp;
     FirebaseAuth auth;
     FirebaseFirestore db;
     ProgressBar progressBar;
@@ -40,32 +42,35 @@ public class User_login extends AppCompatActivity {
             finish();
         }
     }
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_login);
         auth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        Login = findViewById(R.id.registe);
-        signup = findViewById(R.id.sign);
-        progressBar = findViewById(R.id.progress);
-        signup.setOnClickListener(new View.OnClickListener() {
+        email = findViewById(R.id.useremail);
+        password = findViewById(R.id.userpassword);
+        Login = findViewById(R.id.userregiste);
+        signuppp = findViewById(R.id.userregsign);
+      //  progressBar = findViewById(R.id.progress);
+        signuppp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(User_login.this, user_register.class);
+               // Toast.makeText(User_login.this, "pass", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(User_login.this,user_register.class);
                 startActivity(intent);
                 finish();
             }
         });
+
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String emaill, passwordd;
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
-                progressBar.setVisibility(View.VISIBLE);
+               // progressBar.setVisibility(View.VISIBLE);
                 if (TextUtils.isEmpty(emaill) && TextUtils.isEmpty(passwordd)) {
                     email.setError("email cannot be empty");
                     email.requestFocus();
@@ -73,7 +78,7 @@ public class User_login extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-                Toast.makeText(User_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
+               // Toast.makeText(User_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
                 auth.signInWithEmailAndPassword(emaill, passwordd)
                         .addOnCompleteListener(
                                 new OnCompleteListener<AuthResult>() {
@@ -82,7 +87,7 @@ public class User_login extends AppCompatActivity {
                                             @NonNull Task<AuthResult> task)
                                     {
                                         if (task.isSuccessful()) {
-                                            progressBar.setVisibility(View.GONE);
+                                    //        progressBar.setVisibility(View.GONE);
                                             Log.d("user login","Login successful!!");
                                             emailid = emaill;
                                             Intent intent = new Intent(User_login.this, MainActivity.class);
