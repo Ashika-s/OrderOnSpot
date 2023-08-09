@@ -76,6 +76,7 @@
         android:drawablePadding="13dp"
         android:hint="Email Address"
         android:textColorHint="@color/white"
+        android:inputType="textEmailAddress"
         android:textSize="21sp"
 
         app:layout_constraintHorizontal_bias="1.0"

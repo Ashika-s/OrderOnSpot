@@ -16,29 +16,29 @@ import com.sas.food_order_application.admin.Categoryclass;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Item_Adapter extends RecyclerView.Adapter<Category_Adapter.ViewHolder> {
+public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.ViewHolder> {
 
     Context context;
-    ArrayList<Categoryclass> arrayList;
+    List<Categoryclass> arrayList;
 
-    public Item_Adapter(Context context, ArrayList<Categoryclass> userArrayList) {
+    public Item_Adapter(Context context,List<Categoryclass> userArrayList) {
         this.context = context;
-        this.arrayList = arrayList;
+        this.arrayList = userArrayList;
     }
 
     @NonNull
     @Override
-    public Category_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Item_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.item_view,parent,false);
-        return new Category_Adapter.ViewHolder(view);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Category_Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Item_Adapter.ViewHolder holder, int position) {
         Categoryclass category=arrayList.get(position);
-
-        holder.categoryy.setText(category.getCategory());
-
+        holder.Amount.setText(category.getAmount());
+        holder.ItemName.setText(category.getItem());
+        holder.Type.setText(category.getType());
     }
 
     @Override

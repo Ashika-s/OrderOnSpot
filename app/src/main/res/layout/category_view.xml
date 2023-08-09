@@ -19,17 +19,17 @@
             android:id="@+id/imageVerDish"
             android:layout_width="74dp"
             android:layout_height="67dp"
-            android:layout_marginTop="4dp"
             android:layout_marginEnd="52dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ha"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutTxtView"
             android:layout_width="265dp"
-            android:layout_height="92dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toStartOf="@+id/imageVerDish"
             app:layout_constraintHorizontal_bias="0.222"

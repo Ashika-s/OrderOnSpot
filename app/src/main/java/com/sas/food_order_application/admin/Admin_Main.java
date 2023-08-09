@@ -57,7 +57,7 @@ public class Admin_Main extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Categoryclass> userArrayList;
     Category_Adapter category_adapter;
-
+    public static String emaill =  Admin_login.adminemailid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,8 +152,8 @@ public class Admin_Main extends AppCompatActivity {
     private void EventChangeListener() {
 
 
-        String emaill =  Admin_login.adminemailid;
-        Log.d("email", "is " + emaill);
+
+        Log.d("admin Email", "is " + emaill);
         // String email=Admin_login.adminemailid;
         DocumentReference docRef = db.collection("Admin").document(emaill);
 

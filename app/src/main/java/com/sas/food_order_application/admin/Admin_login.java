@@ -90,7 +90,7 @@ public class Admin_login extends AppCompatActivity {
                     Toast.makeText(Admin_login.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     return;
 
-                }Toast.makeText(Admin_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
+                }//Toast.makeText(Admin_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
 // signin existing user
                 auth.signInWithEmailAndPassword(emaill, passwordd)
                         .addOnCompleteListener(
