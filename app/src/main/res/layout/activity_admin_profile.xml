@@ -10,7 +10,7 @@
 
 
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -19,22 +19,28 @@
             layout="@layout/profile"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearImageLayout"
             android:layout_width="match_parent"
             android:layout_height="200dp"
-
-            android:background="@drawable/top_background">
+            android:background="@drawable/top_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="138dp"
                 android:layout_height="126dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/profile_image"
+                android:cropToPadding="true"
+                android:scaleType="centerCrop"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.492"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:scaleType="centerCrop"/>
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
@@ -43,9 +49,18 @@
         <!--                    android:background="@drawable/top_background"-->
         <!--                    tools:ignore="MissingConstraints">-->
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="400dp">
+        <RelativeLayout
+            android:id="@+id/relativeLayout"
+            android:layout_width="409dp"
+            android:layout_height="393dp"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginBottom="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearImageLayout">
 
 
             <EditText
@@ -57,6 +72,7 @@
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="14dp"
                 android:hint="Restaurant Name"
+                android:inputType="textPersonName"
                 android:paddingLeft="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -70,11 +86,13 @@
                 android:id="@+id/prresadd"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/prresname"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#CCCCCC"
                 android:drawableLeft="@drawable/baseline_location_on_24"
                 android:drawablePadding="14dp"
                 android:hint="Restaurant Address"
+                android:inputType="textPostalAddress"
                 android:paddingLeft="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -88,11 +106,13 @@
                 android:id="@+id/prresphno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/prresadd"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#CCCCCC"
                 android:drawableLeft="@drawable/baseline_local_phone_24"
                 android:drawablePadding="14dp"
                 android:hint="Restaurant Phone Number"
+                android:inputType="number"
                 android:paddingLeft="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -101,10 +121,12 @@
                 app:layout_constraintWidth_percent=".8"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
+
             <EditText
                 android:id="@+id/ownname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/prresphno"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#CCCCCC"
                 android:drawableLeft="@drawable/baseline_person_24"
@@ -112,21 +134,25 @@
                 android:hint="Owner Name"
                 android:paddingLeft="10dp"
                 android:textColor="@color/black"
+                android:inputType="textPersonName"
                 android:textColorHint="@color/black"
                 android:textSize="21sp"
                 app:layout_constraintTop_toBottomOf="@+id/prresphno"
                 app:layout_constraintWidth_percent=".8"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
+
             <TextView
                 android:id="@+id/ownemail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ownname"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#CCCCCC"
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="14dp"
                 android:hint="Owner Email ID"
+                android:inputType="textEmailAddress"
                 android:paddingLeft="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
@@ -135,10 +161,12 @@
                 app:layout_constraintWidth_percent=".8"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
+
             <EditText
                 android:id="@+id/ownpass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/ownemail"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="#CCCCCC"
                 android:drawableLeft="@drawable/baseline_password_24"
@@ -147,6 +175,7 @@
                 android:paddingLeft="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
+
                 android:textSize="21sp"
                 app:layout_constraintTop_toBottomOf="@+id/ownemail"
                 app:layout_constraintWidth_percent=".8"
@@ -155,18 +184,25 @@
 
 
             <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
 
         <Button
             android:id="@+id/profilebutton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:layout_gravity="center"
+            android:layout_marginTop="27dp"
+            android:layout_marginBottom="45dp"
             android:layout_weight="0.18"
-            android:text="UPDATE" />
+            android:text="UPDATE"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
 
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <RelativeLayout

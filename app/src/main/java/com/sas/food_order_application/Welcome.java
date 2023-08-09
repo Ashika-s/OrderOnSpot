@@ -18,12 +18,12 @@ Button customer;
         setContentView(R.layout.activity_welcome);
         admin=findViewById(R.id.admin);
         customer=findViewById(R.id.customer);
-
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(), User_login.class);
                 startActivity(intent);
+                finish();
             }
         });
         admin.setOnClickListener(new View.OnClickListener() {
@@ -31,8 +31,8 @@ Button customer;
             public void onClick(View v) {
                 Intent intent=new Intent(getApplicationContext(), Admin_login.class);
                 startActivity(intent);
+                finish();
             }
         });
-
     }
 }

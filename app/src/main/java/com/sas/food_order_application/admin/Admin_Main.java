@@ -7,10 +7,8 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,29 +28,21 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sas.food_order_application.Adapter.Category_Adapter;
-import com.sas.food_order_application.Logout;
-import com.sas.food_order_application.Model.Category;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Admin_Main extends AppCompatActivity {
-
     DrawerLayout drawerLayout;
     FloatingActionButton floatingActionButton;
     ImageView imageView;
     LinearLayout menu, orders, profile, logout;
-
-
     FirebaseFirestore db;
     DocumentReference documentReference;
     CollectionReference collectionReference;
-
     RecyclerView recyclerView;
     ArrayList<Categoryclass> userArrayList;
     Category_Adapter category_adapter;
@@ -70,63 +59,63 @@ public class Admin_Main extends AppCompatActivity {
         orders = findViewById(R.id.Order);
         profile = findViewById(R.id.Profile);
         logout = findViewById(R.id.Logout);
-
-
         floatingActionButton = findViewById(R.id.flt1);
         recyclerView=findViewById(R.id.recyclerviewCategory);
+
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         db = FirebaseFirestore.getInstance();
         userArrayList=new ArrayList<Categoryclass>();
-        EventChangeListener();
-        category_adapter=new Category_Adapter(Admin_Main.this,userArrayList);
 
+        EventChangeListener();
+
+        category_adapter=new Category_Adapter(Admin_Main.this,userArrayList);
         recyclerView.setAdapter(category_adapter);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Admin_Main.this, Edit_Categories.class);
                 startActivity(intent);
+                finish();
             }
         });
+
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openDrawer(drawerLayout);
             }
         });
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recreate();
-
-
             }
         });
+
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectActivity(Admin_Main.this, Admin_Orders.class);
             }
         });
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectActivity(Admin_Main.this, Admin_profile.class);
             }
         });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                // redirectActivity(Admin_Main.this,Admin_Logout.class);
                 showdialog();
             }
 
             private void showdialog() {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(Admin_Main.this);
                 builder.setMessage("Do you want to Logout ?");
                 builder.setTitle("Alert !");
@@ -143,18 +132,12 @@ public class Admin_Main extends AppCompatActivity {
                 });
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
             }
         });
-
     }
 
     private void EventChangeListener() {
-
-
-
         Log.d("admin Email", "is " + emaill);
-        // String email=Admin_login.adminemailid;
         DocumentReference docRef = db.collection("Admin").document(emaill);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -162,18 +145,15 @@ public class Admin_Main extends AppCompatActivity {
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-
                     if (document.exists()) {
                         AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
                         String rest = adminRegisterClass.getRestorantName();
                         Log.d("main", "is " + rest);
                         List<String> tempCategoryList = new ArrayList<>();
-
                         db.collection("Restaurant").document(rest).collection("Veg")
                                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                     @Override
                                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
                                         if(error!=null)
                                         {
                                             Log.e("firestore error",error.getMessage());
@@ -188,18 +168,14 @@ public class Admin_Main extends AppCompatActivity {
                                                 }
                                                 Log.d("list"," is"+category.getCategory());
                                             }
-
                                             category_adapter.notifyDataSetChanged();
                                         }
-
                                     }
                                 });
-
                         db.collection("Restaurant").document(rest).collection("Non-Veg")
                                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                     @Override
                                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
                                         if(error!=null)
                                         {
                                             Log.e("firestore error",error.getMessage());
@@ -213,23 +189,20 @@ public class Admin_Main extends AppCompatActivity {
                                                     userArrayList.add(dc.getDocument().toObject(Categoryclass.class));
                                                 }
                                             }
-
                                             category_adapter.notifyDataSetChanged();
                                         }
-
                                     }
                                 });
                     }
                 }
             }
         });
-
     }
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }
-    public static void closeDrawer(DrawerLayout drawerLayout){
-        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+    public static void closeDrawer(DrawerLayout drawerLayout) {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
         }
     }

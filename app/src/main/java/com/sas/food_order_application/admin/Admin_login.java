@@ -13,7 +13,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -34,32 +33,25 @@ public class Admin_login extends AppCompatActivity {
     EditText password;
     FirebaseAuth auth;
     public static String adminemailid;
-
     public static String res;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public void onStart() {
         super.onStart();
-
         FirebaseUser currentUser=auth.getCurrentUser();
-
         if (currentUser != null) {
             Intent intent=new Intent(Admin_login.this,Admin_Main.class);
             startActivity(intent);
             finish();
-
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_login2);
-
         auth=FirebaseAuth.getInstance();
         db=FirebaseFirestore.getInstance();
-//    ref = db.collection("admin").document();
-
         email=findViewById(R.id.email);
         password=findViewById(R.id.password);
         login=findViewById(R.id.registe);
@@ -68,7 +60,6 @@ public class Admin_login extends AppCompatActivity {
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent=new Intent(Admin_login.this, Admin_register.class);
                 startActivity(intent);
                 finish();
@@ -77,49 +68,36 @@ public class Admin_login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String emaill, passwordd;
-
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
-
-
                 progressBar.setVisibility(View.VISIBLE);
-
-                if (TextUtils.isEmpty(emaill) && TextUtils.isEmpty(passwordd)) {
-                    Toast.makeText(Admin_login.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+                if (TextUtils.isEmpty(emaill) || TextUtils.isEmpty(passwordd)) {
+                    email.setError("email cannot be empty");
+                    email.requestFocus();
+                    password.setError("password cannot be empty");
+                    password.requestFocus();
                     return;
-
-                }//Toast.makeText(Admin_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
-// signin existing user
-                auth.signInWithEmailAndPassword(emaill, passwordd)
-                        .addOnCompleteListener(
-                                new OnCompleteListener<AuthResult>() {
+                }
+                auth.signInWithEmailAndPassword(emaill,passwordd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(
-                                            @NonNull Task<AuthResult> task)
-                                    {
+                                            @NonNull Task<AuthResult> task){
                                         if (task.isSuccessful()) {
                                             progressBar.setVisibility(View.GONE);
-                                           // Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
                                             Log.d("user login","Login successful!!");
                                             adminemailid = emaill;
-                                            // if sign-in is successful
-                                            // intent to home activity
                                             Intent intent = new Intent(Admin_login.this, Admin_Main.class);
                                             startActivity(intent);
-
+                                            finish();
                                         }
-
-                                        else {
-
+                                        else
+                                        {
                                             Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-
-            }
-
+                 }
         });
     }
 }

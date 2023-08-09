@@ -2,7 +2,6 @@ package com.sas.food_order_application.ui.Settings;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -24,29 +22,23 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.User_login;
 import com.sas.food_order_application.Userclass;
-
-
 public class MyprofileActivity extends AppCompatActivity {
     EditText Name;
     TextView Email;
     EditText Password;
     Button Update;
     FirebaseFirestore db;
-
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_myprofile);
-
             Name = findViewById(R.id.prname);
             Email = findViewById(R.id.premail);
             Password = findViewById(R.id.prpassword);
             Update=findViewById(R.id.profilebutton);
 
             db = FirebaseFirestore.getInstance();
-
             String emaill =  User_login.emailid;
 
             fetchData(emaill);
@@ -59,12 +51,9 @@ public class MyprofileActivity extends AppCompatActivity {
     }
 
     void updateData(){
-
         String name = (Name).getText().toString();
         String email = (Email).getText().toString();
         String password =(Password).getText().toString();
-
-
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null)
         {
@@ -80,7 +69,6 @@ public class MyprofileActivity extends AppCompatActivity {
                            }
                        }
                     );
-
             user.updatePassword(password).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
@@ -92,18 +80,12 @@ public class MyprofileActivity extends AppCompatActivity {
                 }
             });
         }
-
         if (email != null) {
-
-
-
             DocumentReference update1 = db.collection("Customer").document(email);
-
             update1
                     .update("name", name,
                             "email",email,
                             "password",password
-
                     )
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -122,8 +104,6 @@ public class MyprofileActivity extends AppCompatActivity {
     }
 
     void fetchData(String email){
-
-
         DocumentReference docRef = db.collection("Customer").document(email);
         Log.d("profile", "value is "+docRef);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -134,16 +114,11 @@ public class MyprofileActivity extends AppCompatActivity {
                     Log.d("profile", "value is "+document);
                     Log.d("profile", "value is "+document.exists());
                     if (document.exists()) {
-                        Toast.makeText(MyprofileActivity.this, "Successfully getting the data...", Toast.LENGTH_SHORT).show();
-
+                        Log.d("profile", "Successfully getting the data...");
                         Userclass userclass = document.toObject(Userclass.class);
-
                         Name.setText(userclass.getName());
                         Email.setText(userclass.getEmail());
                         Password.setText(userclass.getPassword());
-
-
-
                     } else {
                         Log.d("profile", "No such document");
                     }

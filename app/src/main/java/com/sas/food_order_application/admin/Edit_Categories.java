@@ -58,47 +58,32 @@ DocumentReference documentReference;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_categories);
-
-
         item=findViewById(R.id.items);
         category=findViewById(R.id.category);
         type=findViewById(R.id.type);
         amount=findViewById(R.id.amount);
         add=findViewById(R.id.addbtn);
-
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 String itemm,categoryy,typee,amountt;
                 itemm = String.valueOf(item.getText());
                 categoryy=String.valueOf(category.getText());
                 typee = String.valueOf(type.getText());
                 amountt = String.valueOf(amount.getText());
-
                 addcategoryies(itemm,categoryy,typee,amountt);
-
                 startActivity(new Intent(Edit_Categories.this,Admin_Main.class));
-
+                finish();
                 }
         });
-
-
-
-
-
     }
 
     private void addcategoryies(String item,String category,String type,String amount) {
-
         Categoryclass categoryclass=new Categoryclass();
         categoryclass.setItem(item);
         categoryclass.setCategory(category);
         categoryclass.setType(type);
         categoryclass.setAmount(amount);
-
-
-
         db.collection("Admin").document(Admin_login.adminemailid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -122,13 +107,5 @@ DocumentReference documentReference;
                 }
             }
         });
-
-
-
-
-
-
-
-
     }
 }

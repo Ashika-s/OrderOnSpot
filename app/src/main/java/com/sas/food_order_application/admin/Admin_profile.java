@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,7 +18,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -36,7 +34,6 @@ import com.sas.food_order_application.Welcome;
 import com.sas.food_order_application.ui.Settings.MyprofileActivity;
 
 public class Admin_profile extends AppCompatActivity {
-
     EditText RestaurantName;
     EditText RestaurantAddress;
     EditText Restaurantphno;
@@ -60,7 +57,6 @@ public class Admin_profile extends AppCompatActivity {
         orders=findViewById(R.id.Order);
         profile=findViewById(R.id.Profile);
         logout=findViewById(R.id.Logout);
-
         RestaurantName = findViewById(R.id.prresname);
         RestaurantAddress = findViewById(R.id.prresadd);
         Restaurantphno = findViewById(R.id.prresphno);
@@ -70,18 +66,16 @@ public class Admin_profile extends AppCompatActivity {
         Update=findViewById(R.id.profilebutton);
 
         db = FirebaseFirestore.getInstance();
-
         String emaill =  Admin_login.adminemailid;
 
         fetchData(emaill);
+
         Update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 updateData();
             }
         });
-
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,67 +83,52 @@ public class Admin_profile extends AppCompatActivity {
                 openDrawer(drawerLayout);
             }
         });
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectActivity(Admin_profile.this,Admin_Main.class);
-
             }
         });
+
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 redirectActivity(Admin_profile.this,Admin_Orders.class);
             }
         });
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 recreate();
             }
         });
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 showdialog();
             }
 
             private void showdialog() {
-
                 AlertDialog.Builder builder = new AlertDialog.Builder(Admin_profile.this);
-
-
                 builder.setMessage("Do you want to Logout ?");
-
-
                 builder.setTitle("Alert !");
-
-
                 builder.setCancelable(false);
-
-
                 builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
                     FirebaseAuth.getInstance().signOut();
                     finish();
                     Intent intent=new Intent(Admin_profile.this, Welcome.class);
                     startActivity(intent);
                 });
-
-
                 builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-
                     dialog.cancel();
                 });
-
-
                 AlertDialog alertDialog = builder.create();
-
                 alertDialog.show();
-
             }
         });
-
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){
@@ -175,15 +154,12 @@ public class Admin_profile extends AppCompatActivity {
     }
 
     void updateData(){
-
         String restaurantName = (RestaurantName).getText().toString();
         String restaurantAddress = (RestaurantAddress).getText().toString();
         String restaurantphno =(Restaurantphno).getText().toString();
         String ownername = (OwnerName).getText().toString();
         String ownerEmail = (OwnerEmail).getText().toString();
         String password =(Password).getText().toString();
-
-
 
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null)
@@ -200,25 +176,21 @@ public class Admin_profile extends AppCompatActivity {
                                                }
                                            }
                     );
-
             user.updatePassword(password).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
                 public void onComplete(@NonNull Task<Void> task) {
                     if(task.isSuccessful()){
                         Log.d("profile", "password updated!"+password);
-                    }else {
+                    }
+                    else
+                    {
                         Log.d("profile", "failed");
                     }
                 }
             });
         }
-
         if (ownerEmail != null) {
-
-
-
             DocumentReference update1 = db.collection("Admin").document(ownerEmail);
-
             update1
                     .update("restorantName", restaurantName,
                             "restaurantaddress",restaurantAddress,
@@ -226,7 +198,6 @@ public class Admin_profile extends AppCompatActivity {
                             "ownername",ownername,
                             "email",ownerEmail,
                             "password",password
-
                     )
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -245,33 +216,21 @@ public class Admin_profile extends AppCompatActivity {
     }
 
     void fetchData(String email){
-
-
         DocumentReference docRef = db.collection("Admin").document(email);
-
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-
                     if (document.exists()) {
                         Toast.makeText(Admin_profile.this, "Successfully getting the data...", Toast.LENGTH_SHORT).show();
-
                         AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
-
-
-
                         RestaurantName.setText(adminRegisterClass.getRestorantName());
                         RestaurantAddress.setText(adminRegisterClass.getRestaurantaddress());
                         Restaurantphno.setText(adminRegisterClass.getRestaurantphno());
                         OwnerName.setText(adminRegisterClass.getOwnername());
                         OwnerEmail.setText(adminRegisterClass.getEmail());
                         Password.setText(adminRegisterClass.getPassword());
-
-
-
-
                     } else {
                         Log.d("profile", "No such document");
                     }

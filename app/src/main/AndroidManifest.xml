@@ -18,6 +18,9 @@
             android:name=".admin.Edit_Categories"
             android:exported="false" />
         <activity
+            android:name=".admin.Item_activity"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
@@ -53,9 +56,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.Favorite"
-            android:exported="false" />
-        <activity
-            android:name=".Logout"
             android:exported="false" />
         <activity
             android:name=".ui.Settings.MyprofileActivity"

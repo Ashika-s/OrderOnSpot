@@ -1,7 +1,5 @@
 package com.sas.food_order_application.admin;
-
 public class Categoryclass {
-
     String item;
     String category;
     String type;
@@ -13,16 +11,12 @@ public class Categoryclass {
     public Categoryclass() {
 
     }
-
-
     public Categoryclass(String item, String category, String type, String amount) {
         this.item = item;
         this.category = category;
         this.type = type;
         this.amount = amount;
     }
-
-
     public String getItem() {
         return item;
     }

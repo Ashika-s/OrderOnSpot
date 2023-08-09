@@ -1,8 +1,5 @@
 package com.sas.food_order_application.Model;
-
 public class Item {
-
-
     String ItemName;
     int image;
     String Amount;

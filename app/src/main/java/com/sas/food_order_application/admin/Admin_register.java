@@ -2,7 +2,6 @@ package com.sas.food_order_application.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -39,25 +37,19 @@ public class Admin_register extends AppCompatActivity {
     EditText email;
     FirebaseAuth auth;
     CollectionReference collectionReference;
- //   TextView click;
-
     DocumentReference ref;
     ProgressBar progressBar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     public static String restname;
 
     @Override
     public void onStart() {
         super.onStart();
-
         FirebaseUser currentUser=auth.getCurrentUser();
-        // String firebaseUser=ref.getId();
         if (currentUser != null) {
             Intent intent=new Intent(Admin_register.this,Admin_Main.class);
             startActivity(intent);
             finish();
-
         }
     }
 
@@ -66,7 +58,6 @@ public class Admin_register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_register2);
-
 
         register = findViewById(R.id.registe);
         Restaurantname = findViewById(R.id.name);
@@ -77,13 +68,10 @@ public class Admin_register extends AppCompatActivity {
         password =findViewById(R.id.pass);
         confirmpassword=findViewById(R.id.confpass);
         email=findViewById(R.id.owneremail);
-
         collectionReference=db.collection("Admin");
         auth=FirebaseAuth.getInstance();
-
         progressBar = findViewById(R.id.progress);
         register=findViewById(R.id.registe);
-
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,7 +86,6 @@ public class Admin_register extends AppCompatActivity {
                 confirmpasswordd = String.valueOf(confirmpassword.getText());
                 progressBar.setVisibility(View.VISIBLE);
                 Admin_login.adminemailid=emaill;
-
 
                 if (Restaurantname.getText().toString().isEmpty() || Restaurantaddress.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirmpassword.getText().toString().isEmpty())
                 {
@@ -130,7 +117,6 @@ public class Admin_register extends AppCompatActivity {
                     confirmpassword.requestFocus();
                     return;
                 }
-
                 auth.createUserWithEmailAndPassword(emaill,passwordd)
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -138,22 +124,15 @@ public class Admin_register extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                                     addNewData(Restaurantnamee,Restaurantaddresss,Restaurantphnoo,Ownernamee,Ownerphnoo,passwordd,emaill,confirmpasswordd);
                                     Toast.makeText(Admin_register.this, "succefull", Toast.LENGTH_SHORT).show();
-
-
                                 } else {
-                                   // Toast.makeText(Admin_register.this, "Authentication failed.",
-                                     //       Toast.LENGTH_SHORT).show();
                                     Log.d("admin register","Authentication failed");
-
                                 }
                             }
                         });
-
             }
         });
-
-
     }
+
     void addNewData(String Restaurantnamee,String Restaurantaddresss,String Restaurantphnoo,String Ownernamee,String Ownerphnoo,String passwordd,String emaill,String confirmpasswordd){
         AdminRegisterClass adminRegisterClass = new AdminRegisterClass();
         adminRegisterClass.setRestorantName(Restaurantnamee);
@@ -164,19 +143,15 @@ public class Admin_register extends AppCompatActivity {
         adminRegisterClass.setPassword(passwordd);
         adminRegisterClass.setEmail(emaill);
         adminRegisterClass.setConfirmpassword(confirmpasswordd);
-        //db.collection("res").document("res name").collection("cat").c
 
         db.collection("Admin").document(emaill).set(adminRegisterClass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
                 restname=Restaurantnamee;
-
                 Log.d("restname","is "+restname);
-
                 progressBar.setVisibility((View.GONE));
                 startActivity(new Intent(Admin_register.this,Admin_Main.class));
                 finish();
-
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
@@ -184,47 +159,5 @@ public class Admin_register extends AppCompatActivity {
                 Toast.makeText(Admin_register.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
-//        db.collection("Restaurant").document(Restaurantnamee).collection("Non Veg").
-//                set(adminRegisterClass).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void unused) {
-//                progressBar.setVisibility((View.GONE));
-//                startActivity(new Intent(Admin_register.this,Admin_login.class));
-//                finish();
-//            }
-//        }).addOnFailureListener(new OnFailureListener() {
-//            @Override
-//            public void onFailure(@NonNull Exception e) {
-//                Toast.makeText(Admin_register.this, "Failed", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
-
-
-
-        // db.collection("Restaurant").document("Ken Restaurant").
     }
 }
-      //  collectionReference.document("adminid").set(adminRegisterClass);
-//        db.collection("Admin").add(adminRegisterClass).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        progressBar.setVisibility(View.GONE);
-//                        startActivity(new Intent(Admin_register.this, Admin_Main.class));
-//                        finish();
-//                        Toast.makeText(Admin_register.this, "Succefully Registerd", Toast.LENGTH_SHORT).show();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Toast.makeText(Admin_register.this, "Failed", Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//    }
-//}
-

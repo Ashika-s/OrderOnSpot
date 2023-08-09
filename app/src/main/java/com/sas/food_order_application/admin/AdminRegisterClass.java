@@ -1,5 +1,4 @@
 package com.sas.food_order_application.admin;
-
 public class AdminRegisterClass {
     private String RestorantName;
     private  String Restaurantphno;
