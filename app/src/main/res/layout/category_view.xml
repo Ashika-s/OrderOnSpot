@@ -5,13 +5,13 @@
     android:layout_height="70dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="9dp"
-    app:cardCornerRadius="50dp"
+    app:cardCornerRadius="40dp"
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/back"
+        android:background="@color/category_color"
         android:orientation="vertical"
         android:padding="0dp">
 
