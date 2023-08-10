@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -28,9 +28,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
-import com.sas.food_order_application.User_login;
+import com.sas.food_order_application.user.UserLogin;
 import com.sas.food_order_application.Welcome;
-import com.sas.food_order_application.admin.Admin_Logout;
 
 public class SettingsFragment extends Fragment {
     FirebaseAuth auth;
@@ -54,7 +53,7 @@ public class SettingsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_settings, container, false);
         listView = root.findViewById(R.id.list);
-        String emaill = User_login.emailid;
+        String emaill = UserLogin.emailid;
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, SettingItems);
         listView.setAdapter(adapter);
         Log.d("delete account", "DocumentSnapshot successfully deleted!" + emaill);

@@ -28,12 +28,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
-import com.sas.food_order_application.User_login;
-import com.sas.food_order_application.Userclass;
 import com.sas.food_order_application.Welcome;
-import com.sas.food_order_application.ui.Settings.MyprofileActivity;
 
-public class Admin_profile extends AppCompatActivity {
+public class AdminProfile extends AppCompatActivity {
     EditText RestaurantName;
     EditText RestaurantAddress;
     EditText Restaurantphno;
@@ -66,7 +63,7 @@ public class Admin_profile extends AppCompatActivity {
         Update=findViewById(R.id.profilebutton);
 
         db = FirebaseFirestore.getInstance();
-        String emaill =  Admin_login.adminemailid;
+        String emaill =  AdminLogin.adminemailid;
 
         fetchData(emaill);
 
@@ -87,14 +84,14 @@ public class Admin_profile extends AppCompatActivity {
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Admin_profile.this,Admin_Main.class);
+                redirectActivity(AdminProfile.this, AdminMain.class);
             }
         });
 
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Admin_profile.this,Admin_Orders.class);
+                redirectActivity(AdminProfile.this, AdminOrders.class);
             }
         });
 
@@ -112,14 +109,14 @@ public class Admin_profile extends AppCompatActivity {
             }
 
             private void showdialog() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Admin_profile.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminProfile.this);
                 builder.setMessage("Do you want to Logout ?");
                 builder.setTitle("Alert !");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
                     FirebaseAuth.getInstance().signOut();
                     finish();
-                    Intent intent=new Intent(Admin_profile.this, Welcome.class);
+                    Intent intent=new Intent(AdminProfile.this, Welcome.class);
                     startActivity(intent);
                 });
                 builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
@@ -197,22 +194,33 @@ public class Admin_profile extends AppCompatActivity {
                             "restaurantphno",restaurantphno,
                             "ownername",ownername,
                             "email",ownerEmail,
-                            "password",password
+                            "password",password,
+                            "confpassword",password
                     )
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
-                            Toast.makeText( Admin_profile.this, "Successfully updated", Toast.LENGTH_SHORT).show();
+                            Toast.makeText( AdminProfile.this, "Successfully updated", Toast.LENGTH_SHORT).show();
                             Log.d("profile", "DocumentSnapshot successfully updated!");
                         }
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Admin_profile.this, "Failed", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AdminProfile.this, "Failed", Toast.LENGTH_SHORT).show();
                             Log.w("profile", "Error updating document");
                         }
                     });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Create an intent to navigate to MainActivity
+        Intent intent = new Intent(this, AdminMain.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        // Finish the current activity (optional)
+        finish();
     }
 
     void fetchData(String email){
@@ -223,7 +231,7 @@ public class Admin_profile extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Toast.makeText(Admin_profile.this, "Successfully getting the data...", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AdminProfile.this, "Successfully getting the data...", Toast.LENGTH_SHORT).show();
                         AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
                         RestaurantName.setText(adminRegisterClass.getRestorantName());
                         RestaurantAddress.setText(adminRegisterClass.getRestaurantaddress());

@@ -13,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
+        android:background="@color/neww"
+        android:backgroundTint="@color/neww"
         android:src="@drawable/baseline_add_24"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"

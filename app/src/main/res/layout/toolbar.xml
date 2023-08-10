@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="Order On Spot"
+        android:textStyle="bold"
         android:textSize="20sp"
         android:layout_marginStart="12dp"
         android:textColor="@color/white"/>

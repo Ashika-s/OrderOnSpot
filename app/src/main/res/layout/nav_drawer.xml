@@ -10,7 +10,7 @@
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/side_nav_bar"
+    android:background="@drawable/head"
     android:gravity="bottom"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
@@ -25,14 +25,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_title" />
+        android:text="Example Name" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
-        android:text="@string/nav_header_subtitle" />
+        android:text="@string/example_gmail_com" />
 </LinearLayout>
 
     <LinearLayout
@@ -45,9 +45,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#60136D"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
             android:text="Menu"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:drawableLeft="@drawable/baseline_library_books_24"
             android:drawablePadding="8dp"/>
@@ -63,9 +64,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#60136D"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
             android:text="Order"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:drawableLeft="@drawable/baseline_fastfood_24"
             android:drawablePadding="8dp"/>
@@ -81,9 +83,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#60136D"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
             android:text="Profile"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:drawableLeft="@drawable/baseline_person_24"
             android:drawablePadding="8dp"/>
@@ -98,9 +101,10 @@
 
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#60136D"
+            android:layout_height="30dp"
+            android:textColor="@color/black"
             android:text="Logout"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:drawableLeft="@drawable/baseline_logout_24"
             android:drawablePadding="8dp"/>

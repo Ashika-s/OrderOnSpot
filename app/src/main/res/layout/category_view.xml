@@ -15,13 +15,14 @@
         android:orientation="vertical"
         android:padding="0dp">
 
-        <ImageView
+        <com.mikhaellopez.circularimageview.CircularImageView
             android:id="@+id/imageVerDish"
             android:layout_width="74dp"
             android:layout_height="67dp"
             android:layout_marginEnd="52dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ha"
+            app:civ_border_color="@color/transperent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

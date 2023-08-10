@@ -34,25 +34,25 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".admin.Admin_Logout"
+            android:name=".admin.AdminLogout"
             android:exported="false" />
         <activity
-            android:name=".admin.Admin_Orders"
+            android:name=".admin.AdminOrders"
             android:exported="false" />
         <activity
-            android:name=".admin.Admin_Main"
+            android:name=".admin.AdminMain"
             android:exported="false" />
         <activity
             android:name=".admin.EditItem"
             android:exported="false" />
         <activity
-            android:name=".admin.Admin_profile"
+            android:name=".admin.AdminProfile"
             android:exported="false" />
         <activity
-            android:name=".admin.Admin_register"
+            android:name=".admin.AdminRegister"
             android:exported="false" />
         <activity
-            android:name=".admin.Admin_login"
+            android:name=".admin.AdminLogin"
             android:exported="false" />
         <activity
             android:name=".ui.Favorite"
@@ -64,21 +64,21 @@
             android:name=".Welcome"
             android:exported="false" />
         <activity
-            android:name=".user_register"
+            android:name=".user.UserRegister"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".User_login"
+            android:name=".user.UserLogin"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".user.MainActivity"
             android:exported="true"
             android:label="Order On Spot"
             android:theme="@style/Theme.Food_Order_Application.NoActionBar">

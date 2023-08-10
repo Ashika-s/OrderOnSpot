@@ -1,4 +1,4 @@
-package com.sas.food_order_application;
+package com.sas.food_order_application.user;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sas.food_order_application.R;
 import com.sas.food_order_application.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {

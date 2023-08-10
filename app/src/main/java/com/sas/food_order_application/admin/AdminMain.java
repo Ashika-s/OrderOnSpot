@@ -29,13 +29,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.sas.food_order_application.Adapter.Category_Adapter;
+import com.sas.food_order_application.Adapter.CategoryAdapter;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Admin_Main extends AppCompatActivity {
+public class AdminMain extends AppCompatActivity {
     DrawerLayout drawerLayout;
     FloatingActionButton floatingActionButton;
     ImageView imageView;
@@ -45,8 +45,8 @@ public class Admin_Main extends AppCompatActivity {
     CollectionReference collectionReference;
     RecyclerView recyclerView;
     ArrayList<Categoryclass> userArrayList;
-    Category_Adapter category_adapter;
-    public static String adminemaill =  Admin_login.adminemailid;
+    CategoryAdapter category_adapter;
+    public static String adminemaill =  AdminLogin.adminemailid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class Admin_Main extends AppCompatActivity {
         setContentView(R.layout.activity_admin_main2);
 
         drawerLayout = findViewById(R.id.drawerlayout);
-        imageView = findViewById(R.id.menu);
+        imageView =findViewById(R.id.menu);
         menu = findViewById(R.id.Menu);
         orders = findViewById(R.id.Order);
         profile = findViewById(R.id.Profile);
@@ -70,12 +70,12 @@ public class Admin_Main extends AppCompatActivity {
 
         EventChangeListener();
 
-        category_adapter=new Category_Adapter(Admin_Main.this,userArrayList);
+        category_adapter=new CategoryAdapter(AdminMain.this,userArrayList);
         recyclerView.setAdapter(category_adapter);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Admin_Main.this, Edit_Categories.class);
+                Intent intent = new Intent(AdminMain.this, Edit_Categories.class);
                 startActivity(intent);
                 finish();
             }
@@ -98,14 +98,14 @@ public class Admin_Main extends AppCompatActivity {
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Admin_Main.this, Admin_Orders.class);
+                redirectActivity(AdminMain.this, AdminOrders.class);
             }
         });
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Admin_Main.this, Admin_profile.class);
+                redirectActivity(AdminMain.this, AdminProfile.class);
             }
         });
 
@@ -116,14 +116,14 @@ public class Admin_Main extends AppCompatActivity {
             }
 
             private void showdialog() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Admin_Main.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminMain.this);
                 builder.setMessage("Do you want to Logout ?");
                 builder.setTitle("Alert !");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
                     FirebaseAuth.getInstance().signOut();
                     finish();
-                    Intent intent = new Intent(Admin_Main.this, Welcome.class);
+                    Intent intent = new Intent(AdminMain.this, Welcome.class);
                     startActivity(intent);
                 });
                 builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {

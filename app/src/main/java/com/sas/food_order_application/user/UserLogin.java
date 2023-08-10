@@ -1,8 +1,9 @@
-package com.sas.food_order_application.admin;
+package com.sas.food_order_application.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -18,86 +19,88 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sas.food_order_application.MainActivity;
 import com.sas.food_order_application.R;
-import com.sas.food_order_application.User_login;
 
-public class Admin_login extends AppCompatActivity {
-    Button login;
-    TextView signup;
-    ProgressBar progressBar;
+public class UserLogin extends AppCompatActivity {
     EditText email;
     EditText password;
+    Button Login;
+    TextView signuppp;
     FirebaseAuth auth;
-    public static String adminemailid;
-    public static String res;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseFirestore db;
+    ProgressBar progressBar;
+   public static String emailid;
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser=auth.getCurrentUser();
+        // String firebaseUser=ref.getId();
         if (currentUser != null) {
-            Intent intent=new Intent(Admin_login.this,Admin_Main.class);
+            Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
             finish();
         }
     }
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_login2);
-        auth=FirebaseAuth.getInstance();
-        db=FirebaseFirestore.getInstance();
-        email=findViewById(R.id.adminemail);
-        password=findViewById(R.id.adminpassword);
-        login=findViewById(R.id.adminregiste);
-        signup=findViewById(R.id.adminsign);
-      //  progressBar=findViewById(R.id.progress);
-        signup.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_user_login);
+        auth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+        email = findViewById(R.id.useremail);
+        password = findViewById(R.id.userpassword);
+        Login = findViewById(R.id.userregiste);
+        signuppp = findViewById(R.id.userregsign);
+      //  progressBar = findViewById(R.id.progress);
+        signuppp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Admin_login.this, Admin_register.class);
+               // Toast.makeText(User_login.this, "pass", Toast.LENGTH_SHORT).show();
+                Intent intent=new Intent(UserLogin.this, UserRegister.class);
                 startActivity(intent);
                 finish();
             }
         });
-        login.setOnClickListener(new View.OnClickListener() {
+
+        Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String emaill, passwordd;
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
                // progressBar.setVisibility(View.VISIBLE);
-                if (TextUtils.isEmpty(emaill) || TextUtils.isEmpty(passwordd)) {
+                if (TextUtils.isEmpty(emaill) && TextUtils.isEmpty(passwordd)) {
                     email.setError("email cannot be empty");
                     email.requestFocus();
                     password.setError("password cannot be empty");
                     password.requestFocus();
                     return;
                 }
-                auth.signInWithEmailAndPassword(emaill,passwordd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+               // Toast.makeText(User_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
+                auth.signInWithEmailAndPassword(emaill, passwordd)
+                        .addOnCompleteListener(
+                                new OnCompleteListener<AuthResult>() {
                                     @Override
                                     public void onComplete(
-                                            @NonNull Task<AuthResult> task){
+                                            @NonNull Task<AuthResult> task)
+                                    {
                                         if (task.isSuccessful()) {
-                                           // progressBar.setVisibility(View.GONE);
+                                    //        progressBar.setVisibility(View.GONE);
                                             Log.d("user login","Login successful!!");
-                                            adminemailid = emaill;
-                                            Intent intent = new Intent(Admin_login.this, Admin_Main.class);
+                                            emailid = emaill;
+                                            Intent intent = new Intent(UserLogin.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();
                                         }
-                                        else
-                                        {
+                                        else {
                                             Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 });
-                 }
+                }
         });
     }
 }

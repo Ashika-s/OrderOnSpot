@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,11 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sas.food_order_application.MainActivity;
 import com.sas.food_order_application.R;
-import com.sas.food_order_application.user_register;
 
-public class Admin_register extends AppCompatActivity {
+public class AdminRegister extends AppCompatActivity {
     Button register;
     EditText Restaurantname;
     EditText Restaurantaddress;
@@ -49,7 +46,7 @@ public class Admin_register extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser=auth.getCurrentUser();
         if (currentUser != null) {
-            Intent intent=new Intent(Admin_register.this,Admin_Main.class);
+            Intent intent=new Intent(AdminRegister.this, AdminMain.class);
             startActivity(intent);
             finish();
         }
@@ -78,7 +75,7 @@ public class Admin_register extends AppCompatActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(Admin_register.this,Admin_login.class);
+                Intent intent=new Intent(AdminRegister.this, AdminLogin.class);
                 startActivity(intent);
                 finish();
             }
@@ -96,7 +93,7 @@ public class Admin_register extends AppCompatActivity {
                 emaill=String.valueOf(email.getText());
                 confirmpasswordd = String.valueOf(confirmpassword.getText());
            //     progressBar.setVisibility(View.VISIBLE);
-                Admin_login.adminemailid=emaill;
+                AdminLogin.adminemailid=emaill;
 
                 if (Restaurantname.getText().toString().isEmpty() || Restaurantaddress.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirmpassword.getText().toString().isEmpty())
                 {
@@ -134,7 +131,7 @@ public class Admin_register extends AppCompatActivity {
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
                                     addNewData(Restaurantnamee,Restaurantaddresss,Restaurantphnoo,Ownernamee,Ownerphnoo,passwordd,emaill,confirmpasswordd);
-                                    Toast.makeText(Admin_register.this, "succefull", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(AdminRegister.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d("admin register","Authentication failed");
                                 }
@@ -154,6 +151,7 @@ public class Admin_register extends AppCompatActivity {
         adminRegisterClass.setPassword(passwordd);
         adminRegisterClass.setEmail(emaill);
         adminRegisterClass.setConfirmpassword(confirmpasswordd);
+        Log.d("addingData",Restaurantnamee);
 
         db.collection("Admin").document(emaill).set(adminRegisterClass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -161,13 +159,13 @@ public class Admin_register extends AppCompatActivity {
                 restname=Restaurantnamee;
                 Log.d("restname","is "+restname);
           //      progressBar.setVisibility((View.GONE));
-                startActivity(new Intent(Admin_register.this,Admin_Main.class));
+                startActivity(new Intent(AdminRegister.this, AdminMain.class));
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Admin_register.this, "Failed", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminRegister.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
     }

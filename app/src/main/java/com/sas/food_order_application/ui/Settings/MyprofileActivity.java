@@ -20,8 +20,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
-import com.sas.food_order_application.User_login;
-import com.sas.food_order_application.Userclass;
+import com.sas.food_order_application.user.UserLogin;
+import com.sas.food_order_application.user.Userclass;
+
 public class MyprofileActivity extends AppCompatActivity {
     EditText Name;
     TextView Email;
@@ -39,7 +40,7 @@ public class MyprofileActivity extends AppCompatActivity {
             Update=findViewById(R.id.profilebutton);
 
             db = FirebaseFirestore.getInstance();
-            String emaill =  User_login.emailid;
+            String emaill =  UserLogin.emailid;
 
             fetchData(emaill);
             Update.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +103,15 @@ public class MyprofileActivity extends AppCompatActivity {
                     });
         }
     }
-
+//    @Override
+//    public void onBackPressed() {
+//        // Create an intent to navigate to MainActivity
+//        Intent intent = new Intent(this, SettingsFragment.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        startActivity(intent);
+//        // Finish the current activity (optional)
+//        finish();
+//    }
     void fetchData(String email){
         DocumentReference docRef = db.collection("Customer").document(email);
         Log.d("profile", "value is "+docRef);

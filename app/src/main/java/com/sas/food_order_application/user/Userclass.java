@@ -1,4 +1,4 @@
-package com.sas.food_order_application;
+package com.sas.food_order_application.user;
 
 import android.widget.EditText;
 

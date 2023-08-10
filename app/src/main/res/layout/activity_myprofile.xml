@@ -48,10 +48,10 @@
             <EditText
                 android:id="@+id/prname"
                 android:layout_width="match_parent"
-
-                android:layout_marginTop="76dp"
                 android:layout_height="50dp"
                 android:background="@drawable/log"
+                android:layout_marginTop="76dp"
+
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="14dp"
                 android:hint="Full Name"
@@ -67,10 +67,9 @@
             <TextView
                 android:id="@+id/premail"
                 android:layout_width="match_parent"
-
-                android:layout_marginTop="12dp"
                 android:layout_height="50dp"
                 android:background="@drawable/log"
+                android:layout_marginTop="12dp"
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="14dp"
                 android:hint="Email Address"
@@ -89,7 +88,6 @@
                 android:layout_height="50dp"
                 android:background="@drawable/log"
                 android:layout_marginTop="12dp"
-
                 android:drawableLeft="@drawable/baseline_password_24"
                 android:drawablePadding="14dp"
                 android:hint="Password"

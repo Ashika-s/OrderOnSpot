@@ -7,9 +7,9 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 
-import com.sas.food_order_application.admin.Admin_login;
+import com.sas.food_order_application.admin.AdminLogin;
+import com.sas.food_order_application.user.UserLogin;
 
 public class Welcome extends AppCompatActivity {
 CardView admin;
@@ -24,7 +24,7 @@ CardView customer;
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), User_login.class);
+                Intent intent=new Intent(getApplicationContext(), UserLogin.class);
                 startActivity(intent);
                 finish();
             }
@@ -32,7 +32,7 @@ CardView customer;
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getApplicationContext(), Admin_login.class);
+                Intent intent=new Intent(getApplicationContext(), AdminLogin.class);
                 startActivity(intent);
                 finish();
             }

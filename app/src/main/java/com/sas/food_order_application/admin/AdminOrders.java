@@ -13,13 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 
-public class Admin_Logout extends AppCompatActivity {
-FirebaseAuth auth;
-FirebaseUser user;
+public class AdminOrders extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView imageView;
     LinearLayout menu,orders,profile,logout;
@@ -27,13 +24,15 @@ FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_logout2);
+        setContentView(R.layout.activity_admin_orders);
+
         drawerLayout=findViewById(R.id.drawerlayout);
         imageView=findViewById(R.id.menu);
         menu=findViewById(R.id.Menu);
         orders=findViewById(R.id.Order);
         profile=findViewById(R.id.Profile);
         logout=findViewById(R.id.Logout);
+
 
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,21 +44,21 @@ FirebaseUser user;
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Admin_Logout.this,Admin_Main.class);
+                redirectActivity(AdminOrders.this, AdminMain.class);
             }
         });
 
         orders.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Admin_Logout.this,Admin_Orders.class);
+                recreate();
             }
         });
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                redirectActivity(Admin_Logout.this,Admin_profile.class);
+                redirectActivity(AdminOrders.this, AdminProfile.class);
             }
         });
 
@@ -70,16 +69,15 @@ FirebaseUser user;
             }
 
             private void showdialog() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Admin_Logout.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminOrders.this);
                 builder.setMessage("Do you want to Logout ?");
                 builder.setTitle("Alert !");
                 builder.setCancelable(false);
                 builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
                     FirebaseAuth.getInstance().signOut();
                     finish();
-                    Intent intent=new Intent(Admin_Logout.this, Welcome.class);
+                    Intent intent=new Intent(AdminOrders.this, Welcome.class);
                     startActivity(intent);
-                    finish();
                 });
                 builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
                     dialog.cancel();
@@ -89,11 +87,9 @@ FirebaseUser user;
             }
         });
     }
-
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }
-
     public static void closeDrawer(DrawerLayout drawerLayout){
         if (drawerLayout.isDrawerOpen(GravityCompat.START)){
             drawerLayout.closeDrawer(GravityCompat.START);

@@ -2,8 +2,6 @@ package com.sas.food_order_application.admin;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -17,25 +15,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.sas.food_order_application.Adapter.Category_Adapter;
-import com.sas.food_order_application.Model.Category;
 import com.sas.food_order_application.R;
 
 //import com.google.cloud.firestore.CollectionGroupQuery;
 //import com.google.cloud.firestore.Firestore;
 //import com.google.cloud.firestore.FirestoreOptions;
-
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 
 public class Edit_Categories extends AppCompatActivity {
@@ -47,7 +34,7 @@ public class Edit_Categories extends AppCompatActivity {
     TextView amount;
     Button add;
 
-    String restname=Admin_register.restname;
+    String restname= AdminRegister.restname;
 FirebaseFirestore db=FirebaseFirestore.getInstance();
 DocumentReference documentReference;
 
@@ -72,9 +59,18 @@ DocumentReference documentReference;
                 typee = String.valueOf(type.getText());
                 amountt = String.valueOf(amount.getText());
                 addcategoryies(itemm,categoryy,typee,amountt);
-                startActivity(new Intent(Edit_Categories.this,Admin_Main.class));
+                startActivity(new Intent(Edit_Categories.this, AdminMain.class));
                 }
         });
+    }
+    @Override
+    public void onBackPressed() {
+        // Create an intent to navigate to MainActivity
+        Intent intent = new Intent(this, AdminMain.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        // Finish the current activity (optional)
+        finish();
     }
 
     private void addcategoryies(String item,String category,String type,String amount) {
@@ -83,7 +79,7 @@ DocumentReference documentReference;
         categoryclass.setCategory(category);
         categoryclass.setType(type);
         categoryclass.setAmount(amount);
-        db.collection("Admin").document(Admin_login.adminemailid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        db.collection("Admin").document(AdminLogin.adminemailid).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                 if (task.isSuccessful()) {

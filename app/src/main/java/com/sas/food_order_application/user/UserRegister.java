@@ -1,4 +1,4 @@
-package com.sas.food_order_application;
+package com.sas.food_order_application.user;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,9 +21,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.sas.food_order_application.admin.Admin_login;
+import com.sas.food_order_application.R;
 
-public class user_register extends AppCompatActivity {
+public class UserRegister extends AppCompatActivity {
     Button register;
     EditText name;
     EditText email;
@@ -67,7 +66,7 @@ public class user_register extends AppCompatActivity {
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(user_register.this,User_login.class);
+                Intent intent=new Intent(UserRegister.this, UserLogin.class);
                 startActivity(intent);
                 finish();
             }
@@ -81,7 +80,7 @@ public class user_register extends AppCompatActivity {
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
                 confpasswordd = String.valueOf(confpassword.getText());
-                User_login.emailid=emaill;
+                UserLogin.emailid=emaill;
                 if (name.getText().toString().isEmpty() || email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confpassword.getText().toString().isEmpty())
                 {
                     confpassword.setError("Confirm password cannot be empty");
@@ -107,7 +106,7 @@ public class user_register extends AppCompatActivity {
                                 if (task.isSuccessful()) {
                               //     progressBar.setVisibility(View.GONE);
                                     addNewData(namee,passwordd,emaill,confpasswordd);
-                                    Toast.makeText(user_register.this, "succefull", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(UserRegister.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d("user register","Authentication failed");
                                 }
@@ -126,14 +125,14 @@ public class user_register extends AppCompatActivity {
             @Override
             public void onSuccess(Void unused) {
               //  progressBar.setVisibility((View.GONE));
-                Intent intent=new Intent(user_register.this,MainActivity.class);
+                Intent intent=new Intent(UserRegister.this,MainActivity.class);
                 startActivity(intent);
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(user_register.this, "Failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(UserRegister.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
     }

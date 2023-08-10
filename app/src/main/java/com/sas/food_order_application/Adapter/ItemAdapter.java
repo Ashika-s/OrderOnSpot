@@ -7,30 +7,30 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-import com.sas.food_order_application.Model.Category;
+
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.admin.Categoryclass;
-import java.util.ArrayList;
+
 import java.util.List;
 
-public class Item_Adapter extends RecyclerView.Adapter<Item_Adapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     Context context;
     List<Categoryclass> arrayList;
 
-    public Item_Adapter(Context context,List<Categoryclass> userArrayList) {
+    public ItemAdapter(Context context, List<Categoryclass> userArrayList) {
         this.context = context;
         this.arrayList = userArrayList;
     }
 
     @NonNull
     @Override
-    public Item_Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ItemAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.item_view,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Item_Adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder holder, int position) {
         Categoryclass category=arrayList.get(position);
         holder.Amount.setText("Amount: "+category.getAmount());
         holder.ItemName.setText(category.getItem());

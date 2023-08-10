@@ -7,7 +7,7 @@
     android:gravity="center"
     android:background="@drawable/ic_image"
     android:layout_height="match_parent"
-    tools:context=".user_register">
+    tools:context=".user.UserRegister">
 
 
     <androidx.cardview.widget.CardView
@@ -47,6 +47,7 @@
                 android:drawablePadding="1dp"
                 android:hint="Full Name"
                 android:paddingStart="10dp"
+                android:inputType="textPersonName"
                 android:textColor="@color/black"
                 android:textColorHighlight="#5C5F61" />
 
@@ -59,6 +60,7 @@
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="9dp"
                 android:hint="Email Address"
+                android:inputType="textEmailAddress"
                 android:paddingStart="10dp"
                 android:textColor="@color/black"
                 android:textColorHighlight="#5C5F61" />

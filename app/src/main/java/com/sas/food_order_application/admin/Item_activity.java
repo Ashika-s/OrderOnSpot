@@ -16,13 +16,13 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.sas.food_order_application.Adapter.Item_Adapter;
+import com.sas.food_order_application.Adapter.ItemAdapter;
 import com.sas.food_order_application.R;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Item_activity extends AppCompatActivity {
-    Item_Adapter item_adapter;
+    ItemAdapter item_adapter;
     RecyclerView itemViewRec;
 
     @Override
@@ -38,14 +38,14 @@ public class Item_activity extends AppCompatActivity {
         Log.d("clickedList",""+categoryclassList.toString());
         itemViewRec.setHasFixedSize(true);
         itemViewRec.setLayoutManager(new LinearLayoutManager(this));
-        item_adapter=new Item_Adapter(Item_activity.this,categoryclassList);
+        item_adapter=new ItemAdapter(Item_activity.this,categoryclassList);
         itemViewRec.setAdapter(item_adapter);
     }
 
     private ArrayList<Categoryclass> itemSetListener(String clickedCategory) {
         List<Categoryclass> listOfItems = new ArrayList<>();
         FirebaseFirestore db=FirebaseFirestore.getInstance();
-        String emaill =  Admin_login.adminemailid;
+        String emaill =  AdminLogin.adminemailid;
         Log.d("email", "is " + emaill);
         DocumentReference docRef = db.collection("Admin").document(emaill);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

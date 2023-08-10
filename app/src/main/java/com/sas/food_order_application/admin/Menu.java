@@ -10,18 +10,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.ValueEventListener;
-import com.sas.food_order_application.Adapter.Category_Adapter;
+import com.sas.food_order_application.Adapter.CategoryAdapter;
 import com.sas.food_order_application.Model.Category;
 import com.sas.food_order_application.R;
 import java.util.ArrayList;
@@ -35,7 +31,7 @@ public class Menu extends Fragment {
     private Uri selectedImageUri;
     RecyclerView categoryRec;
     List<Category> categoryList=new ArrayList<>();;
-    Category_Adapter category_adapter;
+    CategoryAdapter category_adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
