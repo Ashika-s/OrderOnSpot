@@ -64,11 +64,13 @@
 
 
             <EditText
+
                 android:id="@+id/prresname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
+                android:background="@drawable/log"
                 android:layout_marginTop="28dp"
-                android:backgroundTint="#CCCCCC"
+
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="14dp"
                 android:hint="Restaurant Name"
@@ -83,12 +85,14 @@
                 tools:layout_editor_absoluteX="0dp" />
 
             <EditText
+                android:layout_height="50dp"
+                android:background="@drawable/log"
                 android:id="@+id/prresadd"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
                 android:layout_below="@+id/prresname"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#CCCCCC"
+
                 android:drawableLeft="@drawable/baseline_location_on_24"
                 android:drawablePadding="14dp"
                 android:hint="Restaurant Address"
@@ -105,10 +109,11 @@
             <EditText
                 android:id="@+id/prresphno"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
                 android:layout_below="@+id/prresadd"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#CCCCCC"
+                android:layout_height="50dp"
+                android:background="@drawable/log"
                 android:drawableLeft="@drawable/baseline_local_phone_24"
                 android:drawablePadding="14dp"
                 android:hint="Restaurant Phone Number"
@@ -125,10 +130,11 @@
             <EditText
                 android:id="@+id/ownname"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
                 android:layout_below="@+id/prresphno"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#CCCCCC"
+                android:layout_height="50dp"
+                android:background="@drawable/log"
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="14dp"
                 android:hint="Owner Name"
@@ -145,10 +151,11 @@
             <TextView
                 android:id="@+id/ownemail"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
                 android:layout_below="@+id/ownname"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#CCCCCC"
+                android:layout_height="50dp"
+                android:background="@drawable/log"
                 android:drawableLeft="@drawable/baseline_email_24"
                 android:drawablePadding="14dp"
                 android:hint="Owner Email ID"
@@ -165,10 +172,11 @@
             <EditText
                 android:id="@+id/ownpass"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+
                 android:layout_below="@+id/ownemail"
                 android:layout_marginTop="12dp"
-                android:backgroundTint="#CCCCCC"
+                android:layout_height="50dp"
+                android:background="@drawable/log"
                 android:drawableLeft="@drawable/baseline_password_24"
                 android:drawablePadding="14dp"
                 android:hint="Password"
