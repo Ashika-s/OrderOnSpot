@@ -73,7 +73,6 @@ DocumentReference documentReference;
                 amountt = String.valueOf(amount.getText());
                 addcategoryies(itemm,categoryy,typee,amountt);
                 startActivity(new Intent(Edit_Categories.this,Admin_Main.class));
-                finish();
                 }
         });
     }
