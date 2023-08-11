@@ -1,24 +1,37 @@
 package com.sas.food_order_application.admin;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.sas.food_order_application.R;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 //import com.google.cloud.firestore.CollectionGroupQuery;
 //import com.google.cloud.firestore.Firestore;
@@ -27,18 +40,23 @@ import com.sas.food_order_application.R;
 
 public class Edit_Categories extends AppCompatActivity {
 
-
+static final int PICK_IMAGE_REQUEST=1;
     TextView item;
     TextView category;
     TextView type;
     TextView amount;
     Button add;
 
+     FirebaseStorage storage;
+    Button selectImageButton;
+//     EditText imageNameEditText;
+     ImageView uploadedImageView;
+   
+
     String restname= AdminRegister.restname;
 FirebaseFirestore db=FirebaseFirestore.getInstance();
 DocumentReference documentReference;
-
-
+FirebaseDatabase firebaseDatabase;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -50,6 +68,15 @@ DocumentReference documentReference;
         type=findViewById(R.id.type);
         amount=findViewById(R.id.amount);
         add=findViewById(R.id.addbtn);
+        selectImageButton=findViewById(R.id.selectImageButton);
+      //  imageNameEditText=findViewById(R.id.imageNameEditText);
+        uploadedImageView=findViewById(R.id.uploadedImageView);
+        selectImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openfilechooser();
+            }
+        });
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,6 +90,75 @@ DocumentReference documentReference;
                 }
         });
     }
+
+    private void openfilechooser() {
+
+        Intent intent=new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = data.getData();
+            String name=category.getText().toString();
+            String imageName = name+".jpg";
+            displayImage((Uri.parse(String.valueOf(imageUri))),imageName);
+        }
+    }
+
+    private void uploadImageToFirestore(Uri imageUri,String imageName) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        StorageReference imageRef = storageRef.child("images/" +imageName);
+
+        imageRef.putFile(imageUri)
+                .addOnSuccessListener(taskSnapshot -> {
+                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        String imageUrl = uri.toString();
+                        saveImageToFirestore(imageUrl);
+                    });
+                })
+                .addOnFailureListener(exception -> {
+                });
+
+    }
+
+    private void displayImage(Uri imageUri,String imageName) {
+
+        try {
+            InputStream inputStream = getContentResolver().openInputStream(imageUri);
+            Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+            uploadedImageView.setImageBitmap(bitmap);
+            uploadImageToFirestore(imageUri,imageName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void saveImageToFirestore(String imageUrl) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("image_url", imageUrl);
+
+        db.collection("images")
+                .add(data)
+                .addOnSuccessListener(documentReference -> {
+
+                })
+                .addOnFailureListener(e -> {
+
+                });
+    }
+
+
+
     @Override
     public void onBackPressed() {
         // Create an intent to navigate to MainActivity

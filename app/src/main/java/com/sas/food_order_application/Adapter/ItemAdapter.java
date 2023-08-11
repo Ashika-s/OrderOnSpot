@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,6 +35,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         Categoryclass category=arrayList.get(position);
         holder.Amount.setText("Amount: "+category.getAmount());
         holder.ItemName.setText(category.getItem());
+        //holder.imageView.setImageResource(category.getImage());
         holder.Type.setText("Type: "+ category.getType());
     }
 
@@ -46,12 +48,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         TextView ItemName;
         TextView Amount;
         TextView Type;
+        ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ItemName=itemView.findViewById(R.id.ItemName);
             Amount=itemView.findViewById(R.id.Amount);
             Type=itemView.findViewById(R.id.Type);
+           // imageView=itemView.findViewById(R.id.Type);
         }
     }
 }

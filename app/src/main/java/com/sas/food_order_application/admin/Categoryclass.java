@@ -5,18 +5,31 @@ public class Categoryclass {
     String type;
     String amount;
 
+ //   int image;
+
     public Categoryclass(String data) {
+
         this.category=data;
     }
     public Categoryclass() {
 
     }
-    public Categoryclass(String item, String category, String type, String amount) {
+    public Categoryclass(String item, String category,String type,String amount) {
         this.item = item;
         this.category = category;
         this.type = type;
         this.amount = amount;
+        //this.image=image;
     }
+
+//    public int getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(int image) {
+//        this.image = image;
+//    }
+
     public String getItem() {
         return item;
     }
@@ -48,4 +61,6 @@ public class Categoryclass {
     public void setAmount(String amount) {
         this.amount = amount;
     }
+
+
 }
