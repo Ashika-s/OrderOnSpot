@@ -27,12 +27,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
+            <com.mikhaellopez.circularimageview.CircularImageView
                 android:id="@+id/imageView3"
                 android:layout_width="138dp"
                 android:layout_height="126dp"
                 android:adjustViewBounds="true"
-                android:background="@drawable/profile_image"
+                android:src="@drawable/profile_image"
                 android:cropToPadding="true"
                 android:scaleType="centerCrop"
 
@@ -154,7 +154,7 @@
                 android:hint="Owner Email ID"
                 android:inputType="textEmailAddress"
                 android:minHeight="48dp"
-                android:paddingLeft="10dp"
+                android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="21sp"
@@ -176,7 +176,7 @@
                 android:paddingLeft="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
-
+                android:inputType="textPassword"
                 android:textSize="21sp"
                 app:layout_constraintTop_toBottomOf="@+id/ownemail"
                 app:layout_constraintWidth_percent=".8"

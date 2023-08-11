@@ -1,9 +1,7 @@
 package com.sas.food_order_application.admin;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -13,6 +11,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -76,23 +78,27 @@ public class AdminLogin extends AppCompatActivity {
                     return;
                 }
                 auth.signInWithEmailAndPassword(emaill,passwordd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(
-                                            @NonNull Task<AuthResult> task){
-                                        if (task.isSuccessful()) {
-                                           // progressBar.setVisibility(View.GONE);
-                                            Log.d("user login","Login successful!!");
-                                            adminemailid = emaill;
-                                            Intent intent = new Intent(AdminLogin.this, AdminMain.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                        else
-                                        {
-                                            Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                    @Override
+                    public void onComplete(
+                            @NonNull Task<AuthResult> task){
+                        if (task.isSuccessful()) {
+                           // progressBar.setVisibility(View.GONE);
+                            Log.d("user login","Login successful!!");
+                            adminemailid = emaill;
+                            SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = preferences.edit();
+                            editor.putString("KEY_EMAIL_ADMIN", adminemailid);
+                            editor.apply();
+                            Intent intent = new Intent(AdminLogin.this, AdminMain.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                        else
+                        {
+                            Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
                  }
         });
     }

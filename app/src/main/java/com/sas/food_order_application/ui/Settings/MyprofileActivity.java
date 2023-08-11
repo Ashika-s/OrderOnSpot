@@ -1,8 +1,7 @@
 package com.sas.food_order_application.ui.Settings;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +9,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -113,6 +116,13 @@ public class MyprofileActivity extends AppCompatActivity {
 //        finish();
 //    }
     void fetchData(String email){
+
+        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentuser != null){
+            SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
+            email = preferences.getString("KEY_EMAIL_USER", "");
+            UserLogin.emailid=preferences.getString("KEY_EMAIL_USER", "");
+        }
         DocumentReference docRef = db.collection("Customer").document(email);
         Log.d("profile", "value is "+docRef);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

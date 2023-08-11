@@ -1,9 +1,8 @@
 package com.sas.food_order_application.admin;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -152,7 +155,10 @@ public class AdminRegister extends AppCompatActivity {
         adminRegisterClass.setEmail(emaill);
         adminRegisterClass.setConfirmpassword(confirmpasswordd);
         Log.d("addingData",Restaurantnamee);
-
+        SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KEY_EMAIL_ADMIN", emaill);
+        editor.apply();
         db.collection("Admin").document(emaill).set(adminRegisterClass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {

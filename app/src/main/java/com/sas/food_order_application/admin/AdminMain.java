@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
@@ -47,6 +49,7 @@ public class AdminMain extends AppCompatActivity {
     CollectionReference collectionReference;
     RecyclerView recyclerView;
     ArrayList<Categoryclass> userArrayList;
+ //   ArrayList<ImageData> imageDataList;
     CategoryAdapter category_adapter;
     public static String adminemaill =  AdminLogin.adminemailid;
 
@@ -69,7 +72,13 @@ public class AdminMain extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         userArrayList=new ArrayList<Categoryclass>();
-
+        //imageDataList=new ArrayList<ImageData>();
+        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentuser != null){
+            SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);
+            adminemaill = preferences.getString("KEY_EMAIL_ADMIN", "");
+            AdminLogin.adminemailid=preferences.getString("KEY_EMAIL_ADMIN", "");
+        }
         EventChangeListener();
 
         category_adapter=new CategoryAdapter(AdminMain.this,userArrayList);
@@ -140,6 +149,7 @@ public class AdminMain extends AppCompatActivity {
 
     private void EventChangeListener() {
         Log.d("admin Email", "is " + adminemaill);
+
         DocumentReference docRef = db.collection("Admin").document(adminemaill);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -195,11 +205,32 @@ public class AdminMain extends AppCompatActivity {
                                         }
                                     }
                                 });
+
                     }
                 }
             }
         });
+
+
+//        CollectionReference imageCollectionref = db.collection("images");
+//
+//        imageCollectionref.get().addOnSuccessListener(queryDocumentSnapshots -> {
+//            List<ImageData> imageDataList=new ArrayList<>();
+//            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
+//                ImageData imageData=documentSnapshot.toObject(ImageData.class);
+//                imageDataList.add(imageData);
+//            }
+//            populateRecyclerView(userArrayList, imageDataList);
+//
+//        }).addOnFailureListener(e -> {
+//            // Handle error
+//        });
     }
+
+//    private void populateRecyclerView(ArrayList<Categoryclass> userArrayList, List<ImageData> imageDataList) {
+//
+//    }
+
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }
@@ -222,3 +253,5 @@ public class AdminMain extends AppCompatActivity {
         closeDrawer(drawerLayout);
     }
 }
+
+

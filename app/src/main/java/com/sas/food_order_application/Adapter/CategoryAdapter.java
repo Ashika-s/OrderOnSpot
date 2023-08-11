@@ -6,21 +6,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.admin.Categoryclass;
 import com.sas.food_order_application.admin.Item_activity;
+
 import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     Context context;
     ArrayList<Categoryclass> userArrayList;
+   // ArrayList<ImageData> imageDataList;
+
+//    private static final int VIEW_TYPE_TEXT = 0;
+//    private static final int VIEW_TYPE_IMAGE = 1;
 
     public CategoryAdapter(Context context, ArrayList<Categoryclass> userArrayList) {
         this.context = context;
         this.userArrayList = userArrayList;
+       // this.imageDataList=imageDataList;
     }
 
     @NonNull
@@ -34,6 +41,26 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
       Categoryclass category=userArrayList.get(position);
       holder.categoryy.setText(category.getCategory());
+
+
+//        if (holder instanceof CardViewHolder) {
+//            CardViewHolder cardViewHolder = (CardViewHolder) holder;
+//
+//            if (position < textDataList.size()) {
+//                TextData textData = userArrayList.get(position);
+//
+//                holder.categoryy.setText(category.getCategory());
+//                holder.imageUrl.setVisibility(View.GONE);
+//                holder.categoryy.setVisibility(View.VISIBLE);
+//            } else {
+//                ImageData imageData = imageDataList.get(position - textDataList.size());
+//                Glide.with(cardViewHolder.itemView.getContext())
+//                        .load(imageData.getImageUrl())
+//                        .into(cardViewHolder.imageView);
+//                cardViewHolder.imageView.setVisibility(View.VISIBLE);
+//                cardViewHolder.textView.setVisibility(View.GONE);
+//            }
+      //  }
     }
 
     @Override

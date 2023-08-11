@@ -1,10 +1,8 @@
 package com.sas.food_order_application.user;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -91,6 +93,10 @@ public class UserLogin extends AppCompatActivity {
                                     //        progressBar.setVisibility(View.GONE);
                                             Log.d("user login","Login successful!!");
                                             emailid = emaill;
+                                            SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
+                                            SharedPreferences.Editor editor = preferences.edit();
+                                            editor.putString("KEY_EMAIL_USER", emailid);
+                                            editor.apply();
                                             Intent intent = new Intent(UserLogin.this, MainActivity.class);
                                             startActivity(intent);
                                             finish();

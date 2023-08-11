@@ -1,9 +1,8 @@
 package com.sas.food_order_application.user;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -81,6 +84,10 @@ public class UserRegister extends AppCompatActivity {
                 passwordd = String.valueOf(password.getText());
                 confpasswordd = String.valueOf(confpassword.getText());
                 UserLogin.emailid=emaill;
+                SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+                editor.putString("KEY_EMAIL_USER", emaill);
+                editor.apply();
                 if (name.getText().toString().isEmpty() || email.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confpassword.getText().toString().isEmpty())
                 {
                     confpassword.setError("Confirm password cannot be empty");
