@@ -8,6 +8,15 @@ public class AdminRegisterClass {
     private String password;
     private String confirmpassword;
     private String email;
+    private  int tablecount;
+
+    public int getTablecount() {
+        return tablecount;
+    }
+
+    public void setTablecount(int tablecount) {
+        this.tablecount = tablecount;
+    }
 
     public String getRestorantName() {
         return RestorantName;

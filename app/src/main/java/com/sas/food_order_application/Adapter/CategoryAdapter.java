@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.admin.Categoryclass;
 import com.sas.food_order_application.admin.Item_activity;
@@ -19,15 +21,13 @@ import java.util.ArrayList;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     Context context;
     ArrayList<Categoryclass> userArrayList;
-   // ArrayList<ImageData> imageDataList;
+   // ArrayList<ImageData> imageData;
 
-//    private static final int VIEW_TYPE_TEXT = 0;
-//    private static final int VIEW_TYPE_IMAGE = 1;
 
     public CategoryAdapter(Context context, ArrayList<Categoryclass> userArrayList) {
         this.context = context;
         this.userArrayList = userArrayList;
-       // this.imageDataList=imageDataList;
+
     }
 
     @NonNull
@@ -35,6 +35,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        View view= LayoutInflater.from(context).inflate(R.layout.category_view,parent,false);
        return new ViewHolder(view);
+//        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+//        if (viewType == VIEW_TYPE_TEXT) {
+//            View view = inflater.inflate(R.layout.category_view, parent, false);
+//            return new ViewHolder(view);
+//        } else if (viewType == VIEW_TYPE_IMAGE) {
+//            View view = inflater.inflate(R.layout.category_view, parent, false);
+//            return new ViewHolder(view);
+//        }
+//        throw new IllegalArgumentException("Invalid view type");
     }
 
     @Override
@@ -42,36 +51,25 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
       Categoryclass category=userArrayList.get(position);
       holder.categoryy.setText(category.getCategory());
 
-
-//        if (holder instanceof CardViewHolder) {
-//            CardViewHolder cardViewHolder = (CardViewHolder) holder;
-//
-//            if (position < textDataList.size()) {
-//                TextData textData = userArrayList.get(position);
-//
-//                holder.categoryy.setText(category.getCategory());
-//                holder.imageUrl.setVisibility(View.GONE);
-//                holder.categoryy.setVisibility(View.VISIBLE);
-//            } else {
-//                ImageData imageData = imageDataList.get(position - textDataList.size());
-//                Glide.with(cardViewHolder.itemView.getContext())
-//                        .load(imageData.getImageUrl())
-//                        .into(cardViewHolder.imageView);
-//                cardViewHolder.imageView.setVisibility(View.VISIBLE);
-//                cardViewHolder.textView.setVisibility(View.GONE);
-//            }
-      //  }
+        Glide.with(holder.itemView.getContext())
+                .load(category.getImageurl())
+                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
+
         return userArrayList.size();
     }
 
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView categoryy;
+        ImageView imageView;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
+            imageView = itemView.findViewById(R.id.imageVerDish);
             categoryy=itemView.findViewById(R.id.textCategory);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,4 +81,13 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             });
         }
     }
+//    public void setTextDataList(ArrayList<Categoryclass> userArrayList) {
+//        this.userArrayList = userArrayList;
+//        notifyDataSetChanged();
+//    }
+
+//    public void setImageDataList(ArrayList<ImageData> imageData) {
+//        this.imageData = imageData;
+//        notifyDataSetChanged();
+//    }
 }

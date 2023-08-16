@@ -7,7 +7,7 @@
     android:orientation="horizontal"
     android:padding="15dp"
     android:id="@+id/tool"
-    android:background="#F83C61">
+    android:background="@color/purple_700">
 
 
     <ImageView

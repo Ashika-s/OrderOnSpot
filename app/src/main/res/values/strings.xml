@@ -18,4 +18,5 @@
     <string name="select_image">Select Image</string>
     <string name="enter_your_name">Enter Your Name</string>
     <string name="example_gmail_com">example@gmail.com</string>
+    <string name="spinner_prompt">Select Table</string>
 </resources>

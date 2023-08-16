@@ -11,11 +11,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/category_color"
+        android:background="#CBAEE3"
         android:orientation="vertical"
         android:padding="0dp">
 
-        <com.mikhaellopez.circularimageview.CircularImageView
+        <ImageView
             android:id="@+id/imageVerDish"
             android:layout_width="74dp"
             android:layout_height="67dp"

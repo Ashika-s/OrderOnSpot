@@ -33,6 +33,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sas.food_order_application.Adapter.CategoryAdapter;
+import com.sas.food_order_application.Model.ImageData;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 
@@ -49,6 +50,7 @@ public class AdminMain extends AppCompatActivity {
     CollectionReference collectionReference;
     RecyclerView recyclerView;
     ArrayList<Categoryclass> userArrayList;
+    ArrayList<ImageData> imageData;
  //   ArrayList<ImageData> imageDataList;
     CategoryAdapter category_adapter;
     public static String adminemaill =  AdminLogin.adminemailid;
@@ -83,6 +85,8 @@ public class AdminMain extends AppCompatActivity {
 
         category_adapter=new CategoryAdapter(AdminMain.this,userArrayList);
         recyclerView.setAdapter(category_adapter);
+//        category_adapter.setTextDataList(userArrayList);
+//        category_adapter.setImageDataList(imageData);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -166,19 +170,18 @@ public class AdminMain extends AppCompatActivity {
                                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                     @Override
                                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                        if(error!=null)
-                                        {
-                                            Log.e("firestore error",error.getMessage());
+                                        if (error != null) {
+                                            Log.e("firestore error", error.getMessage());
                                             return;
                                         }
-                                        for(DocumentChange dc : value.getDocumentChanges()){
-                                            if(dc.getType()==DocumentChange.Type.ADDED){
-                                                Categoryclass category= dc.getDocument().toObject(Categoryclass.class);
-                                                if(!tempCategoryList.contains(category.getCategory())) {
+                                        for (DocumentChange dc : value.getDocumentChanges()) {
+                                            if (dc.getType() == DocumentChange.Type.ADDED) {
+                                                Categoryclass category = dc.getDocument().toObject(Categoryclass.class);
+                                                if (!tempCategoryList.contains(category.getCategory())) {
                                                     tempCategoryList.add(category.getCategory());
                                                     userArrayList.add(dc.getDocument().toObject(Categoryclass.class));
                                                 }
-                                                Log.d("list"," is"+category.getCategory());
+                                                Log.d("list", " is" + category.getCategory());
                                             }
                                             category_adapter.notifyDataSetChanged();
                                         }
@@ -188,15 +191,14 @@ public class AdminMain extends AppCompatActivity {
                                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                                     @Override
                                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                                        if(error!=null)
-                                        {
-                                            Log.e("firestore error",error.getMessage());
+                                        if (error != null) {
+                                            Log.e("firestore error", error.getMessage());
                                             return;
                                         }
-                                        for(DocumentChange dc : value.getDocumentChanges()){
-                                            if(dc.getType()==DocumentChange.Type.ADDED){
-                                                Categoryclass category= dc.getDocument().toObject(Categoryclass.class);
-                                                if(!tempCategoryList.contains(category.getCategory())) {
+                                        for (DocumentChange dc : value.getDocumentChanges()) {
+                                            if (dc.getType() == DocumentChange.Type.ADDED) {
+                                                Categoryclass category = dc.getDocument().toObject(Categoryclass.class);
+                                                if (!tempCategoryList.contains(category.getCategory())) {
                                                     tempCategoryList.add(category.getCategory());
                                                     userArrayList.add(dc.getDocument().toObject(Categoryclass.class));
                                                 }
@@ -217,7 +219,7 @@ public class AdminMain extends AppCompatActivity {
 //        imageCollectionref.get().addOnSuccessListener(queryDocumentSnapshots -> {
 //            List<ImageData> imageDataList=new ArrayList<>();
 //            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-//                ImageData imageData=documentSnapshot.toObject(ImageData.class);
+//                ImageData imageData=documentSnapshot.toObject(ImageData.clas/home/ee212707/AndroidStudioProjects/Food_Order_Application/app/build/intermediates/apk/debug/app-debug.apks);
 //                imageDataList.add(imageData);
 //            }
 //            populateRecyclerView(userArrayList, imageDataList);

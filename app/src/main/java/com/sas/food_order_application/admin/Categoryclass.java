@@ -5,7 +5,27 @@ public class Categoryclass {
     String type;
     String amount;
 
+    String imageurl;
+
+
+
  //   int image;
+
+    public Categoryclass(String item, String category, String type, String amount, String imageurl) {
+        this.item = item;
+        this.category = category;
+        this.type = type;
+        this.amount = amount;
+        this.imageurl = imageurl;
+    }
+
+    public String getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(String imageurl) {
+        this.imageurl = imageurl;
+    }
 
     public Categoryclass(String data) {
 

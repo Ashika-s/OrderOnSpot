@@ -33,12 +33,13 @@ import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 
 public class AdminProfile extends AppCompatActivity {
-    EditText RestaurantName;
+    TextView RestaurantName;
     EditText RestaurantAddress;
     EditText Restaurantphno;
     EditText OwnerName;
     TextView OwnerEmail;
     EditText Password;
+    EditText tableno;
     Button Update;
     FirebaseFirestore db;
     DrawerLayout drawerLayout;
@@ -62,6 +63,7 @@ public class AdminProfile extends AppCompatActivity {
         OwnerName = findViewById(R.id.ownname);
         OwnerEmail = findViewById(R.id.ownemail);
         Password=findViewById(R.id.ownpass);
+        tableno=findViewById(R.id.table);
         Update=findViewById(R.id.profilebutton);
 
         db = FirebaseFirestore.getInstance();
@@ -160,7 +162,7 @@ public class AdminProfile extends AppCompatActivity {
         String ownername = (OwnerName).getText().toString();
         String ownerEmail = (OwnerEmail).getText().toString();
         String password =(Password).getText().toString();
-
+        int tableNo= Integer.parseInt((tableno).getText().toString());
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null)
         {
@@ -198,7 +200,7 @@ public class AdminProfile extends AppCompatActivity {
                             "ownername",ownername,
                             "email",ownerEmail,
                             "password",password,
-                            "confpassword",password
+                            "Tablecount",tableNo
                     )
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override

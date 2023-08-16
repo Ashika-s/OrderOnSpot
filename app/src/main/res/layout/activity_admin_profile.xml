@@ -21,7 +21,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/linearImageLayout"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="190dp"
             android:background="@drawable/top_background"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -52,7 +52,7 @@
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="409dp"
-            android:layout_height="393dp"
+            android:layout_height="450dp"
             android:layout_marginStart="2dp"
             android:layout_marginTop="18dp"
             android:layout_marginBottom="120dp"
@@ -62,25 +62,26 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearImageLayout">
 
-
-            <EditText
+            <TextView
                 android:id="@+id/prresname"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/log"
-                android:layout_marginTop="28dp"
                 android:drawableLeft="@drawable/baseline_person_24"
                 android:drawablePadding="14dp"
                 android:hint="Restaurant Name"
                 android:inputType="textPersonName"
-                android:paddingLeft="10dp"
+                android:minHeight="48dp"
+                android:padding="10dp"
                 android:textColor="@color/black"
                 android:textColorHint="@color/black"
                 android:textSize="21sp"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_percent=".8"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
+
 
             <EditText
                 android:id="@+id/prresadd"
@@ -183,6 +184,25 @@
                 tools:ignore="MissingConstraints"
                 tools:layout_editor_absoluteX="0dp" />
 
+            <EditText
+                android:id="@+id/table"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_below="@+id/ownemail"
+                android:layout_marginTop="70dp"
+                android:background="@drawable/log"
+                android:drawableLeft="@drawable/baseline_table_bar_24"
+                android:drawablePadding="14dp"
+                android:hint="Number of table"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:textColorHint="@color/black"
+                android:textSize="21sp"
+                app:layout_constraintTop_toBottomOf="@+id/ownpass"
+                app:layout_constraintWidth_percent=".8"
+                tools:ignore="MissingConstraints"
+                tools:layout_editor_absoluteX="0dp" />
+
 
             <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
         </RelativeLayout>
@@ -193,14 +213,15 @@
             android:layout_height="wrap_content"
 
             android:layout_gravity="center"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="39dp"
             android:layout_marginBottom="45dp"
             android:layout_weight="0.18"
             android:text="UPDATE"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/relativeLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/relativeLayout"
+            app:layout_constraintVertical_bias="0.512" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Food_Order_Application"
         tools:targetApi="31">
         <activity
+            android:name=".user.Checkout"
+            android:exported="false" />
+        <activity
             android:name=".admin.Edit_Categories"
             android:exported="false" />
         <activity
