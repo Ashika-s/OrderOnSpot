@@ -1,5 +1,6 @@
 package com.sas.food_order_application.Adapter;
 
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,10 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
         this.list = list;
     }
 
+    public HomeItemUserAdapter() {
+
+    }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -45,6 +50,12 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
             }
         });
 
+    }
+
+    public void updateData(List<HomeItemUserModel> newItems) {
+        list.clear();
+        list.addAll(newItems);
+        notifyDataSetChanged();
     }
 
     @Override

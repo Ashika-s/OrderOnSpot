@@ -16,4 +16,6 @@ public class HomeCategoryUserModel {
     public void setTextView(String textView) {
         this.textView = textView;
     }
+
+
 }

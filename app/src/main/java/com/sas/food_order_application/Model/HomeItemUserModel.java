@@ -4,8 +4,8 @@ public class HomeItemUserModel {
     int image;
     String dishName,dishAmount;
 
-    public HomeItemUserModel(int burger, String dishName, String dishAmount) {
-        this.image = image;
+    public HomeItemUserModel(String dishName, String dishAmount) {
+//        this.image = image;
         this.dishName = dishName;
         this.dishAmount = dishAmount;
     }

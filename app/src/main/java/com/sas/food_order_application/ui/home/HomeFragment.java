@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -34,19 +35,18 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sas.food_order_application.Adapter.HomeCategoryUserAdapter;
 import com.sas.food_order_application.Adapter.HomeItemUserAdapter;
-import com.sas.food_order_application.admin.AdminRegisterClass;
-import com.sas.food_order_application.databinding.FragmentHomeBinding;
-
 import com.sas.food_order_application.Model.HomeCategoryUserModel;
 import com.sas.food_order_application.Model.HomeItemUserModel;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.admin.AdminRegisterClass;
 import com.sas.food_order_application.admin.Categoryclass;
+import com.sas.food_order_application.databinding.FragmentHomeBinding;
 import com.sas.food_order_application.user.CheckoutDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.ItemClickListener {
+public class HomeFragment extends Fragment  {
 
     TextView selectRestaurant;
     public static String selectedRest;
@@ -56,14 +56,15 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
     private FragmentHomeBinding binding;
 
     RecyclerView homeCategoryRec,homeItemRec;
-    FirebaseFirestore firestore ;
+    static FirebaseFirestore firestore ;
 
     //Category list and adapter
     List<HomeCategoryUserModel> homeCategoryModelsList;
+    List<Categoryclass> categoryClassList;
     HomeCategoryUserAdapter homeCategoryUserAdapter;
 
     //Dish List and adapter
-    List<HomeItemUserModel> homeItemUserModelList;
+  public static List<HomeItemUserModel> homeItemUserModelList;
     HomeItemUserAdapter homeItemUserAdapter;
 
 
@@ -80,7 +81,7 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
         homeItemRec=root.findViewById(R.id.disheslist);
         homeCategoryModelsList = new ArrayList<>();
         homeItemUserModelList = new ArrayList<>();
-
+        categoryClassList = new ArrayList<>();
         //working fine need to check after list of restaurant attached to listView
         selectRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,12 +120,11 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
                         selectRestaurant.setText(adapter.getItem(position));
                         selectedRest=adapter.getItem(position);
                         dialog.dismiss();
+                        homeItemUserModelList.clear();
+                        homeItemUserAdapter.notifyDataSetChanged();
                         homeCategoryModelsList.clear();
                         homeCategoryUserAdapter.notifyDataSetChanged();
                         fetchCategory();// logic for fetching category
-//                        if(homeCategoryModelsList.size() >0) {
-                           itemUpdate(homeCategoryModelsList.get(0).toString());
-//                        }
                     }
                 });
             }
@@ -132,19 +132,20 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
 
 
 //        retreview  data which comes under specific category from firebase
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel("Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel("Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
+//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
 
 
 
-        homeCategoryUserAdapter = new HomeCategoryUserAdapter(getActivity(), homeCategoryModelsList);
+        homeCategoryUserAdapter = new HomeCategoryUserAdapter(getActivity(), homeCategoryModelsList,categoryClassList);
+
         homeCategoryRec.setAdapter(homeCategoryUserAdapter);
 
         homeItemUserAdapter = new HomeItemUserAdapter(getActivity(),homeItemUserModelList);
@@ -162,7 +163,7 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(root.getContext(), CheckoutDetails.class));
+                startActivity(new Intent(root.getContext(),CheckoutDetails.class));
             }
         });
 
@@ -209,13 +210,20 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
                 for (DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         Categoryclass categoryclass = dc.getDocument().toObject(Categoryclass.class);
+                        categoryClassList.add(categoryclass);
+                        //extra
+                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount());
+                        homeItemUserModelList.add(homeItemUserModel);
+
                         if(!tempList.contains(categoryclass.getCategory())){
                             tempList.add(categoryclass.getCategory());
                             HomeCategoryUserModel homeCategoryUserModel=new HomeCategoryUserModel(categoryclass.getCategory());
                             homeCategoryModelsList.add(homeCategoryUserModel);
                         }
                     }
+                    homeItemUserAdapter.notifyDataSetChanged();
                     homeCategoryUserAdapter.notifyDataSetChanged();
+
                 }
             }
         });
@@ -229,16 +237,20 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
                 for (DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         Categoryclass categoryclass = dc.getDocument().toObject(Categoryclass.class);
+                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount());
+                        homeItemUserModelList.add(homeItemUserModel);
                         if(!tempList.contains(categoryclass.getCategory())){
                             tempList.add(categoryclass.getCategory());
                             HomeCategoryUserModel homeCategoryUserModel=new HomeCategoryUserModel(categoryclass.getCategory());
                             homeCategoryModelsList.add(homeCategoryUserModel);
                         }
                     }
+                    homeItemUserAdapter.notifyDataSetChanged();
                     homeCategoryUserAdapter.notifyDataSetChanged();
                 }
             }
         });
+
     }
 
     @Override
@@ -247,39 +259,7 @@ public class HomeFragment extends Fragment implements HomeCategoryUserAdapter.It
         binding = null;
     }
 
-    @Override
-    public void onItemClickListener(String item) {
-        itemUpdate(item);
-    }
 
-    public void itemUpdate(String item){
-        FirebaseFirestore firestore=FirebaseFirestore.getInstance();
-        String clickedCategory= item;
-        Log.d(selectedRest ," "+selectedRest);
-        homeItemUserModelList.clear();
-        firestore.collection("Restaurant").document(selectedRest).collection("Veg")
-                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-                    @Override
-                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error != null) {
-                            Log.e("firestore error", error.getMessage());
-                            return;
-                        }
-                        for (DocumentChange dc : value.getDocumentChanges()) {
-                            if (dc.getType() == DocumentChange.Type.ADDED) {
-                                Categoryclass category = dc.getDocument().toObject(Categoryclass.class);
-                                if (clickedCategory.equals(category.getCategory())) {
-                                    HomeItemUserModel homeItemUserModel = new HomeItemUserModel(R.drawable.burger, category.getItem(), category.getAmount());
-                                    homeItemUserModelList.add(homeItemUserModel);
-                                }
 
-                            }
-                            homeItemUserAdapter.notifyDataSetChanged();
-                        }
-                    }
-                });
-
-//        homeItemUserAdapter.notifyDataSetChanged();
-    }
 
 }
