@@ -4,6 +4,8 @@ public class HomeItemUserModel {
     int image;
     String dishName,dishAmount;
 
+
+
     public HomeItemUserModel(String dishName, String dishAmount) {
 //        this.image = image;
         this.dishName = dishName;

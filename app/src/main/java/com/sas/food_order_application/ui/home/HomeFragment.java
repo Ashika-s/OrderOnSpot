@@ -41,7 +41,7 @@ import com.sas.food_order_application.R;
 import com.sas.food_order_application.admin.AdminRegisterClass;
 import com.sas.food_order_application.admin.Categoryclass;
 import com.sas.food_order_application.databinding.FragmentHomeBinding;
-import com.sas.food_order_application.user.CheckoutDetails;
+import com.sas.food_order_application.user.Checkout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +64,8 @@ public class HomeFragment extends Fragment  {
     HomeCategoryUserAdapter homeCategoryUserAdapter;
 
     //Dish List and adapter
-  public static List<HomeItemUserModel> homeItemUserModelList;
-    HomeItemUserAdapter homeItemUserAdapter;
+    public static List<HomeItemUserModel> homeItemUserModelList;
+    public static HomeItemUserAdapter homeItemUserAdapter;
 
 
 
@@ -120,6 +120,7 @@ public class HomeFragment extends Fragment  {
                         selectRestaurant.setText(adapter.getItem(position));
                         selectedRest=adapter.getItem(position);
                         dialog.dismiss();
+                        categoryClassList.clear();
                         homeItemUserModelList.clear();
                         homeItemUserAdapter.notifyDataSetChanged();
                         homeCategoryModelsList.clear();
@@ -129,20 +130,6 @@ public class HomeFragment extends Fragment  {
                 });
             }
         });
-
-
-//        retreview  data which comes under specific category from firebase
-//        homeItemUserModelList.add(new HomeItemUserModel("Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel("Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-//        homeItemUserModelList.add(new HomeItemUserModel(R.drawable.burger,"Veg Salad","129"));
-
-
 
         homeCategoryUserAdapter = new HomeCategoryUserAdapter(getActivity(), homeCategoryModelsList,categoryClassList);
 
@@ -163,7 +150,7 @@ public class HomeFragment extends Fragment  {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(root.getContext(),CheckoutDetails.class));
+                startActivity(new Intent(root.getContext(), Checkout.class));
             }
         });
 
@@ -237,6 +224,7 @@ public class HomeFragment extends Fragment  {
                 for (DocumentChange dc : value.getDocumentChanges()){
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         Categoryclass categoryclass = dc.getDocument().toObject(Categoryclass.class);
+                        categoryClassList.add(categoryclass);
                         HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount());
                         homeItemUserModelList.add(homeItemUserModel);
                         if(!tempList.contains(categoryclass.getCategory())){
@@ -259,7 +247,11 @@ public class HomeFragment extends Fragment  {
         binding = null;
     }
 
-
+    public static void getUpdateAdapter(List<HomeItemUserModel> homeItemUserModel){
+        homeItemUserModelList.clear();
+        homeItemUserModelList.addAll(homeItemUserModel);
+        homeItemUserAdapter.notifyDataSetChanged();
+    }
 
 
 }

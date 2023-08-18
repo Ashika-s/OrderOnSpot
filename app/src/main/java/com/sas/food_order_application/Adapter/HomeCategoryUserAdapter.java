@@ -26,11 +26,7 @@ public class HomeCategoryUserAdapter extends RecyclerView.Adapter<HomeCategoryUs
     List<HomeCategoryUserModel> homeCategoryModels;
     List<Categoryclass> categoryclassList;
     List<HomeItemUserModel> homeItemUserModelList=new ArrayList<>();
-    List<HomeItemUserModel> tempHomeItemUserModels;
-     HomeItemUserAdapter homeItemUserAdapter;
-    RecyclerView homeItemRec ;
-//    private ItemClickListener itemClickListener;
-
+    HomeItemUserAdapter homeItemUserAdapter;
 
     @NonNull
     @Override
@@ -42,7 +38,9 @@ public class HomeCategoryUserAdapter extends RecyclerView.Adapter<HomeCategoryUs
     public HomeCategoryUserAdapter(Context context, List<HomeCategoryUserModel> homeCategoryModels, List<Categoryclass> categoryclassList) {
         this.context = context;
         this.homeCategoryModels = homeCategoryModels;
+
         this.categoryclassList=categoryclassList;
+//        this.homeItemUserAdapter=homeItemUserAdapter;
     }
 
     @Override
@@ -68,26 +66,16 @@ public class HomeCategoryUserAdapter extends RecyclerView.Adapter<HomeCategoryUs
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    homeItemUserModelList.clear();
-                    homeItemUserAdapter = new HomeItemUserAdapter(context.getApplicationContext(),homeItemUserModelList);
-                   getUpdatedSecondItems(category.getText().toString());
-                    Log.d("Item List"," "+homeItemUserModelList.toString());
-                    for(HomeItemUserModel f:homeItemUserModelList){
-                        Log.d("Items"," "+f.getDishName());
+                    int position = getAdapterPosition();
+                    if (position != RecyclerView.NO_POSITION) {
+                        homeItemUserModelList.clear();
+                        getUpdatedSecondItems(category.getText().toString());
+                        for (HomeItemUserModel f : homeItemUserModelList) {
+                            Log.d("Items", " " + f.getDishName());
+                        }
+                        HomeFragment.getUpdateAdapter(homeItemUserModelList);
                     }
-//                        for(Categoryclass categoryclass:categoryclassList){
-//                            if(category.getText().toString().equals(categoryclass.getCategory())){
-//                                HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount());
-//                                homeItemUserModelList.add(homeItemUserModel);
-//                                Log.d("listOfIem",homeItemUserModel.getDishName());
-//                                HomeFragment.homeItemUserModelList.addAll(homeItemUserModelList);
-//                                HomeFragment.homeItemUserAdapter.notifyDataSetChanged();
-//                            }
-//
-                    homeItemUserAdapter.updateData(homeItemUserModelList);
-
                 }
-
             });
         }
 

@@ -40,17 +40,16 @@
                 android:id="@+id/txtDishName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="serif-monospace"
                 android:text="Veg Salad"
                 android:textColor="@color/black"
-                android:textSize="26sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.129"
+                app:layout_constraintHorizontal_bias="0.084"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.095" />
+                app:layout_constraintVertical_bias="0.096" />
 
             <TextView
                 android:id="@+id/txtDishAmount"
@@ -58,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="14dp"
                 android:layout_marginTop="12dp"
-                android:fontFamily="sans-serif"
+                android:fontFamily="serif"
                 android:text="Amount"
                 android:textColor="@color/black"
                 android:textSize="18sp"
@@ -66,20 +65,63 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtDishName" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnAddDish"
-                android:layout_width="75dp"
-                android:layout_height="48dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/category_bg"
-                android:padding="2dp"
-                android:text="Add"
-                android:textAlignment="center"
-                android:textAllCaps="false"
+<!--            <com.google.android.material.button.MaterialButton-->
+<!--                android:id="@+id/btnAddDish"-->
+<!--                android:layout_width="75dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginBottom="8dp"-->
+<!--                android:background="@drawable/category_bg"-->
+<!--                android:padding="2dp"-->
+<!--                android:text="Add"-->
+<!--                android:textAlignment="center"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintHorizontal_bias="0.776"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/txtDishAmount" />-->
+            <LinearLayout
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="7dp"
+                android:orientation="horizontal"
+                android:paddingBottom="1dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.776"
-                app:layout_constraintStart_toEndOf="@+id/txtDishAmount" />
+                app:layout_constraintStart_toEndOf="@+id/txtDishAmount"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="1.0">
+
+                <Button
+                    android:id="@+id/btndecrease"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="4dp"
+                    android:onClick="decreaseInteger"
+                    android:padding="1dp"
+                    android:text="-"
+                    android:textSize="20sp"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+                <TextView
+                    android:id="@+id/txtinteger_number"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="8dp"
+                    android:text="0"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btnincrease"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:onClick="increaseInteger"
+                    android:padding="1dp"
+                    android:text="+"
+                    tools:ignore="TouchTargetSizeCheck" />
+
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
