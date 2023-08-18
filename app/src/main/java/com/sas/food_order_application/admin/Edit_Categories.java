@@ -6,9 +6,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +25,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -40,23 +46,26 @@ import java.util.Map;
 
 public class Edit_Categories extends AppCompatActivity {
 
-static final int PICK_IMAGE_REQUEST=1;
+    static final int PICK_IMAGE_REQUEST=1;
     TextView item;
     TextView category;
-    TextView type;
+    Spinner type;
+    TextInputLayout spinnerLayout;
+    boolean isInitialTouch = true;
     TextView amount;
     Button add;
 
-     FirebaseStorage storage;
+    FirebaseStorage storage;
     Button selectImageButton;
-//     EditText imageNameEditText;
-     ImageView uploadedImageView;
-   
+    //     EditText imageNameEditText;
+    ImageView uploadedImageView;
+    static String selectedOption;
+
 
     String restname= AdminRegister.restname;
-FirebaseFirestore db=FirebaseFirestore.getInstance();
-DocumentReference documentReference;
-FirebaseDatabase firebaseDatabase;
+    FirebaseFirestore db=FirebaseFirestore.getInstance();
+    DocumentReference documentReference;
+    FirebaseDatabase firebaseDatabase;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -66,11 +75,53 @@ FirebaseDatabase firebaseDatabase;
         item=findViewById(R.id.items);
         category=findViewById(R.id.category);
         type=findViewById(R.id.type);
+        spinnerLayout = findViewById(R.id.spinnerLayout);
         amount=findViewById(R.id.amount);
         add=findViewById(R.id.addbtn);
         selectImageButton=findViewById(R.id.selectImageButton);
-      //  imageNameEditText=findViewById(R.id.imageNameEditText);
+        //  imageNameEditText=findViewById(R.id.imageNameEditText);
         uploadedImageView=findViewById(R.id.uploadedImageView);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                this,
+                R.array.array_name,
+                android.R.layout.simple_spinner_item
+        );
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        type.setAdapter(adapter);
+
+        type.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (isInitialTouch) {
+                    isInitialTouch = false;
+                    // Clear the selection
+                    type.setSelection(0);
+                }
+                return false;
+            }
+        });
+
+
+
+//        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                selectedOption = parent.getItemAtPosition(position).toString();
+//                if (selectedOption.equals(getString(R.string.select_option_prompt)))
+//                    spinnerLayout.setError("Please select an option"); // Set error message
+//                else {
+//                    spinnerLayout.setError(null);
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//
+//            }
+//        });
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -83,11 +134,38 @@ FirebaseDatabase firebaseDatabase;
                 String itemm,categoryy,typee,amountt;
                 itemm = String.valueOf(item.getText());
                 categoryy=String.valueOf(category.getText());
-                typee = String.valueOf(type.getText());
+
                 amountt = String.valueOf(amount.getText());
-                addcategoryies(itemm,categoryy,typee,amountt);
-                startActivity(new Intent(Edit_Categories.this, AdminMain.class));
+                type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        selectedOption = parent.getItemAtPosition(position).toString();
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+
+
+                    }
+                });
+
+                if (TextUtils.isEmpty(itemm) || TextUtils.isEmpty(categoryy) || TextUtils.isEmpty(amountt) || TextUtils.isEmpty(selectedOption)) {
+                    item.setError("Item cannot be empty");
+                    item.requestFocus();
+                    category.setError("Category cannot be empty");
+                    category.requestFocus();
+                    amount.setError("Amount cannot be empty");
+                    amount.requestFocus();
+                    spinnerLayout.setError("Please select an option");
+                    spinnerLayout.requestFocus();
+
+                    return;
                 }
+
+                addcategoryies(itemm,categoryy,selectedOption,amountt);
+
+                startActivity(new Intent(Edit_Categories.this, AdminMain.class));
+            }
         });
     }
 

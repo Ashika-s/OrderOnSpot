@@ -10,13 +10,14 @@
 
     <EditText
         android:id="@+id/items"
+        android:background="@drawable/log"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
+
         android:drawablePadding="13dp"
-        android:hint="Item Name"
+        android:hint="    Item Name"
         android:layout_marginTop="50dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
@@ -32,14 +33,14 @@
     <EditText
         android:id="@+id/category"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
 
+        android:background="@drawable/log"
         android:drawablePadding="13dp"
-        android:hint="Category"
+        android:hint="    Category"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="21sp"
@@ -49,38 +50,38 @@
         app:layout_constraintTop_toBottomOf="@+id/items"
         app:layout_constraintWidth_percent=".8" />
 
-    <EditText
-        android:id="@+id/type"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/spinnerLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
+        android:layout_gravity="center">
 
-        android:drawablePadding="13dp"
-        android:hint="Type"
-        android:textColor="@color/black"
-        android:textColorHint="@color/black"
-        android:textSize="21sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/category"
-        app:layout_constraintWidth_percent=".8" />
+        <Spinner
+            android:id="@+id/type"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="40dp"
+            android:background="@drawable/log"
+            android:drawSelectorOnTop="true"
+            android:entries="@array/array_name"
+            android:prompt="@string/select_option_prompt" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+
 
     <EditText
         android:id="@+id/amount"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
-        android:backgroundTint="#CCCCCC"
 
         android:drawablePadding="13dp"
-        android:hint="Amount"
-
+        android:hint="    Amount"
+        android:background="@drawable/log"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="21sp"
@@ -90,12 +91,35 @@
         app:layout_constraintTop_toBottomOf="@+id/type"
         app:layout_constraintWidth_percent=".8" />
 
+
+    <Button
+        android:id="@+id/selectImageButton"
+        android:layout_width="154dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="110dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="154dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/category_bg"
+        android:text="Select Image"
+        app:layout_constraintBottom_toTopOf="@+id/imageNameEditText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tool" />
+
+    <ImageView
+        android:id="@+id/uploadedImageView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:scaleType="centerInside"/>
+
     <Button
         android:id="@+id/addbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="13dp"
         android:layout_marginStart="140dp"
+        android:layout_marginTop="170dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/category_bg"
         android:text="ADD"
@@ -104,23 +128,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/amount"
         tools:ignore="MissingConstraints" />
-    <Button
-        android:id="@+id/selectImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="113dp"
-        android:layout_marginTop="9dp"
-        android:layout_marginEnd="154dp"
-        android:layout_marginBottom="15dp"
-        android:text="Select Image"
-        app:layout_constraintBottom_toTopOf="@+id/imageNameEditText"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tool" />
-    <ImageView
-        android:id="@+id/uploadedImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:scaleType="centerInside"/>
 </LinearLayout>
