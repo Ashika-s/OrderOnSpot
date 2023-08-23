@@ -1,10 +1,19 @@
 package com.sas.food_order_application.Adapter;
 
+
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,13 +22,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sas.food_order_application.Model.CheckoutModel;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.user.Checkout;
 
 import java.util.List;
 
 public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapter.ViewHolder> {
 
     Context context;
-    List<CheckoutModel> checkoutModelList;
+    public static List<CheckoutModel> checkoutModelList;
 
     public CheckoutUserAdapter(Context context, List<CheckoutModel> list) {
         this.context = context;
@@ -30,14 +40,15 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_checkout,parent,false));
+        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.checkout_item,parent,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.txtDishName.setText(checkoutModelList.get(position).getDishName());
-        holder.txtItemCount.setText(checkoutModelList.get(position).getDishQuantity());
+        holder.edtTxtItemCount.setText((checkoutModelList.get(position).getDishQuantity()));
         holder.txtDishAmount.setText(checkoutModelList.get(position).getDishAmount());
+        holder.imageDish.setImageResource(R.drawable.burger);
 
     }
 
@@ -48,41 +59,91 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtDishName,txtDishAmount,txtItemCount;
+        TextView txtDishName,txtDishAmount;
+        EditText edtTxtItemCount;
         Button btnDecrease,btnIncrease;
-        ImageView imageDish;
+        ImageView imageDish,closeImg;
 
         int minteger=0;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtDishAmount=itemView.findViewById(R.id.txtCheckoutDishAmount);
-            txtDishName=itemView.findViewById(R.id.txtCheckoutDishAmount);
-            btnDecrease=itemView.findViewById(R.id.decrease);
-            btnIncrease=itemView.findViewById(R.id.increase);
+            txtDishName=itemView.findViewById(R.id.txtCheckoutDishName);
+//            btnDecrease=itemView.findViewById(R.id.decrease);
+//            btnIncrease=itemView.findViewById(R.id.increase);
             imageDish=itemView.findViewById(R.id.imageCheckoutDish);
-            txtItemCount=itemView.findViewById(R.id.integer_number);
-
-            btnIncrease.setOnClickListener(new View.OnClickListener() {
+            edtTxtItemCount=itemView.findViewById(R.id.integer_number);
+            closeImg=itemView.findViewById(R.id.closeImg);
+            closeImg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    minteger+=1;
-                    txtItemCount.setText(minteger);
+                    int position = getAdapterPosition();
+                    HomeItemUserAdapter.dishList.remove(checkoutModelList.get(position));
+                    checkoutModelList.remove(position);
+                    Checkout.setTotalAmount();
+                    notifyDataSetChanged();
                 }
             });
-            btnDecrease.setOnClickListener(new View.OnClickListener() {
+            edtTxtItemCount.addTextChangedListener(new TextWatcher() {
                 @Override
-                public void onClick(View v) {
-                    if(minteger>0) {
-                        minteger--;
-                        txtItemCount.setText(minteger);
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    int position = getAdapterPosition();
+                    CheckoutModel checkoutModel= checkoutModelList.get(position);
+                    checkoutModel.setDishQuantity(s.toString());
+                    checkoutModelList.set(position,checkoutModel);
+                    Log.d("Quantity",checkoutModel.getDishName()+"is"+ checkoutModel.getDishQuantity());
+
+
+                }
+
+                @SuppressLint("SuspiciousIndentation")
+                @Override
+                public void afterTextChanged(Editable s) {
+                    if (edtTxtItemCount.getText().toString() != "")
+                    Checkout.setTotalAmount();
+                }
+            });
+            edtTxtItemCount.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (keyCode==KeyEvent.KEYCODE_BACK || keyCode==KeyEvent.KEYCODE_ENTER){
+                        edtTxtItemCount.clearFocus();
+                        hideSoftKeyBoard();
+                        return true;
                     }
-
-                    //need to add function which delete item when count is zero
+                    return ViewHolder.super.itemView.onKeyDown(keyCode,event);
                 }
             });
-
-
+//            btnIncrease.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    minteger+=1;
+//                    txtItemCount.setText(minteger);
+//                }
+//            });
+//            btnDecrease.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    if(minteger>0) {
+//                        minteger--;
+//                        txtItemCount.setText(minteger);
+//                    }
+//
+//                    //need to add function which delete item when count is zero
+//                }
+//            });
 
         }
+        private void hideSoftKeyBoard() {
+            InputMethodManager im=(InputMethodManager) itemView.getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            im.hideSoftInputFromWindow( edtTxtItemCount.getWindowToken(),0);
+        }
+
+
     }
 }
