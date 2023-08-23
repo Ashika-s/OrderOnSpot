@@ -2,14 +2,23 @@ package com.sas.food_order_application.Model;
 public class HomeItemUserModel {
 
     int image;
-    String dishName,dishAmount;
+    String dishName,dishAmount,itemsCount;
 
 
 
-    public HomeItemUserModel(String dishName, String dishAmount) {
+    public HomeItemUserModel(String dishName, String dishAmount,String itemsCount) {
 //        this.image = image;
         this.dishName = dishName;
         this.dishAmount = dishAmount;
+        this.itemsCount=itemsCount;
+    }
+
+    public String getItemsCount() {
+        return itemsCount;
+    }
+
+    public void setItemsCount(String itemsCount) {
+        this.itemsCount = itemsCount;
     }
 
     public int getImage() {

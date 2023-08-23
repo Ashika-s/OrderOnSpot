@@ -2,14 +2,14 @@ package com.sas.food_order_application.Model;
 
 public class CheckoutModel {
 
-    String dishName,dishAmount;
-    int dishQuantity,imageID;
+    String dishName,dishAmount,dishQuantity;
+    int imageID;
 
-    public CheckoutModel(String dishName, String dishAmount, int dishQuantity, int imageID) {
+    public CheckoutModel(String dishName, String dishAmount, String dishQuantity) {
         this.dishName = dishName;
         this.dishAmount = dishAmount;
         this.dishQuantity = dishQuantity;
-        this.imageID = imageID;
+//        this.imageID = imageID;
     }
 
 
@@ -29,11 +29,11 @@ public class CheckoutModel {
         this.dishAmount = dishAmount;
     }
 
-    public int getDishQuantity() {
+    public String getDishQuantity() {
         return dishQuantity;
     }
 
-    public void setDishQuantity(int dishQuantity) {
+    public void setDishQuantity(String dishQuantity) {
         this.dishQuantity = dishQuantity;
     }
 

@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import com.sas.food_order_application.R;
 
-public class orders extends Fragment {
+public class Orders extends Fragment {
 View view;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

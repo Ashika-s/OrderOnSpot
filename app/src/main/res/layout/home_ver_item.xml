@@ -79,6 +79,7 @@
 <!--                app:layout_constraintEnd_toEndOf="parent"-->
 <!--                app:layout_constraintHorizontal_bias="0.776"-->
 <!--                app:layout_constraintStart_toEndOf="@+id/txtDishAmount" />-->
+
             <LinearLayout
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
@@ -93,33 +94,14 @@
                 app:layout_constraintVertical_bias="1.0">
 
                 <Button
-                    android:id="@+id/btndecrease"
-                    android:layout_width="40dp"
+                    android:id="@+id/btnAddCart"
+                    android:layout_width="100dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="4dp"
                     android:onClick="decreaseInteger"
                     android:padding="1dp"
-                    android:text="-"
-                    android:textSize="20sp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <TextView
-                    android:id="@+id/txtinteger_number"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:text="0"
-                    android:inputType="number"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/btnincrease"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:onClick="increaseInteger"
-                    android:padding="1dp"
-                    android:text="+"
+                    android:text="ADD TO CART"
+                    android:textSize="12sp"
                     tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>

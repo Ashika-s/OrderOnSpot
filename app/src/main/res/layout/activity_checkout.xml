@@ -6,97 +6,109 @@
     android:layout_height="match_parent"
     tools:context=".user.Checkout">
 
-
-    <TextView
-        android:id="@+id/textSelectedRestaurant"
+    <LinearLayout
+        android:id="@+id/constraintLayout4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/editbox_background"
-        android:drawableStart="@drawable/baseline_arrow_back_24"
-        android:hint="   Selected Restaurant"
-        android:padding="8dp"
-        android:textAlignment="textStart"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <Spinner
-        android:id="@+id/spinner"
-
-        android:layout_width="151dp"
-        android:layout_height="48dp"
-        android:spinnerMode="dropdown"
-        android:prompt="@string/spinner_prompt"
-        app:layout_constraintBottom_toTopOf="@+id/textItemsAdded"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textSelectedRestaurant" />
-
-    <TextView
-        android:id="@+id/textItemsAdded"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="serif-monospace"
-        android:padding="8dp"
-        android:text="Item(s) added"
-        android:textAlignment="center"
-        android:textColor="#101010"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listOfItemAdded"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textSelectedRestaurant"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textItemsAdded" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="405dp"
-        android:layout_height="111dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/textSelectedRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/screen_background_light_transparent"
+            android:drawableStart="@drawable/baseline_arrow_back_24"
+            android:drawablePadding="4dp"
+            android:hint="   Selected Restaurant"
+            android:padding="8dp"
+            android:textAlignment="textStart"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/spinner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
+
+        <Spinner
+            android:id="@+id/spinner"
+            android:layout_gravity="center"
+            android:layout_width="151dp"
+            android:layout_height="48dp"
+            android:spinnerMode="dropdown"
+            android:prompt="@string/spinner_prompt"
+            app:layout_constraintBottom_toTopOf="@+id/textItemsAdded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textSelectedRestaurant" />
+
+        <TextView
+            android:id="@+id/textItemsAdded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
+            android:fontFamily="serif-monospace"
+            android:padding="8dp"
+            android:text="Item(s) added"
+            android:textAlignment="center"
+            android:textColor="#101010"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/listOfItemAdded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/spinner" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/listOfItemAdded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/constraintLayout3"
+            app:layout_constraintTop_toBottomOf="@+id/textItemsAdded" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/constraintLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout4">
+
+        <TextView
             android:id="@+id/textTotalAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:drawable/editbox_background"
-
+            android:background="@android:drawable/screen_background_light_transparent"
             android:padding="8dp"
             android:text="Total Amount : "
             android:textAlignment="textStart"
             android:textColor="#101010"
             android:textSize="24sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/btntoOrderDetails"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/btntoOrderDetails"
+            android:id="@+id/btntoOrder"
             android:layout_width="246dp"
             android:layout_height="49dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
             android:background="@drawable/bg"
             android:padding="1dp"
+            android:layout_gravity="center"
             android:text="Place Order"
             android:textAlignment="center"
             android:textColor="#ECE8E8"
@@ -107,6 +119,8 @@
             app:layout_constraintHorizontal_bias="0.496"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textTotalAmount" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

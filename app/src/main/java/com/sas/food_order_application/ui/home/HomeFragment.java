@@ -16,13 +16,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+//import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.SearchView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -45,14 +48,16 @@ import com.sas.food_order_application.user.Checkout;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class HomeFragment extends Fragment  {
 
-    TextView selectRestaurant;
+    TextView selectRestaurant,txtItemsAdded;
     public static String selectedRest;
+    SearchView searchView;
     List<String> documentIds = new ArrayList<>();
     Dialog dialog;
-    Button btnNext;
+    static Button btnNext;
     private FragmentHomeBinding binding;
 
     RecyclerView homeCategoryRec,homeItemRec;
@@ -60,13 +65,13 @@ public class HomeFragment extends Fragment  {
 
     //Category list and adapter
     List<HomeCategoryUserModel> homeCategoryModelsList;
-    List<Categoryclass> categoryClassList;
+    public static List<Categoryclass> categoryClassList;
     HomeCategoryUserAdapter homeCategoryUserAdapter;
 
     //Dish List and adapter
     public static List<HomeItemUserModel> homeItemUserModelList;
     public static HomeItemUserAdapter homeItemUserAdapter;
-
+    private Boolean isFirstLaunch;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -75,13 +80,17 @@ public class HomeFragment extends Fragment  {
         View root = binding.getRoot();
         firestore=FirebaseFirestore.getInstance();
         selectRestaurant=root.findViewById(R.id.textSelectRestaurant);
-        listOfRestaurant();
         homeCategoryRec = root.findViewById(R.id.categorylist);
+        txtItemsAdded=root.findViewById(R.id.itemsaddedcount);
         btnNext = root.findViewById(R.id.btntoOrderDetails);
         homeItemRec=root.findViewById(R.id.disheslist);
+        searchView=root.findViewById(R.id.searchDishes);
+        searchView.clearFocus();
         homeCategoryModelsList = new ArrayList<>();
         homeItemUserModelList = new ArrayList<>();
         categoryClassList = new ArrayList<>();
+
+        listOfRestaurant();
         //working fine need to check after list of restaurant attached to listView
         selectRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +129,7 @@ public class HomeFragment extends Fragment  {
                         selectRestaurant.setText(adapter.getItem(position));
                         selectedRest=adapter.getItem(position);
                         dialog.dismiss();
+                        HomeItemUserAdapter.dishList.clear();
                         categoryClassList.clear();
                         homeItemUserModelList.clear();
                         homeItemUserAdapter.notifyDataSetChanged();
@@ -130,7 +140,24 @@ public class HomeFragment extends Fragment  {
                 });
             }
         });
+//        if (isFirstLaunch) {
+//            selectRestaurant.performClick();
+//            isFirstLaunch=false;
+//        }
+        //searchview
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
+                return true;
+            }
 
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                filterList(newText);
+                return true;
+            }
+        });
         homeCategoryUserAdapter = new HomeCategoryUserAdapter(getActivity(), homeCategoryModelsList,categoryClassList);
 
         homeCategoryRec.setAdapter(homeCategoryUserAdapter);
@@ -146,15 +173,48 @@ public class HomeFragment extends Fragment  {
         homeItemRec.setHasFixedSize(true);
         homeItemRec.setNestedScrollingEnabled(false);
 
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(root.getContext(), Checkout.class));
+                int size=HomeItemUserAdapter.dishList.size();
+                if(size>0) {
+//                    btnNext.setEnabled(true);
+                    Intent checkoutIntent = new Intent(root.getContext(),Checkout.class);
+                    checkoutIntent.putExtra("Restaurant Name", selectedRest);
+                    Log.d("restaurant",selectedRest);
+                    startActivity(checkoutIntent);
+                }else{
+                    Toast.makeText(getContext(),"Add item(s) to checkout",Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         return root;
+    }
+
+    //Btutton enable diable
+    public static void setVisibility(int i){
+        if(i>0){
+            btnNext.setEnabled(true);
+        }else {
+            btnNext.setEnabled(false);
+        }
+    }
+
+    //search dishes filter
+    private void filterList(String txt){
+        List<HomeItemUserModel> filterItemList = new ArrayList<>();
+        for (HomeItemUserModel homeItemUserModel: homeItemUserModelList){
+            if(homeItemUserModel.getDishName().toLowerCase(Locale.ROOT).contains(txt.toLowerCase(Locale.ROOT))){
+                filterItemList.add(homeItemUserModel);
+            }
+
+            if (filterItemList.isEmpty()){
+                Toast.makeText(getContext(),"No Item found",Toast.LENGTH_SHORT).show();
+            }else {
+                homeItemUserAdapter.setFilteredList(filterItemList);
+            }
+        }
     }
 
     //getting the document but method is correct
@@ -199,7 +259,7 @@ public class HomeFragment extends Fragment  {
                         Categoryclass categoryclass = dc.getDocument().toObject(Categoryclass.class);
                         categoryClassList.add(categoryclass);
                         //extra
-                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount());
+                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount(),String.valueOf(0));
                         homeItemUserModelList.add(homeItemUserModel);
 
                         if(!tempList.contains(categoryclass.getCategory())){
@@ -225,7 +285,7 @@ public class HomeFragment extends Fragment  {
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         Categoryclass categoryclass = dc.getDocument().toObject(Categoryclass.class);
                         categoryClassList.add(categoryclass);
-                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount());
+                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount(),String.valueOf(0));
                         homeItemUserModelList.add(homeItemUserModel);
                         if(!tempList.contains(categoryclass.getCategory())){
                             tempList.add(categoryclass.getCategory());
@@ -248,9 +308,10 @@ public class HomeFragment extends Fragment  {
     }
 
     public static void getUpdateAdapter(List<HomeItemUserModel> homeItemUserModel){
-        homeItemUserModelList.clear();
-        homeItemUserModelList.addAll(homeItemUserModel);
-        homeItemUserAdapter.notifyDataSetChanged();
+//        homeItemUserModelList.clear();
+//        homeItemUserModelList.addAll(homeItemUserModel);
+//        homeItemUserAdapter.notifyDataSetChanged();
+        homeItemUserAdapter.setFilteredList(homeItemUserModel);
     }
 
 

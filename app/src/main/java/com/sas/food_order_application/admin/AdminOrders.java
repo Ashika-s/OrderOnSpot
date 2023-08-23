@@ -1,25 +1,48 @@
 package com.sas.food_order_application.admin;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.sas.food_order_application.Adapter.OrderAdapter;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
+import com.sas.food_order_application.admin.AdminLogin;
+import com.sas.food_order_application.admin.AdminMain;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class AdminOrders extends AppCompatActivity {
     DrawerLayout drawerLayout;
     ImageView imageView;
     LinearLayout menu,orders,profile,logout;
+    List<DocumentSnapshot> tableDataList;
+
+    RecyclerView recyclerView;
+    OrderAdapter tableDataAdapter;
+    String email= AdminLogin.adminemailid;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +55,60 @@ public class AdminOrders extends AppCompatActivity {
         orders=findViewById(R.id.Order);
         profile=findViewById(R.id.Profile);
         logout=findViewById(R.id.Logout);
+
+        recyclerView = findViewById(R.id.recyclerviewCategory);
+        tableDataList=new ArrayList<>();
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        db.collection("Admin")
+                .document(email)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        if (documentSnapshot.exists()) {
+                            String userRestaurantName = documentSnapshot.getString("restorantName");
+//                            Log.d("order","is "+userRestaurantName);
+                            //   setupRecyclerView(userRestaurantName);
+
+                            CollectionReference tableDataCollection = db.collection("Order");
+
+                            tableDataCollection.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                                @Override
+                                public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                                    for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                                        String restaurantName = documentSnapshot.getString("Restaurant");
+//                                        Log.d("order","is "+restaurantName);
+                                        boolean check =restaurantName.equals(userRestaurantName);
+                                        Log.d("orders","is "+check);
+                                        if(check)
+                                        {
+                                            Log.d("order","is "+restaurantName+" "+userRestaurantName);
+                                            tableDataList.add(documentSnapshot);
+                                            tableDataAdapter = new OrderAdapter(tableDataList);
+//                                            tableDataAdapter.notifyDataSetChanged();
+                                            recyclerView.setAdapter(tableDataAdapter);
+
+                                        }
+                                    }
+
+
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    // Handle failure
+                                }
+                            });
+                        }
+                    }
+
+                });
+
+
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setNestedScrollingEnabled(false);
 
 
         imageView.setOnClickListener(new View.OnClickListener() {
@@ -87,6 +164,12 @@ public class AdminOrders extends AppCompatActivity {
             }
         });
     }
+
+//    private void setupRecyclerView(String userRestaurantName) {
+//
+//
+//    }
+
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);
     }

@@ -26,6 +26,9 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class AdminRegister extends AppCompatActivity {
     Button register;
     EditText Restaurantname;
@@ -174,5 +177,8 @@ public class AdminRegister extends AppCompatActivity {
                 Toast.makeText(AdminRegister.this, "Failed", Toast.LENGTH_SHORT).show();
             }
         });
+        Map<String,Object> map=new HashMap<>();
+        map.put("Email",emaill);
+        db.collection("Restaurant").document(Restaurantnamee).set(map);
     }
 }

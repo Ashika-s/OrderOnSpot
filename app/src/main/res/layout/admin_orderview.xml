@@ -2,126 +2,162 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_margin="9dp"
     app:cardCornerRadius="0dp"
     app:cardElevation="4dp">
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutTxtView"
-        android:layout_width="393dp"
-        android:layout_height="194dp"
-        android:background="#E3CAF8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.222"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
 
-
-        <TextView
-            android:id="@+id/ItemName"
-            android:layout_width="wrap_content"
+        android:padding="16dp">
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="36dp"
-            android:text="ID :"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:id="@+id/layy"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.095" />
+            <TextView
+                android:id="@+id/id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="id"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                tools:ignore="NotSibling" />
 
-        <EditText
-            android:id="@+id/table"
-            android:layout_width="wrap_content"
+            <TextView
+
+                android:id="@+id/tableno"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:text="table"
+                android:textStyle="bold"
+
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layy"
+            android:id="@+id/layyy"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@+id/tablenumber"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="5dp" />
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tablenumber"
-            android:layout_width="wrap_content"
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/totalAmount"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"
+                android:text="Amount"
+                android:textSize="18sp"/>
+        </LinearLayout>
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/layyy"
+            android:id="@+id/layyyy"
             android:layout_height="wrap_content"
-            android:text="Table No :"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold"
+            android:orientation="horizontal"
+            android:padding="18dp">
+            <TextView
+                android:textColor="@color/black"
+                android:id="@+id/preferencesTextView"
+                android:layout_marginLeft="5dp"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-            app:layout_constraintBottom_toTopOf="@+id/accept"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.771"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.155" />
+                android:textSize="18sp"/>
+        </LinearLayout>
 
 
-        <EditText
-            android:id="@+id/idnumber"
+
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
+            android:layout_below="@+id/layyyy"
+            android:id="@+id/btn"
             android:layout_height="wrap_content"
-            android:layout_marginStart="54dp"
-            android:layout_marginEnd="93dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/tablenumber"
-            app:layout_constraintStart_toEndOf="@+id/ItemName"
-            tools:ignore="MissingConstraints"
-            tools:layout_editor_absoluteY="5dp" />
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/itemText"
-            android:layout_width="95dp"
-            android:layout_height="26dp"
-            android:layout_marginStart="36dp"
-            android:layout_marginEnd="262dp"
-            android:layout_marginBottom="31dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="View List"
-            android:textColor="#007ACC"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/reject"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:ignore="MissingConstraints" />
+            <Button
+                android:id="@+id/accept"
 
-        <Button
-            android:id="@+id/accept"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="50dp"
+
+
+                android:text="Accept"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.376"
+                app:layout_constraintStart_toEndOf="@+id/reject" />
+
+            <Button
+                android:id="@+id/reject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/accept"
+                android:layout_marginLeft="30dp"
+
+                android:text="Reject"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </LinearLayout>
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="wrap_content"
+            android:layout_below="@+id/btn"
+            android:id="@+id/orderid"
             android:layout_height="wrap_content"
-            android:layout_marginStart="75dp"
-            android:layout_marginEnd="51dp"
-            android:layout_marginBottom="16dp"
-            android:text="Accept"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toEndOf="@+id/reject" />
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:padding="16dp">
 
-        <Button
-            android:id="@+id/reject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="48dp"
-            android:layout_marginBottom="16dp"
-            android:text="Reject"
-            android:textColor="@color/white"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            <Button
+                android:id="@+id/order"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:background="@color/purple_700"
+                android:text="ORDER READY"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.376"
+                app:layout_constraintStart_toEndOf="@+id/reject" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+
+
+
+
 
 
 </androidx.cardview.widget.CardView>

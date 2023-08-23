@@ -57,6 +57,14 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.095" />
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/closeImg"
+                android:src="@drawable/ic_baseline_close_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <TextView
                 android:id="@+id/txtCheckoutDishAmount"
                 android:layout_width="wrap_content"
@@ -71,49 +79,66 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/txtCheckoutDishName" />
 
-            <LinearLayout
-                android:layout_width="120dp"
+<!--            <LinearLayout-->
+<!--                android:layout_width="120dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="60dp"-->
+<!--                android:layout_marginEnd="7dp"-->
+<!--                android:orientation="horizontal"-->
+<!--                android:paddingBottom="1dp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toEndOf="@+id/txtCheckoutDishAmount"-->
+<!--                app:layout_constraintTop_toTopOf="parent"-->
+<!--                app:layout_constraintVertical_bias="1.0">-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/decrease"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_marginTop="4dp"-->
+<!--                    android:onClick="decreaseInteger"-->
+<!--                    android:padding="1dp"-->
+<!--                    android:text="-"-->
+<!--                    android:textSize="20sp"-->
+<!--                    tools:ignore="TouchTargetSizeCheck" />-->
+
+<!--                <TextView-->
+<!--                    android:id="@+id/integer_number"-->
+<!--                    android:layout_width="30dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:paddingLeft="8dp"-->
+<!--                    android:text="1"-->
+<!--                    android:textSize="18sp"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <Button-->
+<!--                    android:id="@+id/increase"-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:onClick="increaseInteger"-->
+<!--                    android:padding="1dp"-->
+<!--                    android:text="+"-->
+<!--                    tools:ignore="TouchTargetSizeCheck" />-->
+
+<!--            </LinearLayout>-->
+
+
+            <EditText
+                android:id="@+id/integer_number"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="60dp"
-                android:layout_marginEnd="7dp"
-                android:orientation="horizontal"
-                android:paddingBottom="1dp"
+                android:layout_marginTop="46dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="1dp"
+                android:hint="Quantity"
+                android:inputType="number"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColorHint="@color/black"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/txtCheckoutDishAmount"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="1.0">
-
-                <Button
-                    android:id="@+id/decrease"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="4dp"
-                    android:onClick="decreaseInteger"
-                    android:padding="1dp"
-                    android:text="-"
-                    android:textSize="20sp"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-                <TextView
-                    android:id="@+id/integer_number"
-                    android:layout_width="30dp"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="8dp"
-                    android:text="1"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/increase"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:onClick="increaseInteger"
-                    android:padding="1dp"
-                    android:text="+"
-                    tools:ignore="TouchTargetSizeCheck" />
-
-            </LinearLayout>
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
