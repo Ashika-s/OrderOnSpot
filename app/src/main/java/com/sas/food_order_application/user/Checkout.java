@@ -2,13 +2,16 @@ package com.sas.food_order_application.user;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -50,9 +53,14 @@ public class Checkout extends AppCompatActivity {
     List<CheckoutModel> checkoutList;
     CheckoutUserAdapter checkoutUserAdapter;
     Button btnPlaceOrder;
+
+    private Handler handler = new Handler();
+    private Runnable refreshRunnable;
+
     int tableNo=0;
     static int Id=2120;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +69,7 @@ public class Checkout extends AppCompatActivity {
         recyclerView=findViewById(R.id.listOfItemAdded);
         btnPlaceOrder=findViewById(R.id.btntoOrder);
         txtTotalAmount=findViewById(R.id.textTotalAmount);
+
         Intent intent=getIntent();
         useremail=UserLogin.emailid;
         db=FirebaseFirestore.getInstance();
@@ -68,6 +77,7 @@ public class Checkout extends AppCompatActivity {
         restaurant=intent.getStringExtra("Restaurant Name");
         selectedRestaurant.setText(restaurant);
         Log.d("resta",""+restaurant);
+
 
         db.collection("Restaurant").document(restaurant).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>(){
             @Override
@@ -114,8 +124,17 @@ public class Checkout extends AppCompatActivity {
                 btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        myordersdatabase();
                         sendDataToAdmin();
+
+                        Intent intent=new Intent(Checkout.this,orderplaced_splash.class);
+                        startActivity(intent);
+                        finish();
+
+
                     }
+
+
                 });
 
 
@@ -124,7 +143,39 @@ public class Checkout extends AppCompatActivity {
 
 
     }
+    private void myordersdatabase() {
 
+        HashMap<String,Integer> listOrder = new HashMap<>();
+        for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
+            listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
+        }
+        CollectionReference tableCollection = db.collection("My_Orders");
+        DocumentReference documentReference=tableCollection.document(useremail);
+        Map<String,Object> tabledata=new HashMap<>();
+        tabledata.put("tablenumber",tableNo);
+        tabledata.put("preferences",listOrder);
+        tabledata.put("Id",Id++);
+        tabledata.put("Total Amount",totalAmount);
+        tabledata.put("Restaurant",restaurant);
+
+        documentReference.set(tabledata)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Data added successfully
+                        Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // Handle failure
+                        Toast.makeText(Checkout.this, "Failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+    }
     private void sendDataToAdmin() {
         HashMap<String,Integer> listOrder = new HashMap<>();
         for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
@@ -154,16 +205,6 @@ public class Checkout extends AppCompatActivity {
                         Toast.makeText(Checkout.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
-//        OrderDetails orderDetails= new OrderDetails(Id++,restaurant,UserLogin.emailid,tableNo,totalAmount,listOrder);
-//        db.collection("Orders").document(UserLogin.emailid).set(orderDetails).addOnSuccessListener(new OnSuccessListener<Void>() {
-//            @Override
-//            public void onSuccess(Void unused) {
-//                Toast.makeText(getApplicationContext(),"Order placed successfully",Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//        CollectionReference tableCollection = db.collection("Order");
-//        DocumentReference documentReference=tableCollection.document()
     }
 
     private void setRecyclerViewList(){
