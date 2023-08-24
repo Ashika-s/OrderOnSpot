@@ -59,7 +59,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         String ID = String.valueOf(documentSnapshot.get("Id"));
         String tableNumber = String.valueOf(documentSnapshot.get("tablenumber"));
-        String amount = String.valueOf( documentSnapshot.get("Total Amount"));
+        String amount = (documentSnapshot.get("Total Amount")).toString();
 
         Map<String, Object> preferencesMap = (Map<String, Object>) documentSnapshot.get("preferences");
         holder.bindData(ID, tableNumber, amount, preferencesMap);

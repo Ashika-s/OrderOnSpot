@@ -1,7 +1,10 @@
 package com.sas.food_order_application.ui.home;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -29,6 +32,8 @@ import androidx.appcompat.widget.SearchView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -45,6 +50,7 @@ import com.sas.food_order_application.admin.AdminRegisterClass;
 import com.sas.food_order_application.admin.Categoryclass;
 import com.sas.food_order_application.databinding.FragmentHomeBinding;
 import com.sas.food_order_application.user.Checkout;
+import com.sas.food_order_application.user.UserLogin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +85,11 @@ public class HomeFragment extends Fragment  {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         firestore=FirebaseFirestore.getInstance();
+        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentuser != null){
+            SharedPreferences preferences = requireContext().getSharedPreferences("localEmailUser",MODE_PRIVATE);
+            UserLogin.emailid=preferences.getString("KEY_EMAIL_USER", "");
+        }
         selectRestaurant=root.findViewById(R.id.textSelectRestaurant);
         homeCategoryRec = root.findViewById(R.id.categorylist);
         txtItemsAdded=root.findViewById(R.id.itemsaddedcount);

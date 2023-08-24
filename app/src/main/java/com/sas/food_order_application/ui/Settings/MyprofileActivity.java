@@ -117,12 +117,13 @@ public class MyprofileActivity extends AppCompatActivity {
 //    }
     void fetchData(String email){
 
-        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentuser != null){
-            SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
-            email = preferences.getString("KEY_EMAIL_USER", "");
-            UserLogin.emailid=preferences.getString("KEY_EMAIL_USER", "");
-        }
+//        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
+//        if (currentuser != null){
+//            SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
+//            email = preferences.getString("KEY_EMAIL_USER", "");
+//            UserLogin.emailid=preferences.getString("KEY_EMAIL_USER", "");
+//        }
+        email=UserLogin.emailid;
         DocumentReference docRef = db.collection("Customer").document(email);
         Log.d("profile", "value is "+docRef);
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
