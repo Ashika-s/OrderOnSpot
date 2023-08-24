@@ -157,7 +157,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                                 // Handle failure to delete item from the database
                             }
                         });
-                // orderready.
+
             }
         });
 
@@ -166,6 +166,24 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             public void onClick(View v) {
                 tableDataList.remove(position);
                 notifyItemRemoved(position);
+
+                String documentId = documentSnapshot.getId();
+                FirebaseFirestore.getInstance().collection("Order").document(documentId)
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                // Item deleted successfully from the database
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                // Handle failure to delete item from the database
+                            }
+                        });
+                // orderready.
+
 
             }
         });

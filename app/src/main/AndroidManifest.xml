@@ -16,6 +16,9 @@
         android:theme="@style/Theme.Food_Order_Application"
         tools:targetApi="31">
         <activity
+            android:name=".user.orderplaced_splash"
+            android:exported="false" />
+        <activity
             android:name=".admin.Orderready_Splascreensh"
             android:exported="false">
             <meta-data
