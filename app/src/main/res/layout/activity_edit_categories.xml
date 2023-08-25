@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="16dp"
-    tools:context=".admin.Edit_Categories">
+    tools:context=".admin.EditCategories">
 
     <EditText
         android:id="@+id/items"
@@ -17,7 +17,8 @@
         android:layout_marginEnd="40dp"
 
         android:drawablePadding="13dp"
-        android:hint="    Item Name"
+        android:hint="Item Name"
+        android:paddingLeft="20dp"
         android:layout_marginTop="50dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
@@ -40,7 +41,8 @@
 
         android:background="@drawable/log"
         android:drawablePadding="13dp"
-        android:hint="    Category"
+        android:hint="Category"
+        android:paddingLeft="20dp"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="21sp"
@@ -66,7 +68,8 @@
             android:background="@drawable/log"
             android:drawSelectorOnTop="true"
             android:entries="@array/array_name"
-            android:prompt="@string/select_option_prompt" />
+            android:prompt="@string/select_option_prompt"
+            android:paddingLeft="15dp"/>
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -78,13 +81,14 @@
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="40dp"
-
         android:drawablePadding="13dp"
-        android:hint="    Amount"
+        android:hint="Amount"
+        android:paddingLeft="20dp"
         android:background="@drawable/log"
         android:textColor="@color/black"
         android:textColorHint="@color/black"
         android:textSize="21sp"
+        android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,7 +101,7 @@
         android:layout_width="154dp"
         android:layout_height="50dp"
         android:layout_marginStart="110dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="25dp"
         android:layout_marginEnd="154dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/category_bg"
@@ -109,17 +113,18 @@
 
     <ImageView
         android:id="@+id/uploadedImageView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         android:layout_marginTop="16dp"
-        android:scaleType="centerInside"/>
+        android:layout_gravity="center"
+        android:scaleType="centerCrop"/>
 
     <Button
         android:id="@+id/addbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="17dp"
         android:layout_marginBottom="30dp"
         android:background="@drawable/category_bg"
         android:text="ADD"

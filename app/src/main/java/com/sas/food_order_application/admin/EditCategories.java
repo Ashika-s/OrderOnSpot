@@ -44,7 +44,7 @@ import java.util.Map;
 //import com.google.cloud.firestore.FirestoreOptions;
 
 
-public class Edit_Categories extends AppCompatActivity {
+public class EditCategories extends AppCompatActivity {
 
     static final int PICK_IMAGE_REQUEST=1;
     TextView item;
@@ -164,7 +164,7 @@ public class Edit_Categories extends AppCompatActivity {
 
                 addcategoryies(itemm,categoryy,selectedOption,amountt);
 
-                startActivity(new Intent(Edit_Categories.this, AdminMain.class));
+                startActivity(new Intent(EditCategories.this, AdminMain.class));
             }
         });
     }
@@ -264,12 +264,12 @@ public class Edit_Categories extends AppCompatActivity {
                         db.collection("Restaurant").document(rest).collection(type).document(item).set(categoryclass).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-                                Toast.makeText(Edit_Categories.this, "Item Added", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditCategories.this, "Item Added", Toast.LENGTH_SHORT).show();
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                Toast.makeText(Edit_Categories.this, "Failed to add item", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(EditCategories.this, "Failed to add item", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

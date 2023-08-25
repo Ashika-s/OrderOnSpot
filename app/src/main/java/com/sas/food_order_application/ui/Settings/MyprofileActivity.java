@@ -41,10 +41,8 @@ public class MyprofileActivity extends AppCompatActivity {
             Email = findViewById(R.id.premail);
             Password = findViewById(R.id.prpassword);
             Update=findViewById(R.id.profilebutton);
-
             db = FirebaseFirestore.getInstance();
             String emaill =  UserLogin.emailid;
-
             fetchData(emaill);
             Update.setOnClickListener(new View.OnClickListener() {
                 @Override

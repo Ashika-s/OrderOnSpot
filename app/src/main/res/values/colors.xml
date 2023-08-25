@@ -3,12 +3,14 @@
     <color name="purple_200">#DEB8FE</color>
     <color name="purple_500">#511989</color>
     <color name="purple_700">#511989</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="teal_200">#511989</color>
+    <color name="teal_700">#511989</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="transperent">#00000000</color>
     <color name="neww">#DEB8FE</color>
     <color name="app">#511989</color>
     <color name="category_color">#E1D5ED</color>
+    <color name="Veg_Green">#7EE30A</color>
+    <color name="Non_Veg_Red">#F6132F</color>
 </resources>

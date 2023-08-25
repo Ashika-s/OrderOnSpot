@@ -63,7 +63,7 @@
 
         <TextView
             android:id="@+id/itemsaddedcount"
-            android:layout_width="171dp"
+            android:layout_width="wrap_content"
             android:layout_height="41dp"
             android:fontFamily="serif-monospace"
             android:text="items added"
@@ -83,19 +83,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginStart="92dp"
             android:layout_marginEnd="8dp"
             android:background="@drawable/category_bg"
             android:drawableEnd="@drawable/baseline_keyboard_arrow_right_24"
+            android:enabled="false"
             android:text="Next"
             android:textAlignment="viewEnd"
             android:textAllCaps="false"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/itemsaddedcount"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

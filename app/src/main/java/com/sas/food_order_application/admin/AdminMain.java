@@ -53,6 +53,7 @@ public class AdminMain extends AppCompatActivity {
     ArrayList<ImageData> imageData;
  //   ArrayList<ImageData> imageDataList;
     CategoryAdapter category_adapter;
+    public static String rest;
     public static String adminemaill =  AdminLogin.adminemailid;
 
     @Override
@@ -85,12 +86,11 @@ public class AdminMain extends AppCompatActivity {
 
         category_adapter=new CategoryAdapter(AdminMain.this,userArrayList);
         recyclerView.setAdapter(category_adapter);
-//        category_adapter.setTextDataList(userArrayList);
-//        category_adapter.setImageDataList(imageData);
+
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(AdminMain.this, Edit_Categories.class);
+                Intent intent = new Intent(AdminMain.this, EditCategories.class);
                 startActivity(intent);
                 finish();
             }
@@ -163,7 +163,7 @@ public class AdminMain extends AppCompatActivity {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
                         AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
-                        String rest = adminRegisterClass.getRestorantName();
+                         rest = adminRegisterClass.getRestorantName();
                         Log.d("main", "is " + rest);
                         List<String> tempCategoryList = new ArrayList<>();
                         db.collection("Restaurant").document(rest).collection("Veg")
@@ -228,10 +228,6 @@ public class AdminMain extends AppCompatActivity {
 //            // Handle error
 //        });
     }
-
-//    private void populateRecyclerView(ArrayList<Categoryclass> userArrayList, List<ImageData> imageDataList) {
-//
-//    }
 
     public static void openDrawer(DrawerLayout drawerLayout){
         drawerLayout.openDrawer(GravityCompat.START);

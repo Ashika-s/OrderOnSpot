@@ -3,6 +3,7 @@ package com.sas.food_order_application.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sas.food_order_application.Model.HomeItemUserModel;
-import com.sas.food_order_application.Model.QuantityButton;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.ui.home.HomeFragment;
 
@@ -155,7 +155,6 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                     }
                 }
             });*/
-
             btnAddCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -163,7 +162,7 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                     String tempName=txtDishName.getText().toString();
                     Log.d("quantity","is "+tempName+"position "+position);
                     if(position!=RecyclerView.NO_POSITION) {
-                        if (!dishList.contains(tempName)){
+                        if (!dishList.contains(list.get(position))){
                              dishList.add(list.get(position));
                             Toast.makeText(itemView.getContext(), "Item Added",Toast.LENGTH_SHORT).show();
                         }else{
@@ -172,6 +171,7 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                         Log.d("quantity map", "is " + dishList + "value is " + dishList.size());
                         HomeFragment.setVisibility(dishList.size());
                     }
+                    HomeFragment.txtItemsAdded.setText("items added "+dishList.size());
                 }
 
             });

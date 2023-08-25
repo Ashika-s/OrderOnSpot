@@ -19,7 +19,7 @@
             android:name=".user.orderplaced_splash"
             android:exported="false" />
         <activity
-            android:name=".admin.Orderready_Splascreensh"
+            android:name=".admin.OrderReadySplascreen"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -30,7 +30,7 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan|adjustResize" />
         <activity
-            android:name=".admin.Edit_Categories"
+            android:name=".admin.EditCategories"
             android:exported="false" />
         <activity
             android:name=".admin.Item_activity"

@@ -103,6 +103,7 @@ public class Checkout extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         tableNo= (position+1);
+//                        parent.setEnabled(false);
                         Log.d("doc","is "+tableNo);
                     }
 
@@ -124,6 +125,7 @@ public class Checkout extends AppCompatActivity {
                 btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
                         myordersdatabase();
                         sendDataToAdmin();
 
@@ -216,12 +218,14 @@ public class Checkout extends AppCompatActivity {
             checkoutList.add(checkoutModel);
         }
     }
+
     private void populateSpinner(Spinner spinner, long tablecount) {
         String[] tableitem =new String[(int) tablecount];
         for(int i=0; i<tablecount;i++)
         {
             tableitem[i] ="Table No "+(i+1);
         }
+
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,tableitem);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);

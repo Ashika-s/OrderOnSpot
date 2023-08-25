@@ -1,5 +1,6 @@
 package com.sas.food_order_application.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.admin.AdminMain;
 import com.sas.food_order_application.admin.Categoryclass;
 
 import java.util.List;
@@ -31,13 +34,31 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Categoryclass category=arrayList.get(position);
         holder.Amount.setText("Amount: "+category.getAmount());
         holder.ItemName.setText(category.getItem());
         //holder.imageView.setImageResource(category.getImage());
         holder.Type.setText("Type: "+ category.getType());
+
+//        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+//            @Override
+//            public boolean onLongClick(View v) {
+//                deleteItem(position);
+//                return true;
+//            }
+//        });
     }
+
+//    private void deleteItem(int position) {
+//        if(arrayList.remove(position).getType()=="Veg")
+//            FirebaseFirestore.getInstance().collection("Restaurant").document(AdminMain.rest).
+//                collection("Veg").document(arrayList.get(position).getItem()).delete();
+//        else
+//            FirebaseFirestore.getInstance().collection("Restaurant").document(AdminMain.rest).
+//                    collection("Non-Veg").document(arrayList.get(position).getItem()).delete();
+//        arrayList.remove(position);
+//    }
 
     @Override
     public int getItemCount() {

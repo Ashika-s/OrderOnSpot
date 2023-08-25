@@ -32,6 +32,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+
 public class AdminProfile extends AppCompatActivity {
     TextView RestaurantName;
     EditText RestaurantAddress;
@@ -163,20 +166,24 @@ public class AdminProfile extends AppCompatActivity {
         String ownerEmail = (OwnerEmail).getText().toString();
         String password =(Password).getText().toString();
         int tableNo= Integer.parseInt((tableno).getText().toString());
+        HashMap<String,Boolean> tableList = new LinkedHashMap<>();
+        for (int i=0;i<tableNo;i++){
+            tableList.put("Table No"+(i+1),true);
+        }
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null)
         {
             user.updateEmail(ownerEmail)
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                                @Override
-                                               public void onComplete(@NonNull Task<Void> task) {
-                                                   if(task.isSuccessful()){
-                                                       Log.d("profile", "email updated!"+ownerEmail);
-                                                   }else {
-                                                       Log.d("profile", "failed");
-                                                   }
-                                               }
-                                           }
+                           public void onComplete(@NonNull Task<Void> task) {
+                               if(task.isSuccessful()){
+                                   Log.d("profile", "email updated!"+ownerEmail);
+                               }else {
+                                   Log.d("profile", "failed");
+                               }
+                           }
+                       }
                     );
             user.updatePassword(password).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -200,7 +207,8 @@ public class AdminProfile extends AppCompatActivity {
                             "ownername",ownername,
                             "email",ownerEmail,
                             "password",password,
-                            "Tablecount",tableNo
+                            "Tablecount",tableNo,
+                            "Table List",tableList
                     )
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -244,6 +252,8 @@ public class AdminProfile extends AppCompatActivity {
                         OwnerName.setText(adminRegisterClass.getOwnername());
                         OwnerEmail.setText(adminRegisterClass.getEmail());
                         Password.setText(adminRegisterClass.getPassword());
+                        Log.d("Table No",adminRegisterClass.getTablecount()+"  "+String.valueOf( document.get("Tablecount")));
+                        tableno.setText(String.valueOf(document.get("Tablecount")));
                     } else {
                         Log.d("profile", "No such document");
                     }

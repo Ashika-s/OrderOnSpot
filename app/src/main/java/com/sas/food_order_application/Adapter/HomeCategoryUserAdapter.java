@@ -136,7 +136,7 @@ public void getUpdatedSecondItems(String clickedItem) {
 //                });
     for (Categoryclass category:categoryclassList){
         if(category.getCategory().equals(clickedCategory)){
-            HomeItemUserModel homeItemUserModel = new HomeItemUserModel(category.getItem(),category.getAmount(),String.valueOf(0));
+            HomeItemUserModel homeItemUserModel = new HomeItemUserModel(category.getItem(),category.getAmount(),String.valueOf(0), category.getType());
             homeItemUserModelList.add(homeItemUserModel);
         }
     }

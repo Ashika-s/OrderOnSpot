@@ -58,7 +58,8 @@ import java.util.Locale;
 
 public class HomeFragment extends Fragment  {
 
-    TextView selectRestaurant,txtItemsAdded;
+    TextView selectRestaurant;
+    public static TextView txtItemsAdded;
     public static String selectedRest;
     SearchView searchView;
     List<String> documentIds = new ArrayList<>();
@@ -270,7 +271,7 @@ public class HomeFragment extends Fragment  {
                         Categoryclass categoryclass = dc.getDocument().toObject(Categoryclass.class);
                         categoryClassList.add(categoryclass);
                         //extra
-                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount(),String.valueOf(0));
+                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount(),String.valueOf(0), categoryclass.getType());
                         homeItemUserModelList.add(homeItemUserModel);
 
                         if(!tempList.contains(categoryclass.getCategory())){
@@ -296,7 +297,7 @@ public class HomeFragment extends Fragment  {
                     if(dc.getType() == DocumentChange.Type.ADDED){
                         Categoryclass categoryclass = dc.getDocument().toObject(Categoryclass.class);
                         categoryClassList.add(categoryclass);
-                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount(),String.valueOf(0));
+                        HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount(),String.valueOf(0),categoryclass.getType());
                         homeItemUserModelList.add(homeItemUserModel);
                         if(!tempList.contains(categoryclass.getCategory())){
                             tempList.add(categoryclass.getCategory());

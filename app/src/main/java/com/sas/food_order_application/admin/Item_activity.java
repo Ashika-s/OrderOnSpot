@@ -40,6 +40,8 @@ public class Item_activity extends AppCompatActivity {
         itemViewRec.setLayoutManager(new LinearLayoutManager(this));
         item_adapter=new ItemAdapter(Item_activity.this,categoryclassList);
         itemViewRec.setAdapter(item_adapter);
+
+
     }
 
     private ArrayList<Categoryclass> itemSetListener(String clickedCategory) {
