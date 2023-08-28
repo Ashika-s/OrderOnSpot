@@ -1,7 +1,10 @@
 package com.sas.food_order_application.admin;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,14 +13,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -31,6 +41,7 @@ import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 import com.sas.food_order_application.admin.AdminLogin;
 import com.sas.food_order_application.admin.AdminMain;
+import com.sas.food_order_application.user.UserLogin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +53,7 @@ public class AdminOrders extends AppCompatActivity {
     ImageView refresh;
     LinearLayout menu,orders,profile,logout;
     List<DocumentSnapshot> tableDataList;
+    TextView textView;
 
     RecyclerView recyclerView;
     OrderAdapter tableDataAdapter;
@@ -62,8 +74,10 @@ public class AdminOrders extends AppCompatActivity {
         orders=findViewById(R.id.Order);
         profile=findViewById(R.id.Profile);
         logout=findViewById(R.id.Logout);
+        textView=findViewById(R.id.emptyTextView);
 
         recyclerView = findViewById(R.id.recyclerviewCategory);
+
 
 //        refreshRunnable = new Runnable() {
 //            @Override
@@ -140,6 +154,35 @@ public class AdminOrders extends AppCompatActivity {
             }
         });
     }
+    public void send(){
+        String chanelId="CHANNEL_ID_NOTIFICATION";
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(AdminOrders.this,chanelId);
+        builder.setSmallIcon(R.drawable.baseline_notifications_active_24)
+                .setContentTitle("notifcation")
+                .setContentTitle("hii")
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        Intent intent = new Intent(getApplicationContext(), UserLogin.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        // intent.putExtra("data","some value");
+
+        PendingIntent pendingIntent=PendingIntent.getActivity(AdminOrders.this,0,intent,PendingIntent.FLAG_MUTABLE);
+        builder.setContentIntent(pendingIntent);
+        NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        NotificationChannel notificationChannel=notificationManager.getNotificationChannel(chanelId);
+        if (notificationChannel==null){
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            notificationChannel = new NotificationChannel(chanelId,"nicee",importance);
+            notificationChannel.setLightColor(R.color.purple_500);
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        notificationManager.notify(0,builder.build());
+    }
+
 
     private void getorders() {
 
@@ -170,11 +213,16 @@ public class AdminOrders extends AppCompatActivity {
                                         Log.d("orders","is "+check);
                                         if(check)
                                         {
+
                                             Log.d("order","is "+restaurantName+" "+userRestaurantName);
                                             tableDataList.add(documentSnapshot);
-                                            tableDataAdapter = new OrderAdapter(tableDataList);
+                                            tableDataAdapter = new OrderAdapter(tableDataList, getApplicationContext());
 //                                            tableDataAdapter.notifyDataSetChanged();
+                                            updateEmptyState(tableDataList.size());
+                                            recyclerView.setHasFixedSize(true);
+                                            recyclerView.setNestedScrollingEnabled(false);
                                             recyclerView.setAdapter(tableDataAdapter);
+
 
                                         }
                                     }
@@ -193,9 +241,17 @@ public class AdminOrders extends AppCompatActivity {
                 });
 
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setNestedScrollingEnabled(false);
 
+    }
+
+     void updateEmptyState(int itemCount) {
+        if (itemCount==0){
+            recyclerView.setVisibility(View.GONE);
+            textView.setVisibility(View.VISIBLE);
+        }else{
+            recyclerView.setVisibility(View.VISIBLE);
+            textView.setVisibility(View.GONE);
+        }
     }
 
 

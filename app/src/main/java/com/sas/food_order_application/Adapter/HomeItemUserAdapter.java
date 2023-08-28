@@ -164,7 +164,8 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                     if(position!=RecyclerView.NO_POSITION) {
                         if (!dishList.contains(list.get(position))){
                              dishList.add(list.get(position));
-                            Toast.makeText(itemView.getContext(), "Item Added",Toast.LENGTH_SHORT).show();
+                           // Toast.makeText(itemView.getContext(), "Item Added",Toast.LENGTH_SHORT).show();
+
                         }else{
                             Toast.makeText(itemView.getContext(), "Item Already Added",Toast.LENGTH_SHORT).show();
                         }

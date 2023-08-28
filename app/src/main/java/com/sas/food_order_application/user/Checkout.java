@@ -165,7 +165,7 @@ public class Checkout extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Data added successfully
-                        Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -197,7 +197,7 @@ public class Checkout extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Data added successfully
-                        Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
