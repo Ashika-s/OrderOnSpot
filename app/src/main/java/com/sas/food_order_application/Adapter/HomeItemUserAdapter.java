@@ -172,7 +172,7 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                         Log.d("quantity map", "is " + dishList + "value is " + dishList.size());
                         HomeFragment.setVisibility(dishList.size());
                     }
-                    HomeFragment.txtItemsAdded.setText("items added "+dishList.size());
+                    HomeFragment.txtItemsAdded.setText(+dishList.size()+" ITEM ADDED");
                 }
 
             });

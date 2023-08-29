@@ -13,9 +13,9 @@
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="com.sas.food_order_application.ui.My_Orders.DailyMealFragment"
+        android:name="com.sas.food_order_application.ui.My_Orders.MyordersFragment"
         android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_dailymeal" />
+        tools:layout="@layout/fragment_myorders" />
 
     <fragment
         android:id="@+id/nav_slideshow"

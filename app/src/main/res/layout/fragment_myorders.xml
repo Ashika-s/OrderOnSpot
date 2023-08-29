@@ -13,11 +13,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/orders"/>
+
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerviewCategory"
+            android:id="@+id/recyclerviewmyorders"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
@@ -29,16 +28,4 @@
 
     </LinearLayout>
 
-
-    <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@color/white"
-        android:layout_gravity="start">
-
-        <include
-            layout="@layout/nav_drawer"/>
-
-    </RelativeLayout>
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -2,6 +2,7 @@ package com.sas.food_order_application.user;
 
 import static android.content.ContentValues.TAG;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,6 +40,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 public class Checkout extends AppCompatActivity {
 
@@ -57,11 +60,12 @@ public class Checkout extends AppCompatActivity {
     private Runnable refreshRunnable;
 
     int position=0;
-    static int Id=2120;
+    String orderId = UUID.randomUUID().toString();
     List<String> tableList=new ArrayList<>();
 
     ArrayAdapter<String> adapter;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +74,6 @@ public class Checkout extends AppCompatActivity {
         recyclerView=findViewById(R.id.listOfItemAdded);
         btnPlaceOrder=findViewById(R.id.btntoOrder);
         txtTotalAmount=findViewById(R.id.textTotalAmount);
-
 
         Intent intent=getIntent();
         useremail=UserLogin.emailid;
@@ -103,9 +106,7 @@ public class Checkout extends AppCompatActivity {
                             }
                         }
                     });
-
                 }
-
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -154,6 +155,7 @@ public class Checkout extends AppCompatActivity {
                         }
                     }
 
+
                 });
 
 
@@ -162,7 +164,7 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-    private void myordersdatabase(HashMap<String, Integer> listOrder) {
+    private void myordersdatabase() {
 
 
         CollectionReference tableCollection = db.collection("My_Orders");
@@ -251,7 +253,6 @@ public class Checkout extends AppCompatActivity {
         adapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,tableList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
-
     }
 
     public static void setTotalAmount(){

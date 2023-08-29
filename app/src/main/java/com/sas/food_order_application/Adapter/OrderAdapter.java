@@ -73,10 +73,10 @@ import okhttp3.Response;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
     private List<DocumentSnapshot> tableDataList;
-    Context context1;
+
     FirebaseFirestore db;
 
-    private List<CountDownTimer> countdownTimers; // List to store active timers
+    private List<CountDownTimer> countdownTimers;
     private boolean[] isTimerRunning;
 
     Context context;
