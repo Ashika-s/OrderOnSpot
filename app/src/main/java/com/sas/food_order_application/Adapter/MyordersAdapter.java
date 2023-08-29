@@ -1,11 +1,11 @@
 package com.sas.food_order_application.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.user.Feedback;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 public class MyordersAdapter extends RecyclerView.Adapter<MyordersAdapter.ViewHolder> {
@@ -45,6 +45,20 @@ public class MyordersAdapter extends RecyclerView.Adapter<MyordersAdapter.ViewHo
         Log.d("order", "is " + amount);
         Map<String, Object> preferencesMap = (Map<String, Object>) documentSnapshot.get("preferences");
         holder.bindData(restname,ID, tableNumber, amount, preferencesMap);
+        Context context = holder.itemView.getContext();
+        TextView feedback = holder.itemView.findViewById(R.id.feedback);
+
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, Feedback.class);
+                intent.putExtra("order_id", ID);
+                intent.putExtra("restname",restname);
+                intent.putExtra("list", (Serializable) preferencesMap);
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -53,6 +67,7 @@ public class MyordersAdapter extends RecyclerView.Adapter<MyordersAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView feedback;
         TextView restname;
         TextView Id;
         TextView Tablenumber;
@@ -61,6 +76,7 @@ public class MyordersAdapter extends RecyclerView.Adapter<MyordersAdapter.ViewHo
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            feedback=itemView.findViewById(R.id.feedback);
             restname=itemView.findViewById(R.id.rstname);
             Id = itemView.findViewById(R.id.idd);
             Tablenumber = itemView.findViewById(R.id.tablenoo);

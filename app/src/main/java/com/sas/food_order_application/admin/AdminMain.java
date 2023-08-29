@@ -44,7 +44,7 @@ public class AdminMain extends AppCompatActivity {
     DrawerLayout drawerLayout;
     FloatingActionButton floatingActionButton;
     ImageView imageView;
-    LinearLayout menu, orders, profile, logout;
+    LinearLayout menu, orders, profile,feedback, logout;
     FirebaseFirestore db;
     DocumentReference documentReference;
     CollectionReference collectionReference;
@@ -66,6 +66,7 @@ public class AdminMain extends AppCompatActivity {
         menu = findViewById(R.id.Menu);
         orders = findViewById(R.id.Order);
         profile = findViewById(R.id.Profile);
+        feedback=findViewById(R.id.receivedfeedback);
         logout = findViewById(R.id.Logout);
         floatingActionButton = findViewById(R.id.flt1);
         recyclerView=findViewById(R.id.recyclerviewCategory);
@@ -121,6 +122,13 @@ public class AdminMain extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(AdminMain.this, AdminProfile.class);
+            }
+        });
+
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(AdminMain.this,AdminFeedback.class);
             }
         });
 

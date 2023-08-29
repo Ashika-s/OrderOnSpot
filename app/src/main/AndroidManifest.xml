@@ -22,6 +22,12 @@
         android:theme="@style/Theme.Food_Order_Application"
         tools:targetApi="31">
         <activity
+            android:name=".admin.AdminFeedback"
+            android:exported="false" />
+        <activity
+            android:name=".user.Feedback"
+            android:exported="false" />
+        <activity
             android:name=".user.orderplaced_splash"
             android:exported="false" />
         <activity
