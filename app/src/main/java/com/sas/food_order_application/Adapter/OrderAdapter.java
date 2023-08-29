@@ -33,11 +33,15 @@ import androidx.core.app.NotificationManagerCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.admin.AdminLogin;
 import com.sas.food_order_application.admin.AdminOrders;
 import com.sas.food_order_application.user.UserLogin;
 
@@ -55,6 +59,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,6 +111,7 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         String ID = String.valueOf(documentSnapshot.get("Id"));
         String tableNumber = String.valueOf(documentSnapshot.get("tablenumber"));
+        Log.d("STROING",""+tableNumber);
         String amount = String.valueOf( documentSnapshot.get("Total Amount"));
 
         Map<String, Object> preferencesMap = (Map<String, Object>) documentSnapshot.get("preferences");
@@ -205,6 +211,11 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                             @Override
                             public void onSuccess(Void aVoid) {
                                 // Item deleted successfully from the database
+//                                AdminOrders adminOrders=new AdminOrders();
+//                                adminOrders.updateEmptyState(getItemCount());
+                                addTable(tableNumber);
+                                tableDataList.remove(position);
+                                notifyItemRemoved(position);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -225,45 +236,37 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         });
 
         reject.setOnClickListener(new View.OnClickListener() {
-                                      @Override
-                                      public void onClick(View v) {
+          @Override
+          public void onClick(View v) {
+//                AdminOrders adminOrders=new AdminOrders();
+//                adminOrders.updateEmptyState(getItemCount());
+              Dialog dialog = new Dialog(holder.itemView.getContext());
+              dialog.setContentView(R.layout.reject_splash);
+              TextView maintxt = dialog.findViewById(R.id.txxxt);
+              maintxt.setText("ORDER REJECTED");
+              LottieAnimationView animationView = dialog.findViewById(R.id.lottiee);
+              animationView.setAnimation(R.raw.reject);
+              Window window = dialog.getWindow();
+              if (window != null) {
+                  window.setBackgroundDrawableResource(R.drawable.rounddialog);
+                  WindowManager.LayoutParams layoutParams = window.getAttributes();
+                  layoutParams.width = dpToPx(holder.itemView.getContext(), 400);
+                  layoutParams.height = dpToPx(holder.itemView.getContext(), 430);
 
-                                          Dialog dialog = new Dialog(holder.itemView.getContext());
-                                          dialog.setContentView(R.layout.reject_splash);
-                                          TextView maintxt = dialog.findViewById(R.id.txxxt);
-                                          maintxt.setText("ORDER REJECTED");
+                  window.setAttributes(layoutParams);
+              }
 
+              dialog.show();
+              new Handler().postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                      if (dialog.isShowing()) {
+                          dialog.dismiss();
+                      }
+                  }
+              }, 3000);
 
-                                          LottieAnimationView animationView = dialog.findViewById(R.id.lottiee);
-                                          animationView.setAnimation(R.raw.reject);
-
-
-                                          Window window = dialog.getWindow();
-                                          if (window != null) {
-                                              window.setBackgroundDrawableResource(R.drawable.rounddialog);
-                                              WindowManager.LayoutParams layoutParams = window.getAttributes();
-                                              layoutParams.width = dpToPx(holder.itemView.getContext(), 400);
-                                              layoutParams.height = dpToPx(holder.itemView.getContext(), 430);
-
-                                              window.setAttributes(layoutParams);
-                                          }
-
-                                          dialog.show();
-                                          new Handler().postDelayed(new Runnable() {
-                                              @Override
-                                              public void run() {
-                                                  if (dialog.isShowing()) {
-                                                      dialog.dismiss();
-                                                  }
-                                              }
-                                          }, 3000);
-
-                                         // Set the button text to "Accepted"
-
-
-                tableDataList.remove(position);
-                notifyItemRemoved(position);
-
+             // Set the button text to "Accepted"
                 String documentId = documentSnapshot.getId();
                 FirebaseFirestore.getInstance().collection("Order").document(documentId)
                         .delete()
@@ -271,6 +274,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                             @Override
                             public void onSuccess(Void aVoid) {
                                 // Item deleted successfully from the database
+                                addTable(tableNumber);
+                                tableDataList.remove(position);
+                                notifyItemRemoved(position);
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
@@ -291,6 +297,37 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
     }
 
+    private void addTable(String tableNo){
+        String email= AdminLogin.adminemailid;
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference update=db.collection("Admin").document(email);
+        db.collection("Admin").document(email).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+//                                    long tablecount=(long) document.get("Tablecount");
+                        List<String> tableList=(List<String>)document.get("Table List");
+                        tableList.add(tableNo);
+                        update.update( "Table List",tableList).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                            }
+                        });
+
+                    }
+
+                }
+            }
+        });
+    }
     private void sendNotificationToUser(String userDeviceToken) {
         try {
             // Construct your notification payload

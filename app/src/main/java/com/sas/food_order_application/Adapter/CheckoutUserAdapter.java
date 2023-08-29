@@ -69,8 +69,6 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
             super(itemView);
             txtDishAmount=itemView.findViewById(R.id.txtCheckoutDishAmount);
             txtDishName=itemView.findViewById(R.id.txtCheckoutDishName);
-//            btnDecrease=itemView.findViewById(R.id.decrease);
-//            btnIncrease=itemView.findViewById(R.id.increase);
             imageDish=itemView.findViewById(R.id.imageCheckoutDish);
             edtTxtItemCount=itemView.findViewById(R.id.integer_number);
             closeImg=itemView.findViewById(R.id.closeImg);
@@ -119,24 +117,6 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
                     return ViewHolder.super.itemView.onKeyDown(keyCode,event);
                 }
             });
-//            btnIncrease.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    minteger+=1;
-//                    txtItemCount.setText(minteger);
-//                }
-//            });
-//            btnDecrease.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if(minteger>0) {
-//                        minteger--;
-//                        txtItemCount.setText(minteger);
-//                    }
-//
-//                    //need to add function which delete item when count is zero
-//                }
-//            });
 
         }
         private void hideSoftKeyBoard() {

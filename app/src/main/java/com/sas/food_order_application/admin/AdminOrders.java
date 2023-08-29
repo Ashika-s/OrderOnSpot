@@ -244,7 +244,7 @@ public class AdminOrders extends AppCompatActivity {
 
     }
 
-     void updateEmptyState(int itemCount) {
+     public void updateEmptyState(int itemCount) {
         if (itemCount==0){
             recyclerView.setVisibility(View.GONE);
             textView.setVisibility(View.VISIBLE);

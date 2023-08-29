@@ -2,7 +2,6 @@ package com.sas.food_order_application.user;
 
 import static android.content.ContentValues.TAG;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +34,7 @@ import com.sas.food_order_application.Model.HomeItemUserModel;
 import com.sas.food_order_application.R;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -47,7 +46,7 @@ public class Checkout extends AppCompatActivity {
     String restaurant,restaurantEmail;
 
     RecyclerView recyclerView;
-    String useremail;
+    String useremail,tableName;
     TextView selectedRestaurant;
     public static TextView txtTotalAmount;
     List<CheckoutModel> checkoutList;
@@ -57,10 +56,12 @@ public class Checkout extends AppCompatActivity {
     private Handler handler = new Handler();
     private Runnable refreshRunnable;
 
-    int tableNo=0;
+    int position=0;
     static int Id=2120;
+    List<String> tableList=new ArrayList<>();
 
-    @SuppressLint("MissingInflatedId")
+    ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +70,7 @@ public class Checkout extends AppCompatActivity {
         recyclerView=findViewById(R.id.listOfItemAdded);
         btnPlaceOrder=findViewById(R.id.btntoOrder);
         txtTotalAmount=findViewById(R.id.textTotalAmount);
+
 
         Intent intent=getIntent();
         useremail=UserLogin.emailid;
@@ -91,20 +93,25 @@ public class Checkout extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 DocumentSnapshot document = task.getResult();
                                 if (document.exists()) {
-                                    long tablecount=(long) document.get("Tablecount");
-                                    populateSpinner(spinner, tablecount);
+//                                    long tablecount=(long) document.get("Tablecount");
+                                   tableList=(List<String>)document.get("Table List");
+                                    Collections.sort(tableList);
+                                    populateSpinner(spinner, tableList);
+
                                 }
 
                             }
                         }
                     });
+
                 }
+
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                        tableNo= (position+1);
-//                        parent.setEnabled(false);
-                        Log.d("doc","is "+tableNo);
+                        tableName=parent.getItemAtPosition(position).toString();
+                       position=position;
+
                     }
 
                     @Override
@@ -125,17 +132,27 @@ public class Checkout extends AppCompatActivity {
                 btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
-                        myordersdatabase();
-                        sendDataToAdmin();
-
-                        Intent intent=new Intent(Checkout.this,orderplaced_splash.class);
-                        startActivity(intent);
-                        finish();
-
-
+                        Log.d("string", String.valueOf(adapter.getPosition(tableName)) + "");
+                        HashMap<String,Integer> listOrder = new HashMap<>();
+                        for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
+                            listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
+                        }
+                        if (listOrder.size() > 0) {
+                            tableList.remove(position);
+                            adapter.notifyDataSetChanged();
+                            DocumentReference doc = db.collection("Admin").document(restaurantEmail);
+                            List<String> updateList = new ArrayList<>();
+                            updateList.addAll(tableList);
+                            doc.update("Table List", updateList);
+                            myordersdatabase(listOrder);
+                            sendDataToAdmin(listOrder);
+                            Intent intent = new Intent(Checkout.this, orderplaced_splash.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Toast.makeText(getApplicationContext(),"add items to place order",Toast.LENGTH_SHORT).show();
+                        }
                     }
-
 
                 });
 
@@ -145,16 +162,13 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-    private void myordersdatabase() {
+    private void myordersdatabase(HashMap<String, Integer> listOrder) {
 
-        HashMap<String,Integer> listOrder = new HashMap<>();
-        for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
-            listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
-        }
+
         CollectionReference tableCollection = db.collection("My_Orders");
         DocumentReference documentReference=tableCollection.document(useremail);
         Map<String,Object> tabledata=new HashMap<>();
-        tabledata.put("tablenumber",tableNo);
+        tabledata.put("tablenumber",tableName);
         tabledata.put("preferences",listOrder);
         tabledata.put("Id",Id++);
         tabledata.put("Total Amount",totalAmount);
@@ -178,35 +192,37 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-    private void sendDataToAdmin() {
-        HashMap<String,Integer> listOrder = new HashMap<>();
-        for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
-            listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
-        }
-        CollectionReference tableCollection = db.collection("Order");
-        DocumentReference documentReference=tableCollection.document(useremail);
-        Map<String,Object> tabledata=new HashMap<>();
-        tabledata.put("tablenumber",tableNo);
-        tabledata.put("preferences",listOrder);
-        tabledata.put("Id",Id++);
-        tabledata.put("Total Amount",totalAmount);
-        tabledata.put("Restaurant",restaurant);
+    private void sendDataToAdmin(HashMap<String, Integer> listOrder) {
+//        HashMap<String,Integer> listOrder = new HashMap<>();
+//        for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
+//            listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
+//        }
 
-        documentReference.set(tabledata)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Data added successfully
-                       // Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Handle failure
-                        Toast.makeText(Checkout.this, "Failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        CollectionReference tableCollection = db.collection("Order");
+            DocumentReference documentReference = tableCollection.document(useremail);
+            Map<String, Object> tabledata = new HashMap<>();
+            tabledata.put("tablenumber", tableName);
+            tabledata.put("preferences", listOrder);
+            tabledata.put("Id", Id++);
+            tabledata.put("Total Amount", totalAmount);
+            tabledata.put("Restaurant", restaurant);
+
+            documentReference.set(tabledata)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            // Data added successfully
+                            // Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle failure
+                            Toast.makeText(Checkout.this, "Failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
     }
 
     private void setRecyclerViewList(){
@@ -219,16 +235,23 @@ public class Checkout extends AppCompatActivity {
         }
     }
 
-    private void populateSpinner(Spinner spinner, long tablecount) {
-        String[] tableitem =new String[(int) tablecount];
-        for(int i=0; i<tablecount;i++)
-        {
-            tableitem[i] ="Table No "+(i+1);
-        }
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,tableitem);
+    private void populateSpinner(Spinner spinner, List<String > tableList) {
+//        String[] tableitem =new String[(int) tablecount];
+//        for(int i=0; i<tablecount;i++)
+//        {
+//            tableitem[i] ="Table No "+(i+1);
+//        }
+//        List<String> list=new ArrayList<>();
+//        for (String str :
+//                tableList) {
+//            list.add("Table No "+str);
+//
+//        }
+        Collections.sort(tableList);
+        adapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,tableList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
     }
 
     public static void setTotalAmount(){

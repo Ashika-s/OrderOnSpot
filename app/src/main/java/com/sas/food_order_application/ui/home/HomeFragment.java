@@ -190,7 +190,6 @@ public class HomeFragment extends Fragment  {
             public void onClick(View v) {
                 int size=HomeItemUserAdapter.dishList.size();
                 if(size>0) {
-//                    btnNext.setEnabled(true);
                     Intent checkoutIntent = new Intent(root.getContext(),Checkout.class);
                     checkoutIntent.putExtra("Restaurant Name", selectedRest);
                     Log.d("restaurant",selectedRest);

@@ -32,8 +32,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class AdminProfile extends AppCompatActivity {
     TextView RestaurantName;
@@ -166,9 +168,9 @@ public class AdminProfile extends AppCompatActivity {
         String ownerEmail = (OwnerEmail).getText().toString();
         String password =(Password).getText().toString();
         int tableNo= Integer.parseInt((tableno).getText().toString());
-        HashMap<String,Boolean> tableList = new LinkedHashMap<>();
+        List<String> tableList=new ArrayList<>();
         for (int i=0;i<tableNo;i++){
-            tableList.put("Table No"+(i+1),true);
+            tableList.add("Table No "+(i+1));
         }
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         if(user!=null)
