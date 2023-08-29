@@ -53,7 +53,7 @@ public class AdminOrders extends AppCompatActivity {
     ImageView refresh;
     LinearLayout menu,orders,profile,logout;
     List<DocumentSnapshot> tableDataList;
-    TextView textView;
+
 
     RecyclerView recyclerView;
     OrderAdapter tableDataAdapter;
@@ -74,7 +74,7 @@ public class AdminOrders extends AppCompatActivity {
         orders=findViewById(R.id.Order);
         profile=findViewById(R.id.Profile);
         logout=findViewById(R.id.Logout);
-        textView=findViewById(R.id.emptyTextView);
+
 
         recyclerView = findViewById(R.id.recyclerviewCategory);
 
@@ -90,13 +90,13 @@ public class AdminOrders extends AppCompatActivity {
 
 
 
-        refresh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getorders();
-
-            }
-        });
+//        refresh.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getorders();
+//
+//            }
+//        });
 
         getorders();
 
@@ -218,7 +218,7 @@ public class AdminOrders extends AppCompatActivity {
                                             tableDataList.add(documentSnapshot);
                                             tableDataAdapter = new OrderAdapter(tableDataList, getApplicationContext());
 //                                            tableDataAdapter.notifyDataSetChanged();
-                                            updateEmptyState(tableDataList.size());
+
                                             recyclerView.setHasFixedSize(true);
                                             recyclerView.setNestedScrollingEnabled(false);
                                             recyclerView.setAdapter(tableDataAdapter);
@@ -244,15 +244,6 @@ public class AdminOrders extends AppCompatActivity {
 
     }
 
-     void updateEmptyState(int itemCount) {
-        if (itemCount==0){
-            recyclerView.setVisibility(View.GONE);
-            textView.setVisibility(View.VISIBLE);
-        }else{
-            recyclerView.setVisibility(View.VISIBLE);
-            textView.setVisibility(View.GONE);
-        }
-    }
 
 
     public static void openDrawer(DrawerLayout drawerLayout){

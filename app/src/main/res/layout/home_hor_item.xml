@@ -19,12 +19,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:layout_marginBottom="1dp"
-            android:fontFamily="@font/lobster"
             android:text="Category"
+            android:textStyle="bold"
             android:padding="9dp"
             android:textAlignment="center"
-            android:textColor="#424040"
-            android:textSize="16sp" />
+            android:textColor="@color/black"
+            android:textSize="18sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,10 +34,14 @@ import com.sas.food_order_application.Model.CheckoutModel;
 import com.sas.food_order_application.Model.HomeItemUserModel;
 import com.sas.food_order_application.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.UUID;
 
 public class Checkout extends AppCompatActivity {
 
@@ -51,6 +54,7 @@ public class Checkout extends AppCompatActivity {
     TextView selectedRestaurant;
     public static TextView txtTotalAmount;
     List<CheckoutModel> checkoutList;
+    String mail=UserLogin.emailid;
     CheckoutUserAdapter checkoutUserAdapter;
     Button btnPlaceOrder;
 
@@ -58,7 +62,8 @@ public class Checkout extends AppCompatActivity {
     private Runnable refreshRunnable;
 
     int tableNo=0;
-    static int Id=2120;
+
+    String orderId = UUID.randomUUID().toString();
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -125,9 +130,10 @@ public class Checkout extends AppCompatActivity {
                 btnPlaceOrder.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        int id =generateOrderNumber();
 
-                        myordersdatabase();
-                        sendDataToAdmin();
+                        myordersdatabase(id);
+                        sendDataToAdmin(id);
 
                         Intent intent=new Intent(Checkout.this,orderplaced_splash.class);
                         startActivity(intent);
@@ -145,20 +151,36 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-    private void myordersdatabase() {
+
+    private int generateOrderNumber() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = dateFormat.format(new Date());
+        Date currentTime = new Date();
+        String formattedTime = dateFormat.format(currentTime);
+
+        Random random = new Random();
+        int randomSuffix = random.nextInt(9000) + 1000; // Generates a random 4-digit number
+
+        return randomSuffix;
+
+    }
+
+    private void myordersdatabase(int id) {
 
         HashMap<String,Integer> listOrder = new HashMap<>();
         for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
             listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
         }
         CollectionReference tableCollection = db.collection("My_Orders");
-        DocumentReference documentReference=tableCollection.document(useremail);
+        DocumentReference documentReference=tableCollection.document(String.valueOf(id));
         Map<String,Object> tabledata=new HashMap<>();
         tabledata.put("tablenumber",tableNo);
         tabledata.put("preferences",listOrder);
-        tabledata.put("Id",Id++);
+        tabledata.put("Id",id);
         tabledata.put("Total Amount",totalAmount);
         tabledata.put("Restaurant",restaurant);
+        tabledata.put("email",mail);
 
         documentReference.set(tabledata)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -178,26 +200,27 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-    private void sendDataToAdmin() {
+    private void sendDataToAdmin(int id) {
         HashMap<String,Integer> listOrder = new HashMap<>();
         for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
             listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
         }
         CollectionReference tableCollection = db.collection("Order");
-        DocumentReference documentReference=tableCollection.document(useremail);
+        DocumentReference documentReference=tableCollection.document(String.valueOf(id));
         Map<String,Object> tabledata=new HashMap<>();
         tabledata.put("tablenumber",tableNo);
         tabledata.put("preferences",listOrder);
-        tabledata.put("Id",Id++);
+        tabledata.put("Id",id);
         tabledata.put("Total Amount",totalAmount);
         tabledata.put("Restaurant",restaurant);
+        tabledata.put("email",mail);
 
         documentReference.set(tabledata)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
                         // Data added successfully
-                       // Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

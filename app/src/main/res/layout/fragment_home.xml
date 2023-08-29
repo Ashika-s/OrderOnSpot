@@ -54,28 +54,47 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
 
+        <ImageView
+            android:id="@+id/bag"
+            android:layout_width="39dp"
+            android:layout_height="35dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="33dp"
+            android:layout_marginEnd="51dp"
+            android:layout_marginBottom="14dp"
+            android:foregroundGravity="center"
+            android:src="@drawable/bag"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/itemsaddedcount"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="MissingConstraints" />
+
         <TextView
             android:id="@+id/itemsaddedcount"
             android:layout_width="wrap_content"
             android:layout_height="41dp"
-            android:fontFamily="serif-monospace"
-            android:text="items added"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="17dp"
+            android:gravity="center"
+            android:text="ITEM ADDED"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="22sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btntoOrderDetails"
-            app:layout_constraintHorizontal_bias="0.148"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toEndOf="@+id/bag"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0" />
 
         <Button
             android:id="@+id/btntoOrderDetails"
