@@ -3,6 +3,8 @@ package com.sas.food_order_application.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,10 +18,15 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.sas.food_order_application.Model.HomeItemUserModel;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.admin.Categoryclass;
 import com.sas.food_order_application.ui.home.HomeFragment;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,6 +35,7 @@ import java.util.Map;
 public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapter.ViewHolder> {
     Context context;
     List<HomeItemUserModel> list;
+    StorageReference storageReference;
 
     public static List<HomeItemUserModel> dishList = new ArrayList<>();
 
@@ -44,9 +52,23 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.imageDish.setImageResource(R.drawable.burger);
+        HomeItemUserModel homeItemUserModel=list.get(position);
+      //  holder.imageDish.setImageResource(R.drawable.burger);
         holder.txtDishName.setText(list.get(position).getDishName());
         holder.txtAmount.setText("Amount : "+list.get(position).getDishAmount());
+
+        try {
+            storageReference = FirebaseStorage.getInstance().getReference("images/"+homeItemUserModel.getDishName()+".jpg");
+            File localfile1 = File.createTempFile("tempfile", ".jpg");
+            storageReference.getFile(localfile1)
+                    .addOnSuccessListener(taskSnapshot1 -> {
+                        Bitmap bitmap1 = BitmapFactory.decodeFile(localfile1.getAbsolutePath());
+                        holder.imageDish.setImageBitmap(bitmap1);
+                    }).addOnFailureListener(e -> Toast.makeText(context, "Failed to retrieve", Toast.LENGTH_SHORT).show());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void setFilteredList(List<HomeItemUserModel> filteredList){

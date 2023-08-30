@@ -108,7 +108,7 @@ public class UserRegister extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    addNewData(namee,passwordd,emaill,confpasswordd);
+                                    addNewData(namee,passwordd,emaill);
                                     Toast.makeText(UserRegister.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d("user register","Authentication failed");
@@ -118,12 +118,11 @@ public class UserRegister extends AppCompatActivity {
                 }
         });
     }
-    void addNewData(String namee,String passwordd,String emaill,String confpasswordd){
+    void addNewData(String namee,String passwordd,String emaill){
         Userclass userclass=new Userclass();
         userclass.setName(namee);
         userclass.setPassword(passwordd);
         userclass.setEmail(emaill);
-        userclass.setConfpassword(confpasswordd);
         db.collection("Customer").document(emaill).set(userclass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {

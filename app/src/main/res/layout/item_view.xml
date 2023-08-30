@@ -23,7 +23,6 @@
             android:layout_marginBottom="12dp"
             android:scaleType="centerCrop"
             app:civ_border_color="@color/transperent"
-            android:src="@drawable/ha"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

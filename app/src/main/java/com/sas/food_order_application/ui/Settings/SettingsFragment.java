@@ -68,21 +68,26 @@ public class SettingsFragment extends Fragment {
                 } else {
 
                     dialog();
-//                    db.collection("Customer").document(emaill)
-//                            .delete()
-//                            .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                @Override
-//                                public void onSuccess(Void aVoid) {
-//                                    Log.d("delete account", "DocumentSnapshot successfully deleted!");
-//                                }
-//                            })
-//                            .addOnFailureListener(new OnFailureListener() {
-//                                @Override
-//                                public void onFailure(@NonNull Exception e) {
-//                                    Log.d("delete account", "Error deleting document", e);
-//                                }
-//                            });
-
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                    if (user != null) {
+                        user.delete()
+                                .addOnCompleteListener(task -> {
+                                    if (task.isSuccessful()) {
+                                        Log.d("delete account", "auth DocumentSnapshot successfully deleted!");
+                                    } else {
+                                        Log.d("delete account", "auth Error deleting document");
+                                    }
+                                });
+                    }
+                    FirebaseFirestore db = FirebaseFirestore.getInstance();
+                    db.collection("Customer").document(emaill)
+                            .delete()
+                            .addOnSuccessListener(aVoid -> {
+                                Log.d("delete account", "DocumentSnapshot successfully deleted!");
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.d("delete account", "Error deleting document");
+                            });
                 }
             }
 
@@ -112,7 +117,6 @@ public class SettingsFragment extends Fragment {
                                 Log.d("delete account", "Error deleting document", e);
                         }
                       });
-
                       }
 
                     if (user != null) {

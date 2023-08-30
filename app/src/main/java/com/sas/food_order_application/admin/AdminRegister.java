@@ -131,7 +131,7 @@ public class AdminRegister extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    addNewData(Restaurantnamee,Restaurantaddresss,Restaurantphnoo,Ownernamee,Ownerphnoo,passwordd,emaill,confirmpasswordd);
+                                    addNewData(Restaurantnamee,Restaurantaddresss,Restaurantphnoo,Ownernamee,Ownerphnoo,passwordd,emaill);
                                     Toast.makeText(AdminRegister.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d("admin register","Authentication failed");
@@ -142,7 +142,7 @@ public class AdminRegister extends AppCompatActivity {
         });
     }
 
-    void addNewData(String Restaurantnamee,String Restaurantaddresss,String Restaurantphnoo,String Ownernamee,String Ownerphnoo,String passwordd,String emaill,String confirmpasswordd){
+    void addNewData(String Restaurantnamee,String Restaurantaddresss,String Restaurantphnoo,String Ownernamee,String Ownerphnoo,String passwordd,String emaill){
         AdminRegisterClass adminRegisterClass = new AdminRegisterClass();
         adminRegisterClass.setRestorantName(Restaurantnamee);
         adminRegisterClass.setRestaurantaddress(Restaurantaddresss);
@@ -151,7 +151,6 @@ public class AdminRegister extends AppCompatActivity {
         adminRegisterClass.setOwnerphno(Ownerphnoo);
         adminRegisterClass.setPassword(passwordd);
         adminRegisterClass.setEmail(emaill);
-        adminRegisterClass.setConfirmpassword(confirmpasswordd);
         Log.d("addingData",Restaurantnamee);
         SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
