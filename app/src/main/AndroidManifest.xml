@@ -70,9 +70,6 @@
             android:name=".admin.AdminMain"
             android:exported="false" />
         <activity
-            android:name=".admin.EditItem"
-            android:exported="false" />
-        <activity
             android:name=".admin.AdminProfile"
             android:exported="false" />
         <activity

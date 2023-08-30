@@ -43,7 +43,6 @@ public class AdminRegister extends AppCompatActivity {
     FirebaseAuth auth;
     CollectionReference collectionReference;
     DocumentReference ref;
-  //  ProgressBar progressBar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String restname;
 
@@ -75,7 +74,6 @@ public class AdminRegister extends AppCompatActivity {
         email=findViewById(R.id.owneremail);
         collectionReference=db.collection("Admin");
         auth=FirebaseAuth.getInstance();
-       // progressBar = findViewById(R.id.progress);
         register=findViewById(R.id.adminregiste);
         click=findViewById(R.id.signinadmin);
         click.setOnClickListener(new View.OnClickListener() {
@@ -98,12 +96,10 @@ public class AdminRegister extends AppCompatActivity {
                 passwordd = String.valueOf(password.getText());
                 emaill=String.valueOf(email.getText());
                 confirmpasswordd = String.valueOf(confirmpassword.getText());
-           //     progressBar.setVisibility(View.VISIBLE);
                 AdminLogin.adminemailid=emaill;
 
                 if (Restaurantname.getText().toString().isEmpty() || Restaurantaddress.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirmpassword.getText().toString().isEmpty())
                 {
-                   // Toast.makeText(Admin_register.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     confirmpassword.setError("Confirm password cannot be empty");
                     confirmpassword.requestFocus();
                     Ownername.setError("Owner Name cannot be empty");
@@ -126,7 +122,6 @@ public class AdminRegister extends AppCompatActivity {
                 }
                 else if(!password.getText().toString().equals(confirmpassword.getText().toString()))
                 {
-                    //Toast.makeText(Admin_register.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
                     confirmpassword.setError("Passwords are not matching");
                     confirmpassword.requestFocus();
                     return;

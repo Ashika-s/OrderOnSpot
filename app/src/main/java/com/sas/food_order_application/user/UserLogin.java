@@ -31,14 +31,12 @@ public class UserLogin extends AppCompatActivity {
     TextView signuppp;
     FirebaseAuth auth;
     FirebaseFirestore db;
-    ProgressBar progressBar;
    public static String emailid;
 
     @Override
     public void onStart() {
         super.onStart();
         FirebaseUser currentUser=auth.getCurrentUser();
-        // String firebaseUser=ref.getId();
         if (currentUser != null) {
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
             startActivity(intent);
@@ -56,11 +54,9 @@ public class UserLogin extends AppCompatActivity {
         password = findViewById(R.id.userpassword);
         Login = findViewById(R.id.userregiste);
         signuppp = findViewById(R.id.userregsign);
-      //  progressBar = findViewById(R.id.progress);
         signuppp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(User_login.this, "pass", Toast.LENGTH_SHORT).show();
                 Intent intent=new Intent(UserLogin.this, UserRegister.class);
                 startActivity(intent);
                 finish();
@@ -73,7 +69,6 @@ public class UserLogin extends AppCompatActivity {
                 String emaill, passwordd;
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
-               // progressBar.setVisibility(View.VISIBLE);
                 if (TextUtils.isEmpty(emaill) && TextUtils.isEmpty(passwordd)) {
                     email.setError("email cannot be empty");
                     email.requestFocus();
@@ -81,7 +76,7 @@ public class UserLogin extends AppCompatActivity {
                     password.requestFocus();
                     return;
                 }
-               // Toast.makeText(User_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
+
                 auth.signInWithEmailAndPassword(emaill, passwordd)
                         .addOnCompleteListener(
                                 new OnCompleteListener<AuthResult>() {
@@ -90,7 +85,7 @@ public class UserLogin extends AppCompatActivity {
                                             @NonNull Task<AuthResult> task)
                                     {
                                         if (task.isSuccessful()) {
-                                    //        progressBar.setVisibility(View.GONE);
+
                                             Log.d("user login","Login successful!!");
                                             emailid = emaill;
                                             SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);

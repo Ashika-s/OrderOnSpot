@@ -22,7 +22,6 @@ public class MyordersAdapter extends RecyclerView.Adapter<MyordersAdapter.ViewHo
 
     private List<DocumentSnapshot> tableDataList;
     Context context;
-
     public MyordersAdapter(List<DocumentSnapshot> tableDataList, Context context) {
         this.context = context;
         this.tableDataList = tableDataList;
@@ -47,7 +46,6 @@ public class MyordersAdapter extends RecyclerView.Adapter<MyordersAdapter.ViewHo
         holder.bindData(restname,ID, tableNumber, amount, preferencesMap);
         Context context = holder.itemView.getContext();
         TextView feedback = holder.itemView.findViewById(R.id.feedback);
-
         feedback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +54,6 @@ public class MyordersAdapter extends RecyclerView.Adapter<MyordersAdapter.ViewHo
                 intent.putExtra("restname",restname);
                 intent.putExtra("list", (Serializable) preferencesMap);
                 context.startActivity(intent);
-
             }
         });
     }

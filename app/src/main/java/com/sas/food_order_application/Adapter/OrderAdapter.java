@@ -68,18 +68,13 @@ import okhttp3.Response;
 public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> {
 
     private List<DocumentSnapshot> tableDataList;
-
     FirebaseFirestore db;
-
     private List<CountDownTimer> countdownTimers;
     private boolean[] isTimerRunning;
-
     Context context;
     OkHttpClient client = new OkHttpClient();
     public OrderAdapter(List<DocumentSnapshot> tableDataList, Context context) {
-
         this.context = context;
-
         this.tableDataList = tableDataList;
         countdownTimers = new ArrayList<>();
         isTimerRunning = new boolean[tableDataList.size()];
@@ -115,14 +110,10 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         Button orderready=holder.itemView.findViewById(R.id.order);
         orderready.setEnabled(false);
 
-
-
-        //   if (!isTimerRunning[position]) {
         CountDownTimer countDownTimer = new CountDownTimer(60000, 1000) { // 30 seconds
             @Override
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
-                //    countdownTextView.setText("Time left: " + seconds + "s");
                 acceptButton.setText("Accept (" + seconds + "s)");
             }
 
@@ -135,25 +126,18 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         countDownTimer.start();
         countdownTimers.add(countDownTimer);
         isTimerRunning[position] = false;
-        // }
-
-
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 countdownTimers.get(position).cancel();
-
                 Dialog dialog = new Dialog(holder.itemView.getContext());
                 dialog.setContentView(R.layout.activity_orderready_splascreensh);
                 TextView maintxt = dialog.findViewById(R.id.txxt);
                 maintxt.setText("ORDER ACCEPTED");
                 TextView subtxt = dialog.findViewById(R.id.subtxxt);
                 subtxt.setText("Taking you to next Order...");
-
                 LottieAnimationView animationView = dialog.findViewById(R.id.lottie);
                 animationView.setAnimation(R.raw.done);
-
-
 
                 Window window = dialog.getWindow();
                 if (window != null) {
@@ -161,7 +145,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                     WindowManager.LayoutParams layoutParams = window.getAttributes();
                     layoutParams.width = dpToPx(holder.itemView.getContext(),400);
                     layoutParams.height = dpToPx(holder.itemView.getContext(),430);
-
                     window.setAttributes(layoutParams);
                 }
 
@@ -186,9 +169,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             }
         });
 
-
-
-
         orderready.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -197,27 +177,21 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                 notifyItemRemoved(position);
                 String documentId = documentSnapshot.getId();
                 Log.d("id","is "+documentId);
-
-
                 FirebaseFirestore.getInstance().collection("Order").document(documentId)
                         .delete()
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                // Item deleted successfully from the database
+
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                // Handle failure to delete item from the database
+
                             }
                         });
                 send();
-
-
-
-
             }
 
             private void markOrderAsReady(DocumentSnapshot documentSnapshot) {
@@ -232,11 +206,8 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                                           dialog.setContentView(R.layout.reject_splash);
                                           TextView maintxt = dialog.findViewById(R.id.txxxt);
                                           maintxt.setText("ORDER REJECTED");
-
-
                                           LottieAnimationView animationView = dialog.findViewById(R.id.lottiee);
                                           animationView.setAnimation(R.raw.reject);
-
 
                                           Window window = dialog.getWindow();
                                           if (window != null) {
@@ -257,10 +228,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                                                   }
                                               }
                                           }, 3000);
-
-                                         // Set the button text to "Accepted"
-
-
                 tableDataList.remove(position);
                 notifyItemRemoved(position);
 
@@ -270,25 +237,20 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                // Item deleted successfully from the database
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                // Handle failure to delete item from the database
+
                             }
                         });
-//                AdminOrders.updateEmptyState(tableDataList.size()>0);
-                // orderready.
-
 
             }
             private int dpToPx(Context context, int dp) {
                 return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, context.getResources().getDisplayMetrics());
             }
         });
-
     }
 
     private void sendNotificationToUser(String userDeviceToken) {
@@ -339,7 +301,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
         TextView Tablenumber;
         TextView TotalAmount;
         TextView preferencesTextView;
-
         Button accept;
         Button reject;
         TextView time;
@@ -352,8 +313,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             Tablenumber = itemView.findViewById(R.id.tableno);
             TotalAmount=itemView.findViewById(R.id.totalAmount);
             preferencesTextView = itemView.findViewById(R.id.preferencesTextView);
-
-
         }
 
         public void bindData(String id,String tableNumber, String amount, Map<String, Object> preferencesMap) {
@@ -361,18 +320,14 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             Id.setText("ID : "+id);
             Tablenumber.setText("TABLE NUMBER : "+tableNumber);
             TotalAmount.setText("AMOUNT : "+amount);
-
             StringBuilder preferencesText = new StringBuilder();
             for (Map.Entry<String, Object> entry : preferencesMap.entrySet()) {
                 preferencesText.append(entry.getKey()).append(" : ").append(entry.getValue()).append("\n");
             }
             preferencesTextView.setText(preferencesText.toString());
-            Button acceptButton = itemView.findViewById(R.id.accept);
 
         }
     }
-
-
 
     public void send(){
         String chanelId="CHANNEL_ID_NOTIFICATION";
@@ -385,12 +340,9 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
 
         Intent intent = new Intent(context, UserLogin.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        // intent.putExtra("data","some value");
-
         PendingIntent pendingIntent=PendingIntent.getActivity(context,0,intent,PendingIntent.FLAG_MUTABLE);
         builder.setContentIntent(pendingIntent);
         NotificationManager notificationManager= (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
         NotificationChannel notificationChannel=notificationManager.getNotificationChannel(chanelId);
         if (notificationChannel==null){
             int importance = NotificationManager.IMPORTANCE_HIGH;
@@ -399,8 +351,6 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder> 
             notificationChannel.enableVibration(true);
             notificationManager.createNotificationChannel(notificationChannel);
         }
-
         notificationManager.notify(0,builder.build());
     }
-
 }

@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
     Context context;
     ArrayList<Categoryclass> userArrayList;
-   // ArrayList<ImageData> imageData;
+
 
 
     public CategoryAdapter(Context context, ArrayList<Categoryclass> userArrayList) {
@@ -35,33 +35,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
     public CategoryAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        View view= LayoutInflater.from(context).inflate(R.layout.category_view,parent,false);
        return new ViewHolder(view);
-//        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-//        if (viewType == VIEW_TYPE_TEXT) {
-//            View view = inflater.inflate(R.layout.category_view, parent, false);
-//            return new ViewHolder(view);
-//        } else if (viewType == VIEW_TYPE_IMAGE) {
-//            View view = inflater.inflate(R.layout.category_view, parent, false);
-//            return new ViewHolder(view);
-//        }
-//        throw new IllegalArgumentException("Invalid view type");
     }
 
     @Override
     public void onBindViewHolder(@NonNull CategoryAdapter.ViewHolder holder, int position) {
       Categoryclass category=userArrayList.get(position);
       holder.categoryy.setText(category.getCategory());
-//
-//        Glide.with(holder.itemView.getContext())
-//                .load(category.getImageurl())
-//                .into(holder.imageView);
     }
 
     @Override
     public int getItemCount() {
-
         return userArrayList.size();
     }
-
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView categoryy;
@@ -81,13 +66,4 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
             });
         }
     }
-//    public void setTextDataList(ArrayList<Categoryclass> userArrayList) {
-//        this.userArrayList = userArrayList;
-//        notifyDataSetChanged();
-//    }
-
-//    public void setImageDataList(ArrayList<ImageData> imageData) {
-//        this.imageData = imageData;
-//        notifyDataSetChanged();
-//    }
 }

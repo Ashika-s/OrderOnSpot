@@ -7,7 +7,6 @@ public class HomeItemUserModel {
 
 
     public HomeItemUserModel(String dishName, String dishAmount, String itemsCount, String type) {
-//        this.image = image;
         this.dishName = dishName;
         this.dishAmount = dishAmount;
         this.itemsCount=itemsCount;

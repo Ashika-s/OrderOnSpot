@@ -235,11 +235,9 @@ public class AdminProfile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Create an intent to navigate to MainActivity
         Intent intent = new Intent(this, AdminMain.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        // Finish the current activity (optional)
         finish();
     }
 

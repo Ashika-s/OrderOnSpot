@@ -46,7 +46,6 @@ Button submit;
 
         if (receivedMap != null) {
             Log.d("Received Map", receivedMap.toString());
-            // Continue with other operations
         } else {
             Log.e("Received Map", "Received map is null");
         }
@@ -56,11 +55,7 @@ Button submit;
             @Override
             public void onClick(View v) {
                 float rating = ratingBar.getRating();
-
-
                 String message = feedbackMessage.getText().toString();
-
-
                 CollectionReference feedbackCollection = firestore.collection("feedback");
                 DocumentReference feedbackDocument = feedbackCollection.document(String.valueOf(orderId));
                 FeedbackModel feedbackModel = new FeedbackModel(rating, message, restname, receivedMap, orderId);
@@ -68,26 +63,17 @@ Button submit;
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
-                                // Feedback saved successfully
                             }
                         })
                         .addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
-                                // Handle failure
                             }
                         });
 
-
-
-//                DocumentReference feedbackRef = firestore.collection("feedback").document(String.valueOf(orderId));
-//                feedbackRef.set(new FeedbackModel(rating,message,restname, receivedMap, orderId))
-//                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                            @Override
-//                            public void onSuccess(Void aVoid) {
-//                                // Feedback saved successfully
-//                            }
-//                        });
+                Intent intent1=new Intent(Feedback.this,MainActivity.class);
+                startActivity(intent1);
+                finish();
             }
 
         });

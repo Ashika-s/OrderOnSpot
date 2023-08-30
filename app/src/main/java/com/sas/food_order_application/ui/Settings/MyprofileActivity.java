@@ -98,29 +98,12 @@ public class MyprofileActivity extends AppCompatActivity {
                     }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                         //   Toast.makeText(MyprofileActivity.this, "Failed", Toast.LENGTH_SHORT).show();
                             Log.w("profile", "failed");
                         }
                     });
         }
     }
-//    @Override
-//    public void onBackPressed() {
-//        // Create an intent to navigate to MainActivity
-//        Intent intent = new Intent(this, SettingsFragment.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        startActivity(intent);
-//        // Finish the current activity (optional)
-//        finish();
-//    }
     void fetchData(String email){
-
-//        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
-//        if (currentuser != null){
-//            SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
-//            email = preferences.getString("KEY_EMAIL_USER", "");
-//            UserLogin.emailid=preferences.getString("KEY_EMAIL_USER", "");
-//        }
         email=UserLogin.emailid;
         DocumentReference docRef = db.collection("Customer").document(email);
         Log.d("profile", "value is "+docRef);

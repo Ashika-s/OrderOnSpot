@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapter.ViewHolder> {
-
     Context context;
     List<HomeItemUserModel> list;
 
@@ -55,7 +54,6 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
         notifyDataSetChanged();
     }
 
-
     @Override
     public int getItemCount() {
         return list.size();
@@ -75,86 +73,6 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
             txtDishName= itemView.findViewById(R.id.txtDishName);
             txtAmount= itemView.findViewById(R.id.txtDishAmount);
             btnAddCart=itemView.findViewById(R.id.btnAddCart);
-
-/*          txtItemCount=itemView.findViewById(R.id.txtinteger_number);
-            btnDecrease=itemView.findViewById(R.id.btndecrease);
-            btnIncrease=itemView.findViewById(R.id.btnincrease);
-            btnIncrease.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View v) {
-                    int value = 1;
-                    int position=getAdapterPosition();
-                    String tempName=txtDishName.getText().toString();
-                    Log.d("quantity","is "+tempName+"position "+position);
-                    if(position!=RecyclerView.NO_POSITION) {
-                        if (!hashMap.containsKey(tempName)) {
-                            hashMap.put(tempName, value);
-                            for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
-                                String key = entry.getKey();
-                                Integer val = entry.getValue();
-                                Log.d("quantity map", "is " + entry.getKey() + "value is " + val);
-                            }//notifyItemChanged(position,txtItemCount);
-
-                        }
-
-                        else
-                        {
-
-                            int currentvalue = hashMap.get(tempName);
-                            hashMap.put(tempName, currentvalue + 1);
-                            for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
-                                String key = entry.getKey();
-                                Integer val = entry.getValue();
-                                Log.d("quantity map", "is " + entry.getKey() + "value is " + val);
-                            }
-                           // notifyItemChanged(position,txtItemCount);
-                        }
-                        txtItemCount.setText(String.valueOf(hashMap.get(tempName)));
-                        Log.d("quantity map set", "is "+ hashMap.get(tempName)+txtItemCount.getText().toString());
-                        HomeFragment.setVisibility(hashMap.size());
-                        notifyItemChanged(position);
-
-                    }
-                }
-
-
-            });
-
-            btnDecrease.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                     int position=getAdapterPosition();
-                    String tempName=txtDishName.getText().toString();
-                    Log.d("quantity","is "+tempName+"position "+position);
-                    if(position!=RecyclerView.NO_POSITION && hashMap.get(tempName)>0) {
-                        Log.d("quantity","is "+hashMap.get(tempName));
-
-                            int currentvalue=hashMap.get(tempName);
-                            hashMap.put(tempName, currentvalue - 1);
-                            if (hashMap.get(tempName)==0){
-                                hashMap.remove(tempName);
-                                txtItemCount.setText(String.valueOf(0));
-                               // notifyItemChanged(position,txtItemCount);
-                            }
-                            else {
-                                Log.d("quantity map set", "is "+hashMap.get(tempName));
-                                txtItemCount.setText(String.valueOf(hashMap.get(tempName)));
-                                for (Map.Entry<String, Integer> entry : hashMap.entrySet()) {
-                                    String key = entry.getKey();
-                                    Integer val = entry.getValue();
-                                    Log.d("quantity map", "is " + entry.getKey() + "value is " + val);
-
-                                }//notifyItemChanged(position);
-                            }
-                            HomeFragment.setVisibility(hashMap.size());
-                       Log.d("quantity map set", "is "+txtItemCount.getText().toString());
-                        notifyItemChanged(position);
-                      //  notifyDataSetChanged();
-
-                    }
-                }
-            });*/
             btnAddCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -164,8 +82,6 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                     if(position!=RecyclerView.NO_POSITION) {
                         if (!dishList.contains(list.get(position))){
                              dishList.add(list.get(position));
-                           // Toast.makeText(itemView.getContext(), "Item Added",Toast.LENGTH_SHORT).show();
-
                         }else{
                             Toast.makeText(itemView.getContext(), "Item Already Added",Toast.LENGTH_SHORT).show();
                         }
@@ -174,7 +90,6 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                     }
                     HomeFragment.txtItemsAdded.setText(+dishList.size()+" ITEM ADDED");
                 }
-
             });
         }
     }

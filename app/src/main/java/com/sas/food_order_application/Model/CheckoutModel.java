@@ -9,7 +9,6 @@ public class CheckoutModel {
         this.dishName = dishName;
         this.dishAmount = dishAmount;
         this.dishQuantity = dishQuantity;
-//        this.imageID = imageID;
     }
 
 

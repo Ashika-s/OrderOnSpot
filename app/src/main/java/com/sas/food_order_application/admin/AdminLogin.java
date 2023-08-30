@@ -54,7 +54,6 @@ public class AdminLogin extends AppCompatActivity {
         password=findViewById(R.id.adminpassword);
         login=findViewById(R.id.adminregiste);
         signup=findViewById(R.id.adminsign);
-      //  progressBar=findViewById(R.id.progress);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +68,6 @@ public class AdminLogin extends AppCompatActivity {
                 String emaill, passwordd;
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
-               // progressBar.setVisibility(View.VISIBLE);
                 if (TextUtils.isEmpty(emaill) || TextUtils.isEmpty(passwordd)) {
                     email.setError("email cannot be empty");
                     email.requestFocus();
@@ -82,7 +80,6 @@ public class AdminLogin extends AppCompatActivity {
                     public void onComplete(
                             @NonNull Task<AuthResult> task){
                         if (task.isSuccessful()) {
-                           // progressBar.setVisibility(View.GONE);
                             Log.d("user login","Login successful!!");
                             adminemailid = emaill;
                             SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);

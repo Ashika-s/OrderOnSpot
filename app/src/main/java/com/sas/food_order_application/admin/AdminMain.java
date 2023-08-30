@@ -33,7 +33,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.sas.food_order_application.Adapter.CategoryAdapter;
-import com.sas.food_order_application.Model.ImageData;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.Welcome;
 
@@ -50,8 +49,6 @@ public class AdminMain extends AppCompatActivity {
     CollectionReference collectionReference;
     RecyclerView recyclerView;
     ArrayList<Categoryclass> userArrayList;
-    ArrayList<ImageData> imageData;
- //   ArrayList<ImageData> imageDataList;
     CategoryAdapter category_adapter;
     public static String rest;
     public static String adminemaill =  AdminLogin.adminemailid;
@@ -76,7 +73,6 @@ public class AdminMain extends AppCompatActivity {
 
         db = FirebaseFirestore.getInstance();
         userArrayList=new ArrayList<Categoryclass>();
-        //imageDataList=new ArrayList<ImageData>();
         FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentuser != null){
             SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);
@@ -161,9 +157,7 @@ public class AdminMain extends AppCompatActivity {
 
     private void EventChangeListener() {
         Log.d("admin Email", "is " + adminemaill);
-
         DocumentReference docRef = db.collection("Admin").document(adminemaill);
-
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -215,26 +209,10 @@ public class AdminMain extends AppCompatActivity {
                                         }
                                     }
                                 });
-
                     }
                 }
             }
         });
-
-
-//        CollectionReference imageCollectionref = db.collection("images");
-//
-//        imageCollectionref.get().addOnSuccessListener(queryDocumentSnapshots -> {
-//            List<ImageData> imageDataList=new ArrayList<>();
-//            for(QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots){
-//                ImageData imageData=documentSnapshot.toObject(ImageData.clas/home/ee212707/AndroidStudioProjects/Food_Order_Application/app/build/intermediates/apk/debug/app-debug.apks);
-//                imageDataList.add(imageData);
-//            }
-//            populateRecyclerView(userArrayList, imageDataList);
-//
-//        }).addOnFailureListener(e -> {
-//            // Handle error
-//        });
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){

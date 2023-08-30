@@ -10,10 +10,6 @@ public class Categoryclass {
 
     Bitmap imageurl;
 
-
-
-    //   int image;
-
     public Categoryclass(String item, String category, String type, String amount, Bitmap imageurl) {
         this.item = item;
         this.category = category;
@@ -47,13 +43,6 @@ public class Categoryclass {
         //this.image=image;
     }
 
-//    public int getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(int image) {
-//        this.image = image;
-//    }
 
     public String getItem() {
         return item;

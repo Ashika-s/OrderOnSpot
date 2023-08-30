@@ -35,7 +35,6 @@ public class UserRegister extends AppCompatActivity {
     FirebaseAuth auth;
     TextView click;
     DocumentReference ref;
-   // ProgressBar progressBar;
     FirebaseFirestore db;
     CollectionReference collectionReference;
     @Override
@@ -63,7 +62,6 @@ public class UserRegister extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         confpassword = findViewById(R.id.conf);
-       // progressBar = findViewById(R.id.progress);
         click=findViewById(R.id.signin);
 
         click.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +75,6 @@ public class UserRegister extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  progressBar.setVisibility(View.VISIBLE);
                 String namee, emaill, passwordd, confpasswordd;
                 namee = String.valueOf(name.getText());
                 emaill = String.valueOf(email.getText());
@@ -111,7 +108,6 @@ public class UserRegister extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                              //     progressBar.setVisibility(View.GONE);
                                     addNewData(namee,passwordd,emaill,confpasswordd);
                                     Toast.makeText(UserRegister.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
@@ -131,7 +127,6 @@ public class UserRegister extends AppCompatActivity {
         db.collection("Customer").document(emaill).set(userclass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-              //  progressBar.setVisibility((View.GONE));
                 Intent intent=new Intent(UserRegister.this,MainActivity.class);
                 startActivity(intent);
                 finish();

@@ -30,12 +30,10 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
 
     Context context;
     public static List<CheckoutModel> checkoutModelList;
-
     public CheckoutUserAdapter(Context context, List<CheckoutModel> list) {
         this.context = context;
         this.checkoutModelList = list;
     }
-
 
     @NonNull
     @Override
@@ -49,7 +47,6 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
         holder.edtTxtItemCount.setText((checkoutModelList.get(position).getDishQuantity()));
         holder.txtDishAmount.setText(checkoutModelList.get(position).getDishAmount());
         holder.imageDish.setImageResource(R.drawable.burger);
-
     }
 
     @Override
@@ -69,8 +66,6 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
             super(itemView);
             txtDishAmount=itemView.findViewById(R.id.txtCheckoutDishAmount);
             txtDishName=itemView.findViewById(R.id.txtCheckoutDishName);
-//            btnDecrease=itemView.findViewById(R.id.decrease);
-//            btnIncrease=itemView.findViewById(R.id.increase);
             imageDish=itemView.findViewById(R.id.imageCheckoutDish);
             edtTxtItemCount=itemView.findViewById(R.id.integer_number);
             closeImg=itemView.findViewById(R.id.closeImg);
@@ -87,7 +82,6 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
             edtTxtItemCount.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
                 }
 
                 @Override
@@ -97,8 +91,6 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
                     checkoutModel.setDishQuantity(s.toString());
                     checkoutModelList.set(position,checkoutModel);
                     Log.d("Quantity",checkoutModel.getDishName()+"is"+ checkoutModel.getDishQuantity());
-
-
                 }
 
                 @SuppressLint("SuspiciousIndentation")
@@ -119,31 +111,10 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
                     return ViewHolder.super.itemView.onKeyDown(keyCode,event);
                 }
             });
-//            btnIncrease.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    minteger+=1;
-//                    txtItemCount.setText(minteger);
-//                }
-//            });
-//            btnDecrease.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if(minteger>0) {
-//                        minteger--;
-//                        txtItemCount.setText(minteger);
-//                    }
-//
-//                    //need to add function which delete item when count is zero
-//                }
-//            });
-
         }
         private void hideSoftKeyBoard() {
             InputMethodManager im=(InputMethodManager) itemView.getContext().getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             im.hideSoftInputFromWindow( edtTxtItemCount.getWindowToken(),0);
         }
-
-
     }
 }

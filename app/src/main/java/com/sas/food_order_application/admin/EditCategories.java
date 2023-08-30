@@ -51,18 +51,11 @@ public class EditCategories extends AppCompatActivity {
     boolean isInitialTouch = true;
     TextView amount;
     Button add;
-
-    FirebaseStorage storage;
     Button selectImageButton;
-    //     EditText imageNameEditText;
     ImageView uploadedImageView;
     static String selectedOption;
-
-
-    String restname = AdminRegister.restname;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference documentReference;
-    FirebaseDatabase firebaseDatabase;
+
 
     @SuppressLint("MissingInflatedId")
     @Override

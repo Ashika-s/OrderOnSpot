@@ -17,11 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DatabaseReference;
-import com.sas.food_order_application.Adapter.CategoryAdapter;
-import com.sas.food_order_application.Model.Category;
 import com.sas.food_order_application.R;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Menu extends Fragment {
     View view;
@@ -30,8 +26,6 @@ public class Menu extends Fragment {
     private static final int REQUEST_IMAGE_PICK = 1;
     private Uri selectedImageUri;
     RecyclerView categoryRec;
-    List<Category> categoryList=new ArrayList<>();;
-    CategoryAdapter category_adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -48,7 +42,6 @@ public class Menu extends Fragment {
         });
        categoryRec = view.findViewById(R.id.recyclerviewCategory);
         categoryRec.setLayoutManager(new LinearLayoutManager(getActivity()));
-        List<Category> menuEntries = new ArrayList<>();
         return view;
     }
 

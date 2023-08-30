@@ -53,8 +53,6 @@ public class AdminOrders extends AppCompatActivity {
     ImageView refresh;
     LinearLayout menu,orders,profile,feedback,logout;
     List<DocumentSnapshot> tableDataList;
-
-
     RecyclerView recyclerView;
     OrderAdapter tableDataAdapter;
     String email= AdminLogin.adminemailid;
@@ -75,30 +73,7 @@ public class AdminOrders extends AppCompatActivity {
         profile=findViewById(R.id.Profile);
         feedback=findViewById(R.id.receivedfeedback);
         logout=findViewById(R.id.Logout);
-
-
         recyclerView = findViewById(R.id.recyclerviewCategory);
-
-
-//        refreshRunnable = new Runnable() {
-//            @Override
-//            public void run() {
-//                getorders();
-//                handler.postDelayed(this, 5000);
-//            }
-//        };
-//        handler.postDelayed(refreshRunnable, 5000);
-
-
-
-//        refresh.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                getorders();
-//
-//            }
-//        });
-
         getorders();
 
 
@@ -171,8 +146,6 @@ public class AdminOrders extends AppCompatActivity {
 
         Intent intent = new Intent(getApplicationContext(), UserLogin.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        // intent.putExtra("data","some value");
-
         PendingIntent pendingIntent=PendingIntent.getActivity(AdminOrders.this,0,intent,PendingIntent.FLAG_MUTABLE);
         builder.setContentIntent(pendingIntent);
         NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
@@ -204,9 +177,6 @@ public class AdminOrders extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
                             String userRestaurantName = documentSnapshot.getString("restorantName");
-//                            Log.d("order","is "+userRestaurantName);
-                            //   setupRecyclerView(userRestaurantName);
-
                             CollectionReference tableDataCollection = db.collection("Order");
 
                             tableDataCollection.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -214,32 +184,22 @@ public class AdminOrders extends AppCompatActivity {
                                 public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
                                     for (DocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                                         String restaurantName = documentSnapshot.getString("Restaurant");
-//                                        Log.d("order","is "+restaurantName);
                                         boolean check =restaurantName.equals(userRestaurantName);
                                         Log.d("orders","is "+check);
                                         if(check)
                                         {
-
                                             Log.d("order","is "+restaurantName+" "+userRestaurantName);
                                             tableDataList.add(documentSnapshot);
-                                          //  tableDataAdapter = new OrderAdapter(tableDataList, getApplicationContext());
                                             tableDataAdapter=new OrderAdapter(tableDataList,getApplicationContext());
-//                                            tableDataAdapter.notifyDataSetChanged();
-
                                             recyclerView.setHasFixedSize(true);
                                             recyclerView.setNestedScrollingEnabled(false);
                                             recyclerView.setAdapter(tableDataAdapter);
-
-
                                         }
                                     }
-
-
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
-                                    // Handle failure
                                 }
                             });
                         }
@@ -279,16 +239,13 @@ public class AdminOrders extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // Remove the refresh runnable when the activity is destroyed
         handler.removeCallbacks(refreshRunnable);
     }
     @Override
     public void onBackPressed() {
-        // Create an intent to navigate to MainActivity
         Intent intent = new Intent(this, AdminMain.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        // Finish the current activity (optional)
         finish();
     }
 }

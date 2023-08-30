@@ -36,7 +36,6 @@ public class SettingsFragment extends Fragment {
     FirebaseUser user;
     ListView listView;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
     String[] SettingItems = new String[]{"Edit Profile", "Delete Account", "LogOut"};
 
     @Override
@@ -96,8 +95,6 @@ public class SettingsFragment extends Fragment {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
-
                       user = FirebaseAuth.getInstance().getCurrentUser();
                       FirebaseFirestore db = FirebaseFirestore.getInstance();
                       DocumentReference docRef = db.collection("Customer").document(emaill);

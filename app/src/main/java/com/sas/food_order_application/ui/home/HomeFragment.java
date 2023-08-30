@@ -70,16 +70,12 @@ public class HomeFragment extends Fragment  {
     RecyclerView homeCategoryRec,homeItemRec;
     static FirebaseFirestore firestore ;
 
-    //Category list and adapter
     List<HomeCategoryUserModel> homeCategoryModelsList;
     public static List<Categoryclass> categoryClassList;
     HomeCategoryUserAdapter homeCategoryUserAdapter;
 
-    //Dish List and adapter
     public static List<HomeItemUserModel> homeItemUserModelList;
     public static HomeItemUserAdapter homeItemUserAdapter;
-    private Boolean isFirstLaunch;
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -103,7 +99,6 @@ public class HomeFragment extends Fragment  {
         categoryClassList = new ArrayList<>();
 
         listOfRestaurant();
-        //working fine need to check after list of restaurant attached to listView
         selectRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,11 +147,6 @@ public class HomeFragment extends Fragment  {
                 });
             }
         });
-//        if (isFirstLaunch) {
-//            selectRestaurant.performClick();
-//            isFirstLaunch=false;
-//        }
-        //searchview
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -204,7 +194,6 @@ public class HomeFragment extends Fragment  {
         return root;
     }
 
-    //Btutton enable diable
     public static void setVisibility(int i){
         if(i>0){
             btnNext.setEnabled(true);
@@ -213,7 +202,6 @@ public class HomeFragment extends Fragment  {
         }
     }
 
-    //search dishes filter
     private void filterList(String txt){
         List<HomeItemUserModel> filterItemList = new ArrayList<>();
         for (HomeItemUserModel homeItemUserModel: homeItemUserModelList){
@@ -229,7 +217,6 @@ public class HomeFragment extends Fragment  {
         }
     }
 
-    //getting the document but method is correct
     private void listOfRestaurant() {
         firestore.collection("Admin").get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -253,7 +240,6 @@ public class HomeFragment extends Fragment  {
                 });
     }
 
-    //working good
     private void fetchCategory() {
         String selectedRestaurant=selectRestaurant.getText().toString();
         List<String> tempList = new ArrayList<>();
@@ -320,9 +306,6 @@ public class HomeFragment extends Fragment  {
     }
 
     public static void getUpdateAdapter(List<HomeItemUserModel> homeItemUserModel){
-//        homeItemUserModelList.clear();
-//        homeItemUserModelList.addAll(homeItemUserModel);
-//        homeItemUserAdapter.notifyDataSetChanged();
         homeItemUserAdapter.setFilteredList(homeItemUserModel);
     }
 

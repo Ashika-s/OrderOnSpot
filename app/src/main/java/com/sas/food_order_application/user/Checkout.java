@@ -63,8 +63,6 @@ public class Checkout extends AppCompatActivity {
 
     int tableNo=0;
 
-    String orderId = UUID.randomUUID().toString();
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +72,6 @@ public class Checkout extends AppCompatActivity {
         recyclerView=findViewById(R.id.listOfItemAdded);
         btnPlaceOrder=findViewById(R.id.btntoOrder);
         txtTotalAmount=findViewById(R.id.textTotalAmount);
-
         Intent intent=getIntent();
         useremail=UserLogin.emailid;
         db=FirebaseFirestore.getInstance();
@@ -82,8 +79,6 @@ public class Checkout extends AppCompatActivity {
         restaurant=intent.getStringExtra("Restaurant Name");
         selectedRestaurant.setText(restaurant);
         Log.d("resta",""+restaurant);
-
-
         db.collection("Restaurant").document(restaurant).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>(){
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -99,7 +94,6 @@ public class Checkout extends AppCompatActivity {
                                     long tablecount=(long) document.get("Tablecount");
                                     populateSpinner(spinner, tablecount);
                                 }
-
                             }
                         }
                     });
@@ -108,7 +102,6 @@ public class Checkout extends AppCompatActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         tableNo= (position+1);
-//                        parent.setEnabled(false);
                         Log.d("doc","is "+tableNo);
                     }
 
@@ -117,8 +110,6 @@ public class Checkout extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(),"table selection is required",Toast.LENGTH_SHORT).show();
                     }
                 });
-
-                //recyclerview
                 checkoutList=new ArrayList<>();
                 setRecyclerViewList();
                 checkoutUserAdapter=new CheckoutUserAdapter(Checkout.this,checkoutList);
@@ -138,18 +129,10 @@ public class Checkout extends AppCompatActivity {
                         Intent intent=new Intent(Checkout.this,orderplaced_splash.class);
                         startActivity(intent);
                         finish();
-
-
                     }
-
-
                 });
-
-
             }
         });
-
-
     }
 
     private int generateOrderNumber() {
@@ -186,14 +169,11 @@ public class Checkout extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Data added successfully
-                       // Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Handle failure
                         Toast.makeText(Checkout.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });
@@ -219,14 +199,11 @@ public class Checkout extends AppCompatActivity {
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
-                        // Data added successfully
-                        Toast.makeText(Checkout.this, "added", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // Handle failure
                         Toast.makeText(Checkout.this, "Failed", Toast.LENGTH_SHORT).show();
                     }
                 });

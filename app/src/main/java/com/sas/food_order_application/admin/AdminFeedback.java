@@ -67,7 +67,6 @@ public class AdminFeedback extends AppCompatActivity {
         profile = findViewById(R.id.Profile);
         feedback=findViewById(R.id.receivedfeedback);
         logout = findViewById(R.id.Logout);
-
         db = FirebaseFirestore.getInstance();
         String emaill = AdminLogin.adminemailid;
         recyclerView = findViewById(R.id.recyclerviewCategory2);
@@ -180,9 +179,6 @@ public class AdminFeedback extends AppCompatActivity {
                     }
 
                 });
-
-
-
     }
 
     public static void openDrawer(DrawerLayout drawerLayout){
@@ -208,11 +204,9 @@ public class AdminFeedback extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        // Create an intent to navigate to MainActivity
         Intent intent = new Intent(this, AdminMain.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        // Finish the current activity (optional)
         finish();
     }
 }
