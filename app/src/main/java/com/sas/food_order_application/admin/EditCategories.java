@@ -41,11 +41,6 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-//import com.google.cloud.firestore.CollectionGroupQuery;
-//import com.google.cloud.firestore.Firestore;
-//import com.google.cloud.firestore.FirestoreOptions;
-
-
 public class EditCategories extends AppCompatActivity {
 
     static final int PICK_IMAGE_REQUEST = 1;
@@ -81,7 +76,6 @@ public class EditCategories extends AppCompatActivity {
         amount = findViewById(R.id.amount);
         add = findViewById(R.id.addbtn);
         selectImageButton = findViewById(R.id.selectImageButton);
-        //  imageNameEditText=findViewById(R.id.imageNameEditText);
         uploadedImageView = findViewById(R.id.uploadedImageView);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -235,11 +229,9 @@ public class EditCategories extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Create an intent to navigate to MainActivity
         Intent intent = new Intent(this, AdminMain.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        // Finish the current activity (optional)
         finish();
     }
 
