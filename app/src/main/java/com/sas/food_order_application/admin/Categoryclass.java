@@ -1,29 +1,34 @@
 package com.sas.food_order_application.admin;
+
+import android.graphics.Bitmap;
+
 public class Categoryclass {
     String item;
     String category;
     String type;
     String amount;
 
-    String imageurl;
+    Bitmap imageurl;
 
 
 
- //   int image;
+    //   int image;
 
-    public Categoryclass(String item, String category, String type, String amount, String imageurl) {
+    public Categoryclass(String item, String category, String type, String amount, Bitmap imageurl) {
         this.item = item;
         this.category = category;
         this.type = type;
         this.amount = amount;
         this.imageurl = imageurl;
     }
-
-    public String getImageurl() {
+    public Categoryclass(Bitmap bitmap){
+        this.imageurl = bitmap;
+    }
+    public Bitmap getImageurl() {
         return imageurl;
     }
 
-    public void setImageurl(String imageurl) {
+    public void setImageurl(Bitmap imageurl) {
         this.imageurl = imageurl;
     }
 
