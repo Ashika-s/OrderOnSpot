@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentChange;
@@ -40,8 +41,6 @@ public class Item_activity extends AppCompatActivity {
         itemViewRec.setLayoutManager(new LinearLayoutManager(this));
         item_adapter=new ItemAdapter(Item_activity.this,categoryclassList);
         itemViewRec.setAdapter(item_adapter);
-
-
     }
 
     private ArrayList<Categoryclass> itemSetListener(String clickedCategory) {

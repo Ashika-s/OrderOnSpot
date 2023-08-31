@@ -49,7 +49,7 @@ public class AdminProfile extends AppCompatActivity {
     FirebaseFirestore db;
     DrawerLayout drawerLayout;
     ImageView imageView;
-    LinearLayout menu,orders,profile,logout;
+    LinearLayout menu,orders,profile,feedback,logout;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +61,7 @@ public class AdminProfile extends AppCompatActivity {
         menu=findViewById(R.id.Menu);
         orders=findViewById(R.id.Order);
         profile=findViewById(R.id.Profile);
+        feedback=findViewById(R.id.receivedfeedback);
         logout=findViewById(R.id.Logout);
         RestaurantName = findViewById(R.id.prresname);
         RestaurantAddress = findViewById(R.id.prresadd);
@@ -109,6 +110,12 @@ public class AdminProfile extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 recreate();
+            }
+        });
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(AdminProfile.this,AdminFeedback.class);
             }
         });
 
@@ -230,11 +237,9 @@ public class AdminProfile extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // Create an intent to navigate to MainActivity
         Intent intent = new Intent(this, AdminMain.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        // Finish the current activity (optional)
         finish();
     }
 

@@ -6,35 +6,46 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/textSelectRestaurant"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:drawable/editbox_background"
-        android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"
-        android:text="Select Restaurant"
-        android:padding="12dp"
-        android:textAlignment="textStart"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchDishes"
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:queryHint="Search dishes here.."
-        app:iconifiedByDefault="false"
-        android:background="@drawable/category_bg"
-        android:iconifiedByDefault="false"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/nextBtnLayout"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textSelectRestaurant"
-        app:queryHint="Search dishes here.." />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textSelectRestaurant"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/editbox_background"
+            android:drawableEnd="@drawable/baseline_keyboard_arrow_down_24"
+            android:text="Select Restaurant"
+            android:padding="12dp"
+            android:textAlignment="textStart"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchDishes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:queryHint="Search dishes here.."
+            app:iconifiedByDefault="false"
+            android:background="@drawable/category_bg"
+            android:iconifiedByDefault="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textSelectRestaurant"
+            app:queryHint="Search dishes here.." />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/categorylist"
@@ -42,7 +53,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchDishes" />
+        app:layout_constraintTop_toBottomOf="@id/searchDishes"
+         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/disheslist"
@@ -50,13 +62,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/categorylist" />
+        app:layout_constraintTop_toBottomOf="@id/categorylist"
+        app:layout_constraintBottom_toTopOf="@id/nextBtnLayout"/>
 
+    </LinearLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:id="@+id/nextBtnLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -86,7 +101,7 @@
             android:layout_marginTop="32dp"
             android:layout_marginBottom="17dp"
             android:gravity="center"
-            android:text="ITEM ADDED"
+            android:text="Item Added"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="18sp"

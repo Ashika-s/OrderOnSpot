@@ -25,6 +25,8 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.SplashScreen;
+import com.sas.food_order_application.Welcome;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -43,7 +45,6 @@ public class AdminRegister extends AppCompatActivity {
     FirebaseAuth auth;
     CollectionReference collectionReference;
     DocumentReference ref;
-  //  ProgressBar progressBar;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     public static String restname;
 
@@ -75,7 +76,6 @@ public class AdminRegister extends AppCompatActivity {
         email=findViewById(R.id.owneremail);
         collectionReference=db.collection("Admin");
         auth=FirebaseAuth.getInstance();
-       // progressBar = findViewById(R.id.progress);
         register=findViewById(R.id.adminregiste);
         click=findViewById(R.id.signinadmin);
         click.setOnClickListener(new View.OnClickListener() {
@@ -98,12 +98,10 @@ public class AdminRegister extends AppCompatActivity {
                 passwordd = String.valueOf(password.getText());
                 emaill=String.valueOf(email.getText());
                 confirmpasswordd = String.valueOf(confirmpassword.getText());
-           //     progressBar.setVisibility(View.VISIBLE);
                 AdminLogin.adminemailid=emaill;
 
                 if (Restaurantname.getText().toString().isEmpty() || Restaurantaddress.getText().toString().isEmpty() || password.getText().toString().isEmpty() || confirmpassword.getText().toString().isEmpty())
                 {
-                   // Toast.makeText(Admin_register.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
                     confirmpassword.setError("Confirm password cannot be empty");
                     confirmpassword.requestFocus();
                     Ownername.setError("Owner Name cannot be empty");
@@ -126,7 +124,6 @@ public class AdminRegister extends AppCompatActivity {
                 }
                 else if(!password.getText().toString().equals(confirmpassword.getText().toString()))
                 {
-                    //Toast.makeText(Admin_register.this, "Passwords are not matching", Toast.LENGTH_SHORT).show();
                     confirmpassword.setError("Passwords are not matching");
                     confirmpassword.requestFocus();
                     return;
@@ -136,7 +133,8 @@ public class AdminRegister extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    addNewData(Restaurantnamee,Restaurantaddresss,Restaurantphnoo,Ownernamee,Ownerphnoo,passwordd,emaill,confirmpasswordd);
+                                    addNewData(Restaurantnamee,Restaurantaddresss,Restaurantphnoo,Ownernamee,Ownerphnoo,passwordd,emaill);
+                                    SplashScreen.userType="Admin";
                                     Toast.makeText(AdminRegister.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d("admin register","Authentication failed");
@@ -147,7 +145,7 @@ public class AdminRegister extends AppCompatActivity {
         });
     }
 
-    void addNewData(String Restaurantnamee,String Restaurantaddresss,String Restaurantphnoo,String Ownernamee,String Ownerphnoo,String passwordd,String emaill,String confirmpasswordd){
+    void addNewData(String Restaurantnamee,String Restaurantaddresss,String Restaurantphnoo,String Ownernamee,String Ownerphnoo,String passwordd,String emaill){
         AdminRegisterClass adminRegisterClass = new AdminRegisterClass();
         adminRegisterClass.setRestorantName(Restaurantnamee);
         adminRegisterClass.setRestaurantaddress(Restaurantaddresss);
@@ -156,7 +154,6 @@ public class AdminRegister extends AppCompatActivity {
         adminRegisterClass.setOwnerphno(Ownerphnoo);
         adminRegisterClass.setPassword(passwordd);
         adminRegisterClass.setEmail(emaill);
-        adminRegisterClass.setConfirmpassword(confirmpasswordd);
         Log.d("addingData",Restaurantnamee);
         SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
@@ -168,7 +165,8 @@ public class AdminRegister extends AppCompatActivity {
                 restname=Restaurantnamee;
                 Log.d("restname","is "+restname);
           //      progressBar.setVisibility((View.GONE));
-                startActivity(new Intent(AdminRegister.this, AdminMain.class));
+                setResult(1);
+                startActivity(new Intent(AdminRegister.this, AdminOrders.class));
                 finish();
             }
         }).addOnFailureListener(new OnFailureListener() {

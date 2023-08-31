@@ -1,17 +1,34 @@
 package com.sas.food_order_application.Model;
+
+import android.graphics.Bitmap;
+
 public class HomeItemUserModel {
 
-    int image;
+
     String dishName,dishAmount,itemsCount,type;
+    Bitmap imageurl;
 
-
-
-    public HomeItemUserModel(String dishName, String dishAmount, String itemsCount, String type) {
-//        this.image = image;
+    public HomeItemUserModel(String dishName, String dishAmount, String itemsCount, String type, Bitmap imageurl) {
         this.dishName = dishName;
         this.dishAmount = dishAmount;
-        this.itemsCount=itemsCount;
-        this.type=type;
+        this.itemsCount = itemsCount;
+        this.type = type;
+        this.imageurl = imageurl;
+    }
+
+    public HomeItemUserModel(String dishName, String dishAmount, String itemsCount, String type) {
+        this.dishName = dishName;
+        this.dishAmount = dishAmount;
+        this.itemsCount = itemsCount;
+        this.type = type;
+    }
+
+    public Bitmap getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(Bitmap imageurl) {
+        this.imageurl = imageurl;
     }
 
     public String getType() {
@@ -30,13 +47,6 @@ public class HomeItemUserModel {
         this.itemsCount = itemsCount;
     }
 
-    public int getImage() {
-        return image;
-    }
-
-    public void setImage(int image) {
-        this.image = image;
-    }
 
     public String getDishName() {
         return dishName;

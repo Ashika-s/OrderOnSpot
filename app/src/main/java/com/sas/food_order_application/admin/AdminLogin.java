@@ -20,8 +20,12 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.SplashScreen;
+import com.sas.food_order_application.Welcome;
 
 public class AdminLogin extends AppCompatActivity {
     Button login;
@@ -31,7 +35,7 @@ public class AdminLogin extends AppCompatActivity {
     EditText password;
     FirebaseAuth auth;
     public static String adminemailid;
-    public static String res;
+    public static String res="";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
@@ -54,7 +58,6 @@ public class AdminLogin extends AppCompatActivity {
         password=findViewById(R.id.adminpassword);
         login=findViewById(R.id.adminregiste);
         signup=findViewById(R.id.adminsign);
-      //  progressBar=findViewById(R.id.progress);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,7 +72,6 @@ public class AdminLogin extends AppCompatActivity {
                 String emaill, passwordd;
                 emaill = String.valueOf(email.getText());
                 passwordd = String.valueOf(password.getText());
-               // progressBar.setVisibility(View.VISIBLE);
                 if (TextUtils.isEmpty(emaill) || TextUtils.isEmpty(passwordd)) {
                     email.setError("email cannot be empty");
                     email.requestFocus();
@@ -82,14 +84,30 @@ public class AdminLogin extends AppCompatActivity {
                     public void onComplete(
                             @NonNull Task<AuthResult> task){
                         if (task.isSuccessful()) {
-                           // progressBar.setVisibility(View.GONE);
                             Log.d("user login","Login successful!!");
                             adminemailid = emaill;
                             SharedPreferences preferences = getSharedPreferences("localEmailAdmin", MODE_PRIVATE);
                             SharedPreferences.Editor editor = preferences.edit();
                             editor.putString("KEY_EMAIL_ADMIN", adminemailid);
+                            DocumentReference d=FirebaseFirestore.getInstance().collection("Admin").document(adminemailid);
+                            d.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document.exists()) {
+                                            AdminRegisterClass adminRegisterClass = document.toObject(AdminRegisterClass.class);
+                                            res = adminRegisterClass.getRestorantName();
+                                        }
+                                    }
+                                }
+                            });
+
+                            editor.putString("KEY_RESTAURANT",res);
                             editor.apply();
-                            Intent intent = new Intent(AdminLogin.this, AdminMain.class);
+                            setResult(1);
+                            SplashScreen.userType="Admin";
+                            Intent intent = new Intent(AdminLogin.this, AdminOrders.class);
                             startActivity(intent);
                             finish();
                         }

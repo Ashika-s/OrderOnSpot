@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/drawerlayout"
-    tools:context=".admin.AdminOrders">
+    tools:context=".admin.AdminFeedback">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,14 +14,14 @@
         android:orientation="vertical">
 
         <include
-            layout="@layout/orders"/>
+            layout="@layout/feedbacktoolbar"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerviewCategory"
+                android:id="@+id/recyclerviewCategory2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 

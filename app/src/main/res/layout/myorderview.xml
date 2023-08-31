@@ -92,13 +92,27 @@
             android:layout_below="@+id/layyy"
             android:id="@+id/layyyy"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:padding="18dp">
             <TextView
                 android:textColor="@color/black"
                 android:id="@+id/preferencesTextVieww"
                 android:layout_marginLeft="5dp"
                 android:textStyle="bold"
+                android:text="list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:textSize="18sp"/>
+
+            <TextView
+                android:textColor="@color/purple_700"
+                android:id="@+id/feedback"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+
+                android:textStyle="bold"
+                android:text="Rate us"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
 

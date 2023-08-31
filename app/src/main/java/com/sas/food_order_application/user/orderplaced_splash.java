@@ -26,10 +26,11 @@ public class orderplaced_splash extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent=new Intent(getApplicationContext(), MainActivity.class);
+                intent.putExtra("NEW LOGIN",true);
                 startActivity(intent);
                 finish();
             }
-        },5000);
+        },3000);
 
     }
 }

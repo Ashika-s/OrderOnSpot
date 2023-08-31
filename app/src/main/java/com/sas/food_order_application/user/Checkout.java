@@ -3,6 +3,10 @@ package com.sas.food_order_application.user;
 import static android.content.ContentValues.TAG;
 
 import android.annotation.SuppressLint;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,12 +39,16 @@ import com.sas.food_order_application.Adapter.HomeItemUserAdapter;
 import com.sas.food_order_application.Model.CheckoutModel;
 import com.sas.food_order_application.Model.HomeItemUserModel;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.ui.My_Orders.MyordersFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 public class Checkout extends AppCompatActivity {
@@ -60,10 +69,13 @@ public class Checkout extends AppCompatActivity {
     private Runnable refreshRunnable;
 
     int position=0;
+    String mail=UserLogin.emailid;
     String orderId = UUID.randomUUID().toString();
     List<String> tableList=new ArrayList<>();
 
     ArrayAdapter<String> adapter;
+
+    int tableNo=0;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -110,6 +122,8 @@ public class Checkout extends AppCompatActivity {
                 spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                        tableNo= (position+1);
+                        Log.d("doc","is "+tableNo);
                         tableName=parent.getItemAtPosition(position).toString();
                        position=position;
 
@@ -139,14 +153,18 @@ public class Checkout extends AppCompatActivity {
                             listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
                         }
                         if (listOrder.size() > 0) {
+                            int Id =generateOrderNumber();
+
                             tableList.remove(position);
                             adapter.notifyDataSetChanged();
                             DocumentReference doc = db.collection("Admin").document(restaurantEmail);
                             List<String> updateList = new ArrayList<>();
                             updateList.addAll(tableList);
                             doc.update("Table List", updateList);
-                            myordersdatabase(listOrder);
-                            sendDataToAdmin(listOrder);
+                            myordersdatabase(listOrder,Id);
+                            sendDataToAdmin(listOrder,Id);
+                            send();
+                            setResult(1);
                             Intent intent = new Intent(Checkout.this, orderplaced_splash.class);
                             startActivity(intent);
                             finish();
@@ -164,7 +182,47 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-    private void myordersdatabase() {
+    private void send() {
+        String chanelId="CHANNEL_ID_NOTIFICATION";
+        NotificationCompat.Builder builder=new NotificationCompat.Builder(Checkout.this,chanelId);
+        builder.setSmallIcon(R.drawable.baseline_notifications_active_24)
+                .setContentTitle("notifcation")
+                .setContentTitle("Order is Placed!..")
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+
+        Intent intent = new Intent(Checkout.this, MyordersFragment.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent=PendingIntent.getActivity(Checkout.this,0,intent,PendingIntent.FLAG_MUTABLE);
+        builder.setContentIntent(pendingIntent);
+        NotificationManager notificationManager= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationChannel notificationChannel=notificationManager.getNotificationChannel(chanelId);
+        if (notificationChannel==null){
+            int importance = NotificationManager.IMPORTANCE_HIGH;
+            notificationChannel = new NotificationChannel(chanelId,"nicee",importance);
+            notificationChannel.setLightColor(R.color.purple_500);
+            notificationChannel.enableVibration(true);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        notificationManager.notify(0,builder.build());
+
+    }
+
+
+    private int generateOrderNumber() {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+        String timestamp = dateFormat.format(new Date());
+        Date currentTime = new Date();
+        String formattedTime = dateFormat.format(currentTime);
+
+        Random random = new Random();
+        int randomSuffix = random.nextInt(9000) + 1000; // Generates a random 4-digit number
+
+        return randomSuffix;
+
+    }
+    private void myordersdatabase(HashMap<String,Integer> listOrder,int Id) {
 
 
         CollectionReference tableCollection = db.collection("My_Orders");
@@ -172,9 +230,10 @@ public class Checkout extends AppCompatActivity {
         Map<String,Object> tabledata=new HashMap<>();
         tabledata.put("tablenumber",tableName);
         tabledata.put("preferences",listOrder);
-        tabledata.put("Id",Id++);
+        tabledata.put("Id",Id);
         tabledata.put("Total Amount",totalAmount);
         tabledata.put("Restaurant",restaurant);
+        tabledata.put("email",mail);
 
         documentReference.set(tabledata)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -194,21 +253,16 @@ public class Checkout extends AppCompatActivity {
 
 
     }
-    private void sendDataToAdmin(HashMap<String, Integer> listOrder) {
-//        HashMap<String,Integer> listOrder = new HashMap<>();
-//        for (CheckoutModel c:CheckoutUserAdapter.checkoutModelList){
-//            listOrder.put(c.getDishName(), Integer.valueOf(c.getDishQuantity()));
-//        }
-
+    private void sendDataToAdmin(HashMap<String, Integer> listOrder,int Id) {
         CollectionReference tableCollection = db.collection("Order");
             DocumentReference documentReference = tableCollection.document(useremail);
             Map<String, Object> tabledata = new HashMap<>();
             tabledata.put("tablenumber", tableName);
             tabledata.put("preferences", listOrder);
-            tabledata.put("Id", Id++);
+            tabledata.put("Id", Id);
             tabledata.put("Total Amount", totalAmount);
             tabledata.put("Restaurant", restaurant);
-
+            tabledata.put("email",mail);
             documentReference.set(tabledata)
                     .addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -238,17 +292,6 @@ public class Checkout extends AppCompatActivity {
     }
 
     private void populateSpinner(Spinner spinner, List<String > tableList) {
-//        String[] tableitem =new String[(int) tablecount];
-//        for(int i=0; i<tablecount;i++)
-//        {
-//            tableitem[i] ="Table No "+(i+1);
-//        }
-//        List<String> list=new ArrayList<>();
-//        for (String str :
-//                tableList) {
-//            list.add("Table No "+str);
-//
-//        }
         Collections.sort(tableList);
         adapter= new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,tableList);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HomeCategoryUserAdapter extends RecyclerView.Adapter<HomeCategoryUserAdapter.ViewHolder>  {
-
     Context context;
     List<HomeCategoryUserModel> homeCategoryModels;
     List<Categoryclass> categoryclassList;
@@ -38,9 +37,7 @@ public class HomeCategoryUserAdapter extends RecyclerView.Adapter<HomeCategoryUs
     public HomeCategoryUserAdapter(Context context, List<HomeCategoryUserModel> homeCategoryModels, List<Categoryclass> categoryclassList) {
         this.context = context;
         this.homeCategoryModels = homeCategoryModels;
-
         this.categoryclassList=categoryclassList;
-//        this.homeItemUserAdapter=homeItemUserAdapter;
     }
 
     @Override
@@ -56,13 +53,11 @@ public class HomeCategoryUserAdapter extends RecyclerView.Adapter<HomeCategoryUs
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView category;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             category = itemView.findViewById(R.id.textCategory);
-
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,56 +79,10 @@ public class HomeCategoryUserAdapter extends RecyclerView.Adapter<HomeCategoryUs
         }
     }
 
-public void getUpdatedSecondItems(String clickedItem) {
+    public void getUpdatedSecondItems(String clickedItem) {
     String clickedCategory= clickedItem;
     Log.d("clicked elements"," "+clickedCategory);
-//    List<HomeItemUserModel> updatehomeItemUserModelList= new ArrayList<>();
     Log.d("selected rest", HomeFragment.selectedRest);
-//    FirebaseFirestore.getInstance().collection("Restaurant")
-//        .document(HomeFragment.selectedRest)
-//        .collection("Veg")
-//        .get()
-//        .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                Log.d("Firebase","OrderOnSpot");
-//                if (task.isSuccessful()) {
-//                    for (QueryDocumentSnapshot document : task.getResult()) {
-//                        Categoryclass categoryclass=document.toObject(Categoryclass.class);
-//                        if (clickedCategory.equals(categoryclass.getCategory())){
-//                            HomeItemUserModel homeItemUserModel=new HomeItemUserModel(categoryclass.getItem(),categoryclass.getAmount());
-//                            homeItemUserModelList.add(homeItemUserModel);
-//                            Log.d(selectedRest ," "+homeItemUserModel.getDishName());
-//                        }
-//                    }
-//                } else {
-//                    Log.d("firestore error", "Error getting documents: ", task.getException());
-//                }
-//            }
-//        });
-//
-//        FirebaseFirestore.getInstance().collection("Restaurant").document(selectedRest).collection("Veg")
-//                .addSnapshotListener(new EventListener<QuerySnapshot>() {
-//                    @Override
-//                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-//                        if(error!=null)
-//                        {
-//                            Log.e("firestore error",error.getMessage());
-//                            return;
-//                        }
-//                        Log.d("LOG ",clickedItem.getTextView());
-//                        for (DocumentChange dc : value.getDocumentChanges()) {
-//                            if (dc.getType() == DocumentChange.Type.ADDED) {
-//                                Categoryclass category = dc.getDocument().toObject(Categoryclass.class);
-//                                if (clickedCategory.equals(category.getCategory())) {
-//                                    HomeItemUserModel homeItemUserModel = new HomeItemUserModel( category.getItem(), category.getAmount());
-//                                    Log.d("checking items",""+homeItemUserModel.getDishName());
-//                                    updatehomeItemUserModelList.add(homeItemUserModel);
-//                                }
-//                            }
-//                        }
-//                    }
-//                });
     for (Categoryclass category:categoryclassList){
         if(category.getCategory().equals(clickedCategory)){
             HomeItemUserModel homeItemUserModel = new HomeItemUserModel(category.getItem(),category.getAmount(),String.valueOf(0), category.getType());
@@ -141,7 +90,5 @@ public void getUpdatedSecondItems(String clickedItem) {
         }
     }
      Log.d("Item List2"," "+homeItemUserModelList.toString());
-
     }
-
 }

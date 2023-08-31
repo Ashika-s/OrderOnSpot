@@ -1,10 +1,13 @@
 package com.sas.food_order_application.ui.Settings;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -156,12 +159,17 @@ public class SettingsFragment extends Fragment {
                 Context fragmentContext = requireContext();
                 AlertDialog.Builder builder = new AlertDialog.Builder(fragmentContext);
                 builder.setTitle("Are you sure you want to logout?");
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         FirebaseAuth.getInstance().signOut();
+                        SharedPreferences preferences1 = requireContext().getSharedPreferences("localMainActivityData",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = preferences1.edit();
+                        editor.clear();
+                        editor.apply();
                         Intent intent=new Intent(getActivity().getApplicationContext(), Welcome.class);
                         startActivity(intent);
+                        getActivity().finish();
                     }
                 });
                 builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {

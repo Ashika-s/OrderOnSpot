@@ -25,6 +25,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.SplashScreen;
 
 public class UserRegister extends AppCompatActivity {
     Button register;
@@ -35,7 +36,6 @@ public class UserRegister extends AppCompatActivity {
     FirebaseAuth auth;
     TextView click;
     DocumentReference ref;
-   // ProgressBar progressBar;
     FirebaseFirestore db;
     CollectionReference collectionReference;
     @Override
@@ -63,7 +63,6 @@ public class UserRegister extends AppCompatActivity {
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         confpassword = findViewById(R.id.conf);
-       // progressBar = findViewById(R.id.progress);
         click=findViewById(R.id.signin);
 
         click.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +76,6 @@ public class UserRegister extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  progressBar.setVisibility(View.VISIBLE);
                 String namee, emaill, passwordd, confpasswordd;
                 namee = String.valueOf(name.getText());
                 emaill = String.valueOf(email.getText());
@@ -111,8 +109,7 @@ public class UserRegister extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                              //     progressBar.setVisibility(View.GONE);
-                                    addNewData(namee,passwordd,emaill,confpasswordd);
+                                    addNewData(namee,passwordd,emaill);
                                     Toast.makeText(UserRegister.this, "succefull", Toast.LENGTH_SHORT).show();
                                 } else {
                                     Log.d("user register","Authentication failed");
@@ -122,17 +119,19 @@ public class UserRegister extends AppCompatActivity {
                 }
         });
     }
-    void addNewData(String namee,String passwordd,String emaill,String confpasswordd){
+    void addNewData(String namee,String passwordd,String emaill){
         Userclass userclass=new Userclass();
         userclass.setName(namee);
         userclass.setPassword(passwordd);
         userclass.setEmail(emaill);
-        userclass.setConfpassword(confpasswordd);
         db.collection("Customer").document(emaill).set(userclass).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-              //  progressBar.setVisibility((View.GONE));
+                SplashScreen.userType="Customer";
+                setResult(1);
                 Intent intent=new Intent(UserRegister.this,MainActivity.class);
+                intent.putExtra("Perform Select Restaurant",true);
+                intent.putExtra("NEW LOGIN",false);
                 startActivity(intent);
                 finish();
             }

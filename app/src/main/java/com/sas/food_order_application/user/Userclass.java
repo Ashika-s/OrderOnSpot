@@ -5,7 +5,6 @@ import android.widget.EditText;
 import java.io.Serializable;
 
 public class Userclass implements Serializable {
-
     String name;
    static String email;
     String password;

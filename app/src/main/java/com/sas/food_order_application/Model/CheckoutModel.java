@@ -1,17 +1,32 @@
 package com.sas.food_order_application.Model;
 
+import android.graphics.Bitmap;
+
 public class CheckoutModel {
 
     String dishName,dishAmount,dishQuantity;
-    int imageID;
+   Bitmap imageurl;
 
     public CheckoutModel(String dishName, String dishAmount, String dishQuantity) {
         this.dishName = dishName;
         this.dishAmount = dishAmount;
         this.dishQuantity = dishQuantity;
-//        this.imageID = imageID;
     }
 
+    public CheckoutModel(String dishName, String dishAmount, String dishQuantity, Bitmap imageurl) {
+        this.dishName = dishName;
+        this.dishAmount = dishAmount;
+        this.dishQuantity = dishQuantity;
+        this.imageurl = imageurl;
+    }
+
+    public Bitmap getImageurl() {
+        return imageurl;
+    }
+
+    public void setImageurl(Bitmap imageurl) {
+        this.imageurl = imageurl;
+    }
 
     public String getDishName() {
         return dishName;

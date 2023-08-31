@@ -2,6 +2,8 @@ package com.sas.food_order_application.ui.home;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import static com.sas.food_order_application.user.UserLogin.emailid;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -30,6 +32,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.SearchView;
 
+import com.airbnb.lottie.L;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,7 +81,7 @@ public class HomeFragment extends Fragment  {
     //Dish List and adapter
     public static List<HomeItemUserModel> homeItemUserModelList;
     public static HomeItemUserAdapter homeItemUserAdapter;
-    private Boolean isFirstLaunch;
+    private final int Request_Code_Order=1;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -86,11 +89,7 @@ public class HomeFragment extends Fragment  {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         firestore=FirebaseFirestore.getInstance();
-        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentuser != null){
-            SharedPreferences preferences = requireContext().getSharedPreferences("localEmailUser",MODE_PRIVATE);
-            UserLogin.emailid=preferences.getString("KEY_EMAIL_USER", "");
-        }
+
         selectRestaurant=root.findViewById(R.id.textSelectRestaurant);
         homeCategoryRec = root.findViewById(R.id.categorylist);
         txtItemsAdded=root.findViewById(R.id.itemsaddedcount);
@@ -101,9 +100,29 @@ public class HomeFragment extends Fragment  {
         homeCategoryModelsList = new ArrayList<>();
         homeItemUserModelList = new ArrayList<>();
         categoryClassList = new ArrayList<>();
+        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
+        Intent intent=getActivity().getIntent();
+        Boolean enable=intent.getBooleanExtra("Perform Select Restaurant",false),newLogin=intent.getBooleanExtra("NEW LOGIN",false);
+        Log.d("HomeFragment","HomeFragment "+newLogin);
+        if (enable) {
+            Log.d("Shared",""+selectedRest);
+            selectRestaurant.performClick();
+        }
+        if (currentuser != null && newLogin){
+            Log.d("HomeFragment","HomeFragment previous login");
+            SharedPreferences preferences = requireContext().getSharedPreferences("localEmailUser",MODE_PRIVATE);
+            emailid=preferences.getString("KEY_EMAIL_USER", "");
+            SharedPreferences preferences1 = requireContext().getSharedPreferences("localMainActivityData",MODE_PRIVATE);
+            selectRestaurant.setText(preferences1.getString("KEY_RESTAURANT",""));
+            selectedRest=preferences1.getString("KEY_RESTAURANT","");
+            Log.d("Shared",""+selectedRest);
+            fetchCategory();
+        }
+            Log.d("Shared","enable"+enable);
+
 
         listOfRestaurant();
-        //working fine need to check after list of restaurant attached to listView
+        //working fine
         selectRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -152,10 +171,7 @@ public class HomeFragment extends Fragment  {
                 });
             }
         });
-//        if (isFirstLaunch) {
-//            selectRestaurant.performClick();
-//            isFirstLaunch=false;
-//        }
+
         //searchview
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -185,6 +201,7 @@ public class HomeFragment extends Fragment  {
         homeItemRec.setHasFixedSize(true);
         homeItemRec.setNestedScrollingEnabled(false);
 
+
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,7 +210,7 @@ public class HomeFragment extends Fragment  {
                     Intent checkoutIntent = new Intent(root.getContext(),Checkout.class);
                     checkoutIntent.putExtra("Restaurant Name", selectedRest);
                     Log.d("restaurant",selectedRest);
-                    startActivity(checkoutIntent);
+                    startActivityForResult(checkoutIntent,Request_Code_Order);
                 }else{
                     Toast.makeText(getContext(),"Add item(s) to checkout",Toast.LENGTH_SHORT).show();
                 }
@@ -209,6 +226,16 @@ public class HomeFragment extends Fragment  {
             btnNext.setEnabled(true);
         }else {
             btnNext.setEnabled(false);
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==Request_Code_Order){
+            if(resultCode==1){
+                getActivity().finish();
+            }
         }
     }
 
@@ -313,15 +340,21 @@ public class HomeFragment extends Fragment  {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        SharedPreferences preferences = getActivity().getSharedPreferences("localMainActivityData", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString("KEY_RESTAURANT", selectedRest);
+        editor.apply();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
     public static void getUpdateAdapter(List<HomeItemUserModel> homeItemUserModel){
-//        homeItemUserModelList.clear();
-//        homeItemUserModelList.addAll(homeItemUserModel);
-//        homeItemUserAdapter.notifyDataSetChanged();
         homeItemUserAdapter.setFilteredList(homeItemUserModel);
     }
 

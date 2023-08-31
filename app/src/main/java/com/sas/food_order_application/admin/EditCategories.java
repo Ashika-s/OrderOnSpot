@@ -1,5 +1,6 @@
 package com.sas.food_order_application.admin;
 
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,6 +8,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -39,14 +41,9 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-//import com.google.cloud.firestore.CollectionGroupQuery;
-//import com.google.cloud.firestore.Firestore;
-//import com.google.cloud.firestore.FirestoreOptions;
-
-
 public class EditCategories extends AppCompatActivity {
 
-    static final int PICK_IMAGE_REQUEST=1;
+    static final int PICK_IMAGE_REQUEST = 1;
     TextView item;
     TextView category;
     Spinner type;
@@ -54,33 +51,25 @@ public class EditCategories extends AppCompatActivity {
     boolean isInitialTouch = true;
     TextView amount;
     Button add;
-
-    FirebaseStorage storage;
     Button selectImageButton;
-    //     EditText imageNameEditText;
     ImageView uploadedImageView;
     static String selectedOption;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-    String restname= AdminRegister.restname;
-    FirebaseFirestore db=FirebaseFirestore.getInstance();
-    DocumentReference documentReference;
-    FirebaseDatabase firebaseDatabase;
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_categories);
-        item=findViewById(R.id.items);
-        category=findViewById(R.id.category);
-        type=findViewById(R.id.type);
+        item = findViewById(R.id.items);
+        category = findViewById(R.id.category);
+        type = findViewById(R.id.type);
         spinnerLayout = findViewById(R.id.spinnerLayout);
-        amount=findViewById(R.id.amount);
-        add=findViewById(R.id.addbtn);
-        selectImageButton=findViewById(R.id.selectImageButton);
-        //  imageNameEditText=findViewById(R.id.imageNameEditText);
-        uploadedImageView=findViewById(R.id.uploadedImageView);
+        amount = findViewById(R.id.amount);
+        add = findViewById(R.id.addbtn);
+        selectImageButton = findViewById(R.id.selectImageButton);
+        uploadedImageView = findViewById(R.id.uploadedImageView);
 
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
@@ -104,24 +93,23 @@ public class EditCategories extends AppCompatActivity {
         });
 
 
+        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                selectedOption = parent.getItemAtPosition(position).toString();
+                if (selectedOption.equals(getString(R.string.select_option_prompt)))
+                    spinnerLayout.setError("Please select an option"); // Set error message
+                else {
+                    spinnerLayout.setError(null);
+                }
+            }
 
-//        type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                selectedOption = parent.getItemAtPosition(position).toString();
-//                if (selectedOption.equals(getString(R.string.select_option_prompt)))
-//                    spinnerLayout.setError("Please select an option"); // Set error message
-//                else {
-//                    spinnerLayout.setError(null);
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//
-//
-//            }
-//        });
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+
+            }
+        });
         selectImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -131,23 +119,21 @@ public class EditCategories extends AppCompatActivity {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String itemm,categoryy,typee,amountt;
+                String itemm, categoryy, typee, amountt;
                 itemm = String.valueOf(item.getText());
-                categoryy=String.valueOf(category.getText());
+                categoryy = String.valueOf(category.getText());
 
                 amountt = String.valueOf(amount.getText());
+                Log.d("Akash","line 140 "+itemm+" "+categoryy+" "+amountt);
                 type.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                         selectedOption = parent.getItemAtPosition(position).toString();
                     }
-
                     @Override
-                    public void onNothingSelected(AdapterView<?> parent) {
-
-
-                    }
+                    public void onNothingSelected(AdapterView<?> parent) { }
                 });
+                Log.d("Akash","line 154 "+itemm+" "+categoryy+" "+amountt+" "+selectedOption);
 
                 if (TextUtils.isEmpty(itemm) || TextUtils.isEmpty(categoryy) || TextUtils.isEmpty(amountt) || TextUtils.isEmpty(selectedOption)) {
                     item.setError("Item cannot be empty");
@@ -159,22 +145,20 @@ public class EditCategories extends AppCompatActivity {
                     spinnerLayout.setError("Please select an option");
                     spinnerLayout.requestFocus();
 
-                    return;
+                }else {
+                    addcategoryies(itemm, categoryy, selectedOption, amountt);
+                    startActivity(new Intent(EditCategories.this, AdminMain.class));
                 }
-
-                addcategoryies(itemm,categoryy,selectedOption,amountt);
-
-                startActivity(new Intent(EditCategories.this, AdminMain.class));
             }
         });
     }
 
     private void openfilechooser() {
 
-        Intent intent=new Intent();
+        Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(intent,PICK_IMAGE_REQUEST);
+        startActivityForResult(intent, PICK_IMAGE_REQUEST);
     }
 
     @Override
@@ -183,16 +167,16 @@ public class EditCategories extends AppCompatActivity {
 
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             Uri imageUri = data.getData();
-            String name=category.getText().toString();
-            String imageName = name+".jpg";
-            displayImage((Uri.parse(String.valueOf(imageUri))),imageName);
+            String name = item.getText().toString();
+            String imageName = name + ".jpg";
+            displayImage((Uri.parse(String.valueOf(imageUri))), imageName);
         }
     }
 
-    private void uploadImageToFirestore(Uri imageUri,String imageName) {
+    private void uploadImageToFirestore(Uri imageUri, String imageName) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();
-        StorageReference imageRef = storageRef.child("images/" +imageName);
+        StorageReference imageRef = storageRef.child("images/" + imageName);
 
         imageRef.putFile(imageUri)
                 .addOnSuccessListener(taskSnapshot -> {
@@ -206,13 +190,13 @@ public class EditCategories extends AppCompatActivity {
 
     }
 
-    private void displayImage(Uri imageUri,String imageName) {
+    private void displayImage(Uri imageUri, String imageName) {
 
         try {
             InputStream inputStream = getContentResolver().openInputStream(imageUri);
             Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
             uploadedImageView.setImageBitmap(bitmap);
-            uploadImageToFirestore(imageUri,imageName);
+            uploadImageToFirestore(imageUri, imageName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -236,19 +220,16 @@ public class EditCategories extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
-        // Create an intent to navigate to MainActivity
         Intent intent = new Intent(this, AdminMain.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
-        // Finish the current activity (optional)
         finish();
     }
 
-    private void addcategoryies(String item,String category,String type,String amount) {
-        Categoryclass categoryclass=new Categoryclass();
+    private void addcategoryies(String item, String category, String type, String amount) {
+        Categoryclass categoryclass = new Categoryclass();
         categoryclass.setItem(item);
         categoryclass.setCategory(category);
         categoryclass.setType(type);

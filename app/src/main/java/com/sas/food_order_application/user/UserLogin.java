@@ -23,6 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.SplashScreen;
 
 public class UserLogin extends AppCompatActivity {
     EditText email;
@@ -31,7 +32,6 @@ public class UserLogin extends AppCompatActivity {
     TextView signuppp;
     FirebaseAuth auth;
     FirebaseFirestore db;
-    ProgressBar progressBar;
    public static String emailid;
 
     @Override
@@ -41,6 +41,7 @@ public class UserLogin extends AppCompatActivity {
         // String firebaseUser=ref.getId();
         if (currentUser != null) {
             Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+            intent.putExtra("Perform Select Restaurant",true);
             startActivity(intent);
             finish();
         }
@@ -84,28 +85,32 @@ public class UserLogin extends AppCompatActivity {
                // Toast.makeText(User_login.this, ""+emaill+"pass : "+passwordd, Toast.LENGTH_SHORT).show();
                 auth.signInWithEmailAndPassword(emaill, passwordd)
                         .addOnCompleteListener(
-                                new OnCompleteListener<AuthResult>() {
-                                    @Override
-                                    public void onComplete(
-                                            @NonNull Task<AuthResult> task)
-                                    {
-                                        if (task.isSuccessful()) {
-                                    //        progressBar.setVisibility(View.GONE);
-                                            Log.d("user login","Login successful!!");
-                                            emailid = emaill;
-                                            SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
-                                            SharedPreferences.Editor editor = preferences.edit();
-                                            editor.putString("KEY_EMAIL_USER", emailid);
-                                            editor.apply();
-                                            Intent intent = new Intent(UserLogin.this, MainActivity.class);
-                                            startActivity(intent);
-                                            finish();
-                                        }
-                                        else {
-                                            Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
-                                        }
+                            new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(
+                                        @NonNull Task<AuthResult> task)
+                                {
+                                    if (task.isSuccessful()) {
+                                //        progressBar.setVisibility(View.GONE);
+                                        Log.d("user login","Login successful!!");
+                                        emailid = emaill;
+                                        SharedPreferences preferences = getSharedPreferences("localEmailUser", MODE_PRIVATE);
+                                        SharedPreferences.Editor editor = preferences.edit();
+                                        editor.putString("KEY_EMAIL_USER", emailid);
+                                        editor.apply();
+                                        SplashScreen.userType="Customer";
+                                        setResult(1);
+                                        Intent intent = new Intent(UserLogin.this, MainActivity.class);
+                                        intent.putExtra("Perform Select Restaurant",true);
+                                        intent.putExtra("NEW LOGIN",false);
+                                        startActivity(intent);
+                                        finish();
                                     }
-                                });
+                                    else {
+                                        Toast.makeText(getApplicationContext(), "Wrong Credentials",Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                            });
                 }
         });
     }
