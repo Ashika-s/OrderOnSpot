@@ -105,6 +105,10 @@ public class AdminLogin extends AppCompatActivity {
 
                             editor.putString("KEY_RESTAURANT",res);
                             editor.apply();
+                            SharedPreferences preferences1= getSharedPreferences("localUserDetection", MODE_PRIVATE);
+                            SharedPreferences.Editor editor1 = preferences1.edit();
+                            editor1.putString("KEY_USER_TYPE", "1");
+                            editor1.apply();
                             setResult(1);
                             SplashScreen.userType="Admin";
                             Intent intent = new Intent(AdminLogin.this, AdminOrders.class);

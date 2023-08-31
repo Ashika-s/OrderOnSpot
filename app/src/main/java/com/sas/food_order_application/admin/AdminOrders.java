@@ -248,11 +248,11 @@ public class AdminOrders extends AppCompatActivity {
         super.onDestroy();
         handler.removeCallbacks(refreshRunnable);
     }
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, AdminMain.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        startActivity(intent);
-        finish();
-    }
+//    @Override
+//    public void onBackPressed() {
+//        Intent intent = new Intent(this, Welcome.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        startActivity(intent);
+//        finish();
+//    }
 }

@@ -237,4 +237,12 @@ public class AdminMain extends AppCompatActivity {
         super.onPause();
         closeDrawer(drawerLayout);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, AdminOrders.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+        finish();
+    }
 }

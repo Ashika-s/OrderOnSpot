@@ -165,6 +165,10 @@ public class AdminRegister extends AppCompatActivity {
                 restname=Restaurantnamee;
                 Log.d("restname","is "+restname);
           //      progressBar.setVisibility((View.GONE));
+                SharedPreferences preferences1= getSharedPreferences("localUserDetection", MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = preferences1.edit();
+                editor1.putString("KEY_USER_TYPE", "1");
+                editor1.apply();
                 setResult(1);
                 startActivity(new Intent(AdminRegister.this, AdminOrders.class));
                 finish();

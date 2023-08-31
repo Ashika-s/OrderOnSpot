@@ -32,7 +32,6 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="12dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/burger"
             app:civ_border_color="@color/transperent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -3,6 +3,8 @@ package com.sas.food_order_application.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -16,20 +18,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 import com.sas.food_order_application.Model.CheckoutModel;
 import com.sas.food_order_application.R;
+import com.sas.food_order_application.ui.home.HomeFragment;
 import com.sas.food_order_application.user.Checkout;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapter.ViewHolder> {
 
     Context context;
     public static List<CheckoutModel> checkoutModelList;
+    StorageReference storageReference;
 
     public CheckoutUserAdapter(Context context, List<CheckoutModel> list) {
         this.context = context;
@@ -45,10 +54,22 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        CheckoutModel checkoutModel=checkoutModelList.get(position);
         holder.txtDishName.setText(checkoutModelList.get(position).getDishName());
         holder.edtTxtItemCount.setText((checkoutModelList.get(position).getDishQuantity()));
         holder.txtDishAmount.setText(checkoutModelList.get(position).getDishAmount());
-        holder.imageDish.setImageResource(R.drawable.burger);
+        try {
+            storageReference = FirebaseStorage.getInstance().getReference("images/"+checkoutModel.getDishName()+".jpg");
+            File localfile1 = File.createTempFile("tempfile", ".jpg");
+            storageReference.getFile(localfile1)
+                    .addOnSuccessListener(taskSnapshot1 -> {
+                        Bitmap bitmap1 = BitmapFactory.decodeFile(localfile1.getAbsolutePath());
+                        holder.imageDish.setImageBitmap(bitmap1);
+                    }).addOnFailureListener(e -> Toast.makeText(context, "Failed to retrieve", Toast.LENGTH_SHORT).show());
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
@@ -77,6 +98,7 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
                 public void onClick(View v) {
                     int position = getAdapterPosition();
                     HomeItemUserAdapter.dishList.remove(checkoutModelList.get(position));
+                    HomeFragment.txtItemsAdded.setText(HomeItemUserAdapter.dishList.size()+" Items Added");
                     checkoutModelList.remove(position);
                     Checkout.setTotalAmount();
                     notifyDataSetChanged();

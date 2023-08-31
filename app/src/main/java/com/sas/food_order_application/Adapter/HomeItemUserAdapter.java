@@ -52,7 +52,6 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
-       // holder.imageDish.setImageResource(R.drawable.burger);
         HomeItemUserModel homeItemUserModel=list.get(position);
         holder.txtDishName.setText(list.get(position).getDishName());
         holder.txtAmount.setText("Amount : "+list.get(position).getDishAmount());
@@ -110,7 +109,7 @@ public class HomeItemUserAdapter extends RecyclerView.Adapter<HomeItemUserAdapte
                         Log.d("quantity map", "is " + dishList + "value is " + dishList.size());
                         HomeFragment.setVisibility(dishList.size());
                     }
-                    HomeFragment.txtItemsAdded.setText(+dishList.size()+" Items Added");
+                    HomeFragment.txtItemsAdded.setText(dishList.size()+" Items Added");
                 }
             });
         }

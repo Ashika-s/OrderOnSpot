@@ -132,6 +132,10 @@ public class UserRegister extends AppCompatActivity {
                 Intent intent=new Intent(UserRegister.this,MainActivity.class);
                 intent.putExtra("Perform Select Restaurant",true);
                 intent.putExtra("NEW LOGIN",false);
+                SharedPreferences preferences1= getSharedPreferences("localUserDetection", MODE_PRIVATE);
+                SharedPreferences.Editor editor1 = preferences1.edit();
+                editor1.putString("KEY_USER_TYPE", "2");
+                editor1.apply();
                 startActivity(intent);
                 finish();
             }

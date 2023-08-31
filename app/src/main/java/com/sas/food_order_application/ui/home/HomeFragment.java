@@ -340,6 +340,12 @@ public class HomeFragment extends Fragment  {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        txtItemsAdded.setText(HomeItemUserAdapter.dishList.size()+" Items Added");
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         SharedPreferences preferences = getActivity().getSharedPreferences("localMainActivityData", MODE_PRIVATE);

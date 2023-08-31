@@ -1,10 +1,15 @@
 package com.sas.food_order_application;
 
+import static com.sas.food_order_application.SplashScreen.i;
+import static com.sas.food_order_application.user.UserLogin.emailid;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,6 +27,7 @@ public class Welcome extends AppCompatActivity {
 CardView admin;
 CardView customer;
 
+
     private final int Request_Code_Order=1;
 
     @SuppressLint("MissingInflatedId")
@@ -31,33 +37,21 @@ CardView customer;
         setContentView(R.layout.activity_welcome);
         admin=findViewById(R.id.cardone);
         customer=findViewById(R.id.cardtwo);
-        FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
+
         customer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentuser !=null){
-                    Log.d("Login Type",""+currentuser.getEmail());
-                    Intent intent= new Intent(getApplicationContext(), MainActivity.class);
-                    intent.putExtra("Perform Select Restaurant",false);
-                    intent.putExtra("NEW LOGIN",true);
-                    startActivity(intent);
-                    finish();
-                }else {
-                    Intent intent = new Intent(getApplicationContext(), UserLogin.class);
-                    startActivityForResult(intent,Request_Code_Order);
-                }
-
+                        Intent intent = new Intent(getApplicationContext(), UserLogin.class);
+                        startActivityForResult(intent, Request_Code_Order);
             }
         });
+
+
         admin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentuser != null) {
-                    startActivity(new Intent(getApplicationContext(), AdminOrders.class));
-                } else {
-                    Intent intent = new Intent(getApplicationContext(), AdminLogin.class);
-                    startActivityForResult(intent,Request_Code_Order);
-                }
+                        Intent intent = new Intent(getApplicationContext(), AdminLogin.class);
+                        startActivityForResult(intent, Request_Code_Order);
             }
         });
     }
