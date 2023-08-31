@@ -64,6 +64,7 @@ public class HomeFragment extends Fragment  {
     TextView selectRestaurant;
     public static TextView txtItemsAdded;
     public static String selectedRest;
+    public Boolean excuteOnStartMethod=false;
     SearchView searchView;
     List<String> documentIds = new ArrayList<>();
     Dialog dialog;
@@ -100,6 +101,7 @@ public class HomeFragment extends Fragment  {
         homeCategoryModelsList = new ArrayList<>();
         homeItemUserModelList = new ArrayList<>();
         categoryClassList = new ArrayList<>();
+        excuteOnStartMethod=true;
         FirebaseUser currentuser = FirebaseAuth.getInstance().getCurrentUser();
         Intent intent=getActivity().getIntent();
         Boolean enable=intent.getBooleanExtra("Perform Select Restaurant",false),newLogin=intent.getBooleanExtra("NEW LOGIN",false);
@@ -116,6 +118,7 @@ public class HomeFragment extends Fragment  {
             selectRestaurant.setText(preferences1.getString("KEY_RESTAURANT",""));
             selectedRest=preferences1.getString("KEY_RESTAURANT","");
             Log.d("Shared",""+selectedRest);
+            if (!selectedRest.isEmpty())
             fetchCategory();
         }
             Log.d("Shared","enable"+enable);
@@ -219,6 +222,7 @@ public class HomeFragment extends Fragment  {
 
         return root;
     }
+
 
     //Btutton enable diable
     public static void setVisibility(int i){
@@ -342,8 +346,14 @@ public class HomeFragment extends Fragment  {
     @Override
     public void onStart() {
         super.onStart();
+        if(excuteOnStartMethod){
+            selectRestaurant.performClick();
+        }
+        excuteOnStartMethod=false;
         txtItemsAdded.setText(HomeItemUserAdapter.dishList.size()+" Items Added");
     }
+
+
 
     @Override
     public void onPause() {
