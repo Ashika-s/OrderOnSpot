@@ -72,6 +72,7 @@ Button submit;
                         });
 
                 Intent intent1=new Intent(Feedback.this,MainActivity.class);
+                intent.putExtra("NEW LOGIN", true);
                 startActivity(intent1);
                 finish();
             }

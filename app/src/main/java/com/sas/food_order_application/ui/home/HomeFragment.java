@@ -4,6 +4,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 import static com.sas.food_order_application.user.UserLogin.emailid;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -85,6 +86,7 @@ public class HomeFragment extends Fragment  {
     private final int Request_Code_Order=1;
 
 
+    @SuppressLint("SuspiciousIndentation")
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
@@ -119,7 +121,7 @@ public class HomeFragment extends Fragment  {
             selectedRest=preferences1.getString("KEY_RESTAURANT","");
             Log.d("Shared",""+selectedRest);
             if (!selectedRest.isEmpty())
-            fetchCategory();
+             fetchCategory();
         }
             Log.d("Shared","enable"+enable);
 
@@ -164,7 +166,9 @@ public class HomeFragment extends Fragment  {
                         selectedRest=adapter.getItem(position);
                         dialog.dismiss();
                         HomeItemUserAdapter.dishList.clear();
+                        txtItemsAdded.setText(HomeItemUserAdapter.dishList.size()+" Items Added");
                         categoryClassList.clear();
+                        btnNext.setEnabled(false);
                         homeItemUserModelList.clear();
                         homeItemUserAdapter.notifyDataSetChanged();
                         homeCategoryModelsList.clear();

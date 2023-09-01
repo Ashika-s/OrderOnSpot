@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.sas.food_order_application.Model.CheckoutModel;
+import com.sas.food_order_application.Model.HomeItemUserModel;
 import com.sas.food_order_application.R;
 import com.sas.food_order_application.ui.home.HomeFragment;
 import com.sas.food_order_application.user.Checkout;
@@ -97,8 +98,13 @@ public class CheckoutUserAdapter extends RecyclerView.Adapter<CheckoutUserAdapte
                 @Override
                 public void onClick(View v) {
                     int position = getAdapterPosition();
-                    HomeItemUserAdapter.dishList.remove(checkoutModelList.get(position));
-                    HomeFragment.txtItemsAdded.setText(HomeItemUserAdapter.dishList.size()+" Items Added");
+//                    for(HomeItemUserModel str : HomeItemUserAdapter.dishList) {
+//                        if(str.getDishName().equals(checkoutModelList.get(position).getDishName())) {
+                            HomeItemUserAdapter.dishList.remove(position);
+                            HomeFragment.txtItemsAdded.setText(HomeItemUserAdapter.dishList.size() + " Items Added");
+//                        }
+//                    }
+                    Log.d("CheckoutItem Remove","list size "+HomeItemUserAdapter.dishList.size()+" "+HomeFragment.txtItemsAdded.getText().toString());
                     checkoutModelList.remove(position);
                     Checkout.setTotalAmount();
                     notifyDataSetChanged();
