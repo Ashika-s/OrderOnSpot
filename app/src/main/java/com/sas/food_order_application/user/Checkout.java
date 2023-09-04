@@ -154,7 +154,9 @@ public class Checkout extends AppCompatActivity {
                         }
                         if (listOrder.size() > 0) {
                             int Id =generateOrderNumber();
-
+                            HomeItemUserAdapter.dishList.clear();
+                            tableList.remove(position);
+                            adapter.notifyDataSetChanged();
                             DocumentReference doc = db.collection("Admin").document(restaurantEmail);
                             List<String> updateList = new ArrayList<>();
                             updateList.addAll(tableList);
@@ -163,8 +165,7 @@ public class Checkout extends AppCompatActivity {
                             sendDataToAdmin(listOrder,Id);
                             send();
                             setResult(1);
-                            tableList.remove(position);
-                            adapter.notifyDataSetChanged();
+
                             Intent intent = new Intent(Checkout.this, orderplaced_splash.class);
                             startActivity(intent);
                             finish();
