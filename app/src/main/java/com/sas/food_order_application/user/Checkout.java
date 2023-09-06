@@ -227,7 +227,7 @@ public class Checkout extends AppCompatActivity {
 
 
         CollectionReference tableCollection = db.collection("My_Orders");
-        DocumentReference documentReference=tableCollection.document(useremail);
+        DocumentReference documentReference=tableCollection.document(String.valueOf(Id));
         Map<String,Object> tabledata=new HashMap<>();
         tabledata.put("tablenumber",tableName);
         tabledata.put("preferences",listOrder);
@@ -256,7 +256,7 @@ public class Checkout extends AppCompatActivity {
     }
     private void sendDataToAdmin(HashMap<String, Integer> listOrder,int Id) {
         CollectionReference tableCollection = db.collection("Order");
-            DocumentReference documentReference = tableCollection.document(useremail);
+            DocumentReference documentReference = tableCollection.document(String.valueOf(Id));
             Map<String, Object> tabledata = new HashMap<>();
             tabledata.put("tablenumber", tableName);
             tabledata.put("preferences", listOrder);

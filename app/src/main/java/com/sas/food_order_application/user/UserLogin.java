@@ -104,7 +104,7 @@ public class UserLogin extends AppCompatActivity {
                                         editor1.putString("KEY_USER_TYPE", "2");
                                         editor1.apply();
                                         setResult(1);
-                                        Intent intent = new Intent(UserLogin.this, MainActivity.class);
+                                        Intent intent = new Intent(UserLogin.this, SelectRestaurant.class);
                                         intent.putExtra("Perform Select Restaurant",true);
                                         intent.putExtra("NEW LOGIN",false);
                                         startActivity(intent);

@@ -127,7 +127,6 @@ public class HomeFragment extends Fragment  {
 
 
         listOfRestaurant();
-        //working fine
         selectRestaurant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

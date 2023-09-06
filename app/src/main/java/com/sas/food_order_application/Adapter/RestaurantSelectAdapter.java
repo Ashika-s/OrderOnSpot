@@ -23,6 +23,7 @@ import java.util.List;
 
 public class RestaurantSelectAdapter extends RecyclerView.Adapter<RestaurantSelectAdapter.ViewHolder>{
 Context context;
+public static String res;
     private List<String> restaurantNames;
 
     public RestaurantSelectAdapter(List<String> restaurantNames) {
@@ -61,6 +62,7 @@ Context context;
                         int position = getAdapterPosition();
                         if (position != RecyclerView.NO_POSITION) {
                             String selectedRestaurant = restaurantNames.get(position);
+                            res=selectedRestaurant;
                             Intent intent = new Intent(context, MainActivity.class);
                             intent.putExtra("restaurantName", selectedRestaurant);
                             context.startActivity(intent);

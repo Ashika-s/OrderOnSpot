@@ -22,7 +22,7 @@ FirebaseAuth auth;
 FirebaseUser user;
     DrawerLayout drawerLayout;
     ImageView imageView;
-    LinearLayout menu,orders,profile,feedback,logout;
+    LinearLayout menu,orders,profile,history,feedback,logout;
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +33,7 @@ FirebaseUser user;
         menu=findViewById(R.id.Menu);
         orders=findViewById(R.id.Order);
         profile=findViewById(R.id.Profile);
+        history=findViewById(R.id.history);
         feedback=findViewById(R.id.receivedfeedback);
         logout=findViewById(R.id.Logout);
 
@@ -61,6 +62,12 @@ FirebaseUser user;
             @Override
             public void onClick(View v) {
                 redirectActivity(AdminLogout.this, AdminProfile.class);
+            }
+        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(AdminLogout.this, AdminHistory.class);
             }
         });
         feedback.setOnClickListener(new View.OnClickListener() {

@@ -52,7 +52,7 @@ public class AdminFeedback extends AppCompatActivity {
     FeedbackAdapter feedbackAdapter;
     ImageView imageView;
     String email= AdminLogin.adminemailid;
-    LinearLayout menu, orders, profile,feedback, logout;
+    LinearLayout menu, orders, profile,history,feedback, logout;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -65,6 +65,7 @@ public class AdminFeedback extends AppCompatActivity {
         menu = findViewById(R.id.Menu);
         orders = findViewById(R.id.Order);
         profile = findViewById(R.id.Profile);
+        history=findViewById(R.id.history);
         feedback=findViewById(R.id.receivedfeedback);
         logout = findViewById(R.id.Logout);
         db = FirebaseFirestore.getInstance();
@@ -98,6 +99,12 @@ public class AdminFeedback extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 redirectActivity(AdminFeedback.this, AdminProfile.class);
+            }
+        });
+        history.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                redirectActivity(AdminFeedback.this, AdminHistory.class);
             }
         });
 
